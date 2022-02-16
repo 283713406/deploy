@@ -1,0 +1,2 @@
+需要在连接的mysql数据库上,创建数据库kylin_source_info_test;
+然后source  kylin_source_info_test.sql,创建相对应的表格.
