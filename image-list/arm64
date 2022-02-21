@@ -59,4 +59,4 @@ registry.kylincloud.org:4001/solution/repo/arm64/repo-store-worker:v5
 registry.kylincloud.org:4001/solution/repo/arm64/spilo-12:1.6-p5
 registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm
 registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm
-registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1
+registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.1
