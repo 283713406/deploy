@@ -1,4 +1,4 @@
-registry.kylincloud.org:4001/solution/mirrors-update/amd64/sourceinfo:v1.1
+registry.kylincloud.org:4001/solution/mirrors-update/amd64/sourceinfo:v1.4
 registry.kylincloud.org:4001/solution/softshop/amd64/client:2.1.0-arm
 registry.kylincloud.org:4001/solution/softshop/amd64/manage:2.1.0-arm
 registry.kylincloud.org:4001/solution/tianyu/amd64/alertmanager:v0.22.2
