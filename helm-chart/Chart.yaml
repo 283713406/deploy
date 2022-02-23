@@ -1,0 +1,81 @@
+apiVersion: v2
+name: deploy
+description: DEPRECATED - A helm chart for kylin software
+type: application
+version: 0.0.1
+appVersion: "0.0.1"
+engine: gotpl
+dependencies:
+- condition: redis-ha.enabled
+  name: redis-ha
+  version: "4.4.6"
+  repository: "file://subcharts/redis"
+- condition: apisix.enabled
+  name: apisix
+  version: "0.7.3"
+  repository: "file://subcharts/apisix"
+- condition: elasticsearch.enabled
+  name: elasticsearch
+  version: "7.9.1"
+  repository: "file://subcharts/elasticsearch"
+- condition: etcd.enabled
+  name: etcd
+  version: "6.2.6"
+  repository: "file://subcharts/etcd"
+- condition: mongodb.enabled
+  name: mongodb
+  version: "7.8.10"
+  repository: "file://subcharts/mongodb"
+- condition: mysql.enabled
+  name: mysql
+  version: "1.0.0"
+  repository: "file://subcharts/mysql"
+- condition: minio.enabled
+  name: minio
+  version: "8.0.10"
+  repository: "file://subcharts/minio/minio"
+- condition: repo.enabled
+  name: front-child
+  version: "0.1.0"
+  repository: "file://subcharts/repo/front-child"
+# repo subcharts
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
+# - condition: repo.enabled
+#   name: 
+#   version: 
+#   repository: 
