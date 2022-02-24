@@ -1,8 +1,13 @@
 # deploy
-整合部署应用软件及高可用软件。
+整合部署应用软件及高可用软件，部署的前提条件是k8s集群已经就绪。服务的部署顺序是：KIM部署->NFS部署->部署应用及组件
 
-## 如何使用
-### 部署nfs storage class
+### 1. KIM部署
+请参考[KIM部署](docs/01-kim-installation.md)
+
+### 2. NFS部署
+请参考[NFS 部署](docs/02-nfs-installation.md)
+
+#### 2.1 部署nfs storage class
 ```bash
 # 必要: 修改nfs 服务地址
 $ make chost Host="192.168.1.1"
@@ -18,9 +23,8 @@ $ git checkout nfs.yaml
 # 必要: 部署nfs
 $ make apply
 ```
-需要现部署nfs，再部署其他组件。
 
-### 部署应用及组件
+### 3. 部署应用及组件
 ```bash
 # 克隆项目
 $ git clone git@gitlab.kylincloud.org:solution/deploy.git
@@ -47,6 +51,22 @@ $ vi values.yaml #将除了apisix.enabled设为false，其他组件开关设为t
 $ kubectl create ns ha
 $ helm install -n ha ha ./
 ```
+
+#### 3.1 部署仓库源
+```bash
+$ git clone https://gitlab.kylincloud.org/solution/repo.git
+#后续部署请 联系 朱信 支持
+```
+
+#### 3.2 部署软件商店
+请参考[软件商店](docs/03-softshop-installation.md)
+
+#### 3.3 部署源更新
+```bash
+$ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
+$ helm -n kylin-update install kylin-update-service mirrors-update/ 
+```
+
 ### 常用helm命令解释
 ```bash
 $ helm install -n ha hacomponent ./
