@@ -20,6 +20,7 @@
 [submodule "helm-chart/subcharts/mongodb"]
 	path = helm-chart/subcharts/mongodb
 	url = git@gitlab.kylincloud.org:solution/ha/mongodb.git
+
 [submodule "helm-chart/subcharts/redis"]
 	path = helm-chart/subcharts/redis
 	url = git@gitlab.kylincloud.org:solution/ha/redis.git
