@@ -12,6 +12,8 @@ $ make cpath Path="/foo/bar"
 
 # 可选: 修改为amd镜像，默认为arm镜像
 $ make amd
+# 如果上述3个步骤误操作，执行下面这句命令重置nfs配置，再重新执行上述3个步骤
+$ git checkout nfs.yaml
 
 # 必要: 部署nfs
 $ make apply
@@ -23,9 +25,11 @@ $ make apply
 # 克隆项目
 $ git clone git@gitlab.kylincloud.org:solution/deploy.git
 
-# 进入项目更新git submodule
-$ cd deploy/helm-chart
+# 更新git submodule
 $ git submodule update --init --recursive
+
+#进入项目
+$ cd deploy/helm-chart
 
 # 更新helm subchart
 $ helm dependency update
@@ -50,23 +54,4 @@ $ helm install -n ha hacomponent ./
 # 注：同一个命名空间下chart 名字不可重复
 $ helm -n ha delete hacomponent
 # 删除ha 命名空间下的hacomponentchart
-```
-
-
-## 如何更新 git submodule
-当 git submodule更新了内容，需要在本仓库同步内容。
-```bash
-# 例如 mysql 的 master 分支更新了内容
-
-# 删除 mysql 内容
-$ vi .gitmodules
-$ vi .git/config
-# 删除 .git/modules/ 下 mysql 目录
-$ rm -rf .git/modules/subcharts/mysql/
-
-# 删除 mysql 目录
-$ rm -rf subcharts/mysql/
-$ git add subcharts/mysql/
-# 重新添加 mysql 
-$ git submodule add {mysql gitlab url} subcharts/mysql
 ```
