@@ -2,6 +2,23 @@
 整合部署应用软件及高可用软件。
 
 ## 如何使用
+### 部署nfs storage class
+```bash
+# 必要: 修改nfs 服务地址
+$ make chost Host="192.168.1.1"
+
+# 可选: 修改nfs 服务挂载目录，默认为: /k8s/nfs-storage/common
+$ make cpath Path="/foo/bar"
+
+# 可选: 修改为amd镜像，默认为arm镜像
+$ make amd
+
+# 必要: 部署nfs
+$ make apply
+```
+需要现部署nfs，再部署其他组件。
+
+### 部署应用及组件
 ```bash
 # 克隆项目
 $ git clone git@gitlab.kylincloud.org:solution/deploy.git
