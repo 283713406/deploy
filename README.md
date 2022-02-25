@@ -1,18 +1,26 @@
 # deploy
-整合部署应用软件及高可用软件，部署的前提条件是k8s集群已经就绪。服务的部署顺序是：KIM部署->NFS部署->部署应用及组件
+整合部署应用软件及高可用软件，部署的前提条件是k8s集群已经就绪。服务的部署顺序是：
+* a. KIM部署、NFS部署（*包含2.1与2.2步骤*），这两个服务可以分别同步进行部署
+* b. 基础组件部署
+* c. 仓库源部署、安全管控部署、软件商店部署、源更新部署，这四个服务可以分别同步进行部署
+
+> a步骤是b,c步骤的基础，需预先部署；b步骤是c步骤的基础，需预先部署
 
 ### 1. KIM部署
 请参考[KIM部署](docs/01-kim-installation.md)
 
-### 2. NFS部署
+### 2.1 NFS部署
 请参考[NFS 部署](docs/02-nfs-installation.md)
 
-#### 2.1 部署nfs storage class
+#### 2.2 NFS部署：nfs-storageClass
 ```bash
-# 必要: 修改nfs 服务地址
+# 切换到master1控制节点
+$ git clone https://gitlab.kylincloud.org/solution/deploy.git
+$ cd deploy
+# 必要: 修改nfs 服务地址，值为:步骤2. NFS部署中的NFS服务IP地址
 $ make chost Host="192.168.1.1"
 
-# 可选: 修改nfs 服务挂载目录，默认为: /k8s/nfs-storage/common
+# 可选: 修改nfs 服务挂载目录，值为:步骤2. NFS部署中的NFS目录
 $ make cpath Path="/foo/bar"
 
 # 可选: 修改为amd镜像，默认为arm镜像
@@ -24,11 +32,11 @@ $ git checkout nfs.yaml
 $ make apply
 ```
 
-### 3. 部署应用及组件
+### 3. 基础组件部署
 ```bash
-# 克隆项目
+# 切换到master1控制节点
 $ git clone git@gitlab.kylincloud.org:solution/deploy.git
-
+$ cd deploy
 # 更新git submodule
 $ git submodule update --init --recursive
 
@@ -52,16 +60,22 @@ $ kubectl create ns ha
 $ helm install -n ha ha ./
 ```
 
-#### 3.1 部署仓库源
+#### 4.1 仓库源部署
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/repo.git
 #后续部署请 联系 朱信 支持
 ```
 
-#### 3.2 部署软件商店
+#### 4.2 安全管控部署
+```bash
+$ git clone https://gitlab.kylincloud.org/solution/tianyu.git
+$ helm install tianyu tianyu/
+```
+
+#### 4.2 软件商店部署
 请参考[软件商店](docs/03-softshop-installation.md)
 
-#### 3.3 部署源更新
+#### 3.3 源更新部署
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
 $ helm -n kylin-update install kylin-update-service mirrors-update/ 
