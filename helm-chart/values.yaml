@@ -1,6 +1,6 @@
 mysql:
   enabled: true
-  replicas: 3
+  replicas: 1
   persistentVolume:
     enabled: true
     size: 10Gi
