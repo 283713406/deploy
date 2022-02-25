@@ -6,7 +6,9 @@ git checkout hebing
 ```
 2.修改client与manage数据库等基本配置参数
 ```bash
-vim softshop/values.yaml
+#若若部署的环境为x86环境，则执行下述操作，为arm64环境则无需操作
+sed -i 's/arm64/amd64/g' softshop/values.yaml
+sed -i 's/2.1.0-arm/2.1.0-x86/g' softshop/values.yaml
 ```
 3.创建k8s namespaces
 ```bash

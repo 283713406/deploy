@@ -18,10 +18,10 @@ dependencies:
   name: elasticsearch
   version: "7.9.1"
   repository: "file://subcharts/elasticsearch"
-- condition: etcd.enabled
-  name: etcd
-  version: "6.2.6"
-  repository: "file://subcharts/etcd"
+#- condition: etcd.enabled
+#  name: etcd
+#  version: "6.2.6"
+#  repository: "file://subcharts/etcd"
 - condition: mongodb.enabled
   name: mongodb
   version: "7.8.10"
@@ -34,10 +34,10 @@ dependencies:
   name: minio
   version: "8.0.10"
   repository: "file://subcharts/minio/minio"
-- condition: repo.enabled
-  name: front-child
-  version: "0.1.0"
-  repository: "file://subcharts/repo/front-child"
+#- condition: repo.enabled
+#  name: front-child
+#  version: "0.1.0"
+#  repository: "file://subcharts/repo/front-child"
 # repo subcharts
 # - condition: repo.enabled
 #   name: 
