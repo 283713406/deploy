@@ -118,7 +118,6 @@ redis-ha:
     storageClass: nfs-storage
   redis:
     customConfig: |
-      cluster-enabled yes
       dir "/data"
       port 6379
       maxmemory 0
