@@ -25,10 +25,10 @@ registry.kylincloud.org:4001/solution/tianyu/amd64/etcd:3.6.0
 registry.kylincloud.org:4001/solution/tianyu/amd64/httpd-amd64:2.4
 registry.kylincloud.org:4001/solution/tianyu/amd64/kube-webhook-certgen:v1.5.1
 registry.kylincloud.org:4001/solution/tianyu/amd64/logstash:7.9.1
-registry.kylincloud.org:4001/solution/tianyu/amd64/monitor-sync-amd64:3.6.0-5
+registry.kylincloud.org:4001/solution/tianyu/amd64/monitor-sync-amd64:3.6.0-7
 registry.kylincloud.org:4001/solution/tianyu/amd64/nfs-client-provisioner:20220217
 registry.kylincloud.org:4001/solution/tianyu/amd64/nginx:1.19.2
 registry.kylincloud.org:4001/solution/tianyu/amd64/policy-service:3.6.2
 registry.kylincloud.org:4001/solution/tianyu/amd64/register-service:3.6.2
 registry.kylincloud.org:4001/solution/tianyu/amd64/server-service:3.6.2
-registry.kylincloud.org:4001/solution/tianyu/amd64/ssmwebsite-amd64:3.6.0-ICBC
+registry.kylincloud.org:4001/solution/tianyu/amd64/ssmwebsite-amd64:3.6.0-7-ICBC
