@@ -7,45 +7,23 @@
 
 2. 主机名设置
    
-    系统安装时可以设置主机名，或者安装后使用命令修改，要求主机名为FQDN形式，如```server.kimserver.local```
+    系统安装时可以设置主机名，或者安装后使用命令修改，要求主机名为FQDN形式，如```server.example.local```
    
    > 确定主机名之前请务必ping一下，确保不会与其他域名冲突
    
     命令修改方式为
    
    ```sh
-   # 例如 hostnamectl set-hostname server.kimserver.local
+   # 例如 hostnamectl set-hostname server.example.local
    hostnamectl set-hostname <hostname>
    ```
    
    > v10版本的hostnamectl命令修改主机名时不会修改/etc/hostname文件，所以重启后会恢复原来的主机名，可以手动修改/etc/hostname文件并重启
 
 3. 防火墙设置
-   
-    在 ```开始菜单``` --> ```防火墙``` 打开防火墙
-    在 ```区域``` --> ```服务``` 勾选以下几项：
-   
-   - [x] ```dns```
-   
-   - [x] ```http```
-   
-   - [x] ```https```
-   
-   - [x] ```kerberos```
-   
-   - [x] ```kpasswd```
-   
-   - [x] ```ldap```
-   
-   - [x] ```ldaps```
-   
-   - [x] ```ssh```
-   
-   - [x] ```ntp```
-     
-     然后在 ```区域``` --> ```端口``` 新增 ```tcp``` 协议的 ```7878``` 、```1812 ```、```9468``` 、```123```、```6080-6089```、```5911-5920```端口
-     在选项点击 ```将Runtime设定为永久配置```
-     ![images](./图片1.png)
+    ```bash
+    bash kim_firewall_port.sh
+    ```
 
 4. 本地源配置
    
@@ -57,9 +35,8 @@
    
     将 ```kimpkg-*.tar.gz``` 解压，得到 ```pkgs``` 文件夹，把 ```pkgs``` 文件夹放到 ```/var/``` 路径下
    
-   > 注 如果架构为arm64, 需将 ```docker-compose/``` 中的包也放入/var/pkgs/下
-   
-    执行
+
+   执行
    
    ```sh
    createrepo /var/pkgs
@@ -67,7 +44,7 @@
    dnf makecache
    ```
    
-    本地源配置完毕
+   本地源配置完毕
 
 ### 二、安装
 
@@ -103,17 +80,18 @@
                       --no-ntp
    ```
    
-   > 将参数中主机名和域名替换为实际的主机名与域名，realm参数注意大写，IP_ADDRESS填写实际网卡的IP地址
+   > 将参数中主机名和域名替换为实际的主机名与域名，realm参数注意大写，IP_ADDRESS填写实际网卡的IP地址,hostname与domain参数不能相同
    > 然后根据提示设置Directory Manager密码和管理员admin密码后确认安装，请务必记住这两个密码。
 
     如果清楚安装流程，也可以不带任何参数安装，通过后面的提示配置参数
 
-    ![images](./图片3.png)
+    ![images](图片3.png)
 
     安装过程其它参数酌情配置。
 
     安装需要几分钟时间，等到安装成功后，会出现以下提示：
-    ![images](./图片4.png)
+    
+    ![images](图片4.png)
 
     设置自动创建家目录：
 
