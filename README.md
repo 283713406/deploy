@@ -35,7 +35,7 @@ $ git checkout nfs.yaml
 $ make apply
 ```
 
-### <span id="j3">3. 基础组件部署</span>
+### <span id="j3">3.1 基础组件部署</span>
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
@@ -69,6 +69,8 @@ $ helm install -n ha ha ./
 # 查看所有pod是否Running
 $ kubectl -n ha get pods -o wide
 ```
+#### 3.2 部署dbinit
+切换到master1控制节点```$ ssh root@master1```,请参考[dbinit](docs/03-db-init.md)
 
 #### 4.1 仓库源部署
 **切换到master1控制节点**
@@ -96,7 +98,7 @@ $ helm install tianyu tianyu/
 ```
 
 #### 4.3 软件商店部署
-切换到master1控制节点```$ ssh root@master1```,请参考[软件商店](docs/03-softshop-installation.md)
+切换到master1控制节点```$ ssh root@master1```,请参考[软件商店](docs/04-softshop-installation.md)
 
 #### 4.4 源更新部署
 ```bash
