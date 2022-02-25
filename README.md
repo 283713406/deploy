@@ -6,10 +6,10 @@
 
 > a步骤是b,c步骤的基础，需预先部署；b步骤是c步骤的基础，需预先部署
 
-### 1. KIM部署
+### <sapn id="j1">1. KIM部署</sapn>
 请参考[KIM部署](docs/01-kim-installation.md)
 
-### 2.1 NFS部署
+### <sapn id="j2">2.1 NFS部署</span>
 请参考[NFS 部署](docs/02-nfs-installation.md)
 
 #### 2.2 NFS部署：nfs-storageClass
@@ -72,10 +72,10 @@ $ git clone https://gitlab.kylincloud.org/solution/tianyu.git
 $ helm install tianyu tianyu/
 ```
 
-#### 4.2 软件商店部署
+#### 4.3 软件商店部署
 请参考[软件商店](docs/03-softshop-installation.md)
 
-#### 3.3 源更新部署
+#### 4.4 源更新部署
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
 $ helm -n kylin-update install kylin-update-service mirrors-update/ 
