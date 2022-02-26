@@ -3,12 +3,12 @@
 
 启动Job:
 ```
-$ helm [-n namespace] install dbinit ./
+$ helm -n dbinit install dbinit ./
 ```
 
 查看结果:
 ```bash
-$ kubectl [-n namespace] get all
+$ kubectl -n dbinit get all
 
 NAME                  READY   STATUS      RESTARTS   AGE
 pod/mysql-job-vgss5   0/1     Completed   0          17m
