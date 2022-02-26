@@ -55,7 +55,7 @@ $ make apply
 $ ssh root@master1
 ```
 ```bash
-$ git clone https://gitlab.kylincloud.org/solution/deploy.git
+# 再次切换到之前的deploy目录
 $ cd deploy
 # 更新git submodule
 $ git submodule update --init --recursive
