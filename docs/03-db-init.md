@@ -1,8 +1,13 @@
 # DBInit
 用于初始化MySQL和mongoDB的数据，values.yaml内的数据除非开发调试，或者开发人员指导否则请不要修改。
 
-启动Job:
+创建namespaces
+```bash
+$ kubectl create ns dbinit
 ```
+
+启动Job:
+```bash
 $ helm -n dbinit install dbinit ./
 ```
 
