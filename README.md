@@ -102,7 +102,9 @@ $ kubectl  -n nfs-storage delete pods --all 删除nfs-storage-class
 
 切换到master1控制节点
 ```$ ssh root@master1```
-请参考[dbinit](docs/03-db-init.md)
+切入对应的deploy/dbinit目录
+cd  deploy/dbinit
+操作请参考[dbinit](docs/03-db-init.md)
 
 ### 5 部署应用
 #### 5.1 仓库源部署
