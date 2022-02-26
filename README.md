@@ -4,6 +4,7 @@
 ```bash
 # 本安装方法通过helm工具来进行安装，-n后的参数代表组件安装所在的命名空间，hacomponent为组件名字，./代表安装组件的配置文件所在目录.
 # 注：同一个命名空间下组件名字不可重复
+# 注: hacomponent需要根据具体的组件名称修改以做识别和区分，改成比如:  ha;  apisixi;   tianyu;  mirrors-update;  repo;  softshop
 $ helm install -n ha hacomponent ./
 
 # 从平台层面删除通过helm安装的组件，下面命令会卸载组件。
