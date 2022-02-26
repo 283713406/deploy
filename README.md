@@ -92,6 +92,9 @@ $ kubectl create ns ha
 $ helm install -n ha ha ./
 # 查看所有pod是否Running
 $ kubectl -n ha get pods -o wide
+
+# 如果出现大量pods批量处于pending状态, 执行如下命令重置nfs pv控制器.
+$ kubectl  -n nfs-storage delete pods --all 删除nfs-storage-class
 ```
 ### 4 部署dbinit
 部署dbinit对数据库进行初始化，执行创建数据库、表格、初始数据等操作。
