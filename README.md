@@ -20,6 +20,14 @@ $ helm -n ha uninstall hacomponent
 
 > a步骤是b,c步骤的基础，需预先部署；b步骤是c步骤的基础，需预先部署
 
+### 前提条件
+请先确认所有节点上均可连接
+$ ping registry.kylincloud.org
+# 测试registry镜像服务是否就绪,测试环境下会报权限问题(这是正常的)，用户现场环境会直接拉取,注意把下面 amd64 改成对应架构类型
+$ docker pull  registry.kylincloud.org:4001/solution/ha/mongodb/amd64/mongo:4.4.2
+
+测试失败，请在所有master和node节点的/etc/hosts文件中配置正确的registry.kylincloud.org地址。
+
 ### <sapn id="j1">1. KIM部署</sapn>
 请参考[KIM部署](docs/01-kim-installation.md)
 
