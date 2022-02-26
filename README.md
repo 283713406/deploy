@@ -1,4 +1,18 @@
 # deploy
+
+### 涉及操作介绍
+```bash
+# 本安装方法通过helm工具来进行安装，-n后的参数代表组件安装所在的命名空间，hacomponent为组件名字，./代表安装组件的配置文件所在目录.
+# 注：同一个命名空间下组件名字不可重复
+$ helm install -n ha hacomponent ./
+
+# 从平台层面删除通过helm安装的组件，下面命令会卸载组件。
+# 卸载后可以重新使用上面install命令安装，更新values或者其他文件后可以先uninstall然后再install.
+# uninstall后需要一点时间等待组件彻底卸载(30s-60s)，未完全卸载时install会报namespace正在停止中
+# 只要再uninstall后重新install即可。
+$ helm -n ha uninstall hacomponent
+```
+
 整合部署应用软件及高可用软件，部署的前提条件是k8s集群已经就绪。服务的部署顺序是：
 * a. KIM部署、NFS部署（*包含2.1与2.2步骤*），这两个服务可以分别同步进行部署
 * b. 基础组件部署
@@ -9,10 +23,10 @@
 ### <sapn id="j1">1. KIM部署</sapn>
 请参考[KIM部署](docs/01-kim-installation.md)
 
-### <sapn id="j2">2.1 NFS部署</span>
+### <sapn id="j2">2 NFS部署</span>
 请参考[NFS 部署](docs/02-nfs-installation.md)
 
-#### 2.2 NFS部署：nfs-storageClass
+#### 2.1 NFS部署：nfs-storageClass
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
@@ -35,7 +49,7 @@ $ git checkout nfs.yaml
 $ make apply
 ```
 
-### <span id="j3">3.1 基础组件部署</span>
+### <span id="j3">3 基础组件部署</span>
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
@@ -69,10 +83,16 @@ $ helm install -n ha ha ./
 # 查看所有pod是否Running
 $ kubectl -n ha get pods -o wide
 ```
-#### 3.2 部署dbinit
-切换到master1控制节点```$ ssh root@master1```,请参考[dbinit](docs/03-db-init.md)
+### 4 部署dbinit
+部署dbinit对数据库进行初始化，执行创建数据库、表格、初始数据等操作。
+注意该操作原则上在ha数据库部署之后只能执行一遍，重复执行可能导致问题。
 
-#### 4.1 仓库源部署
+切换到master1控制节点
+```$ ssh root@master1```
+请参考[dbinit](docs/03-db-init.md)
+
+### 5 部署应用
+#### 5.1 仓库源部署
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
@@ -84,35 +104,30 @@ $ ssh root@master1
 $ kubectl edit sc/local-path
 
 $ git clone https://gitlab.kylincloud.org/solution/repo.git
-#后续部署请 联系 朱信 支持
-```
+#后续部署请 联系 曹远志 支持
+     
 
-#### 4.2 安全管控部署
+#### 5.2 安全管控部署
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
 ```
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/tianyu.git
+  # 请参考对应的values.yaml和文档。
 $ helm install tianyu tianyu/
 ```
 
-#### 4.3 软件商店部署
+#### 5.3 软件商店部署
 切换到master1控制节点```$ ssh root@master1```,请参考[软件商店](docs/04-softshop-installation.md)
 
-#### 4.4 源更新部署
+#### 5.4 源更新部署
 ```bash
-# 切换到master1控制节点
+  # 切换到master1控制节点
 $ ssh root@master1
 $ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
+  # 请参考对应的values.yaml和文档。
 $ helm -n kylin-update install kylin-update-service mirrors-update/ 
 ```
 
-### 常用helm命令解释
-```bash
-$ helm install -n ha hacomponent ./
-# helm 安装命令，-n 为命名空间，hacomponent为helm chart名字，./代表chart所在路径
-# 注：同一个命名空间下chart 名字不可重复
-$ helm -n ha delete hacomponent
-# 删除ha 命名空间下的hacomponentchart
-```
+
