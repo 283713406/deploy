@@ -1,0 +1,21 @@
+dependencies:
+- name: redis-ha
+  repository: file://subcharts/redis
+  version: 4.4.6
+- name: apisix
+  repository: file://subcharts/apisix
+  version: 0.7.3
+- name: elasticsearch
+  repository: file://subcharts/elasticsearch
+  version: 7.9.1
+- name: mongodb
+  repository: file://subcharts/mongodb
+  version: 7.8.10
+- name: mysql
+  repository: file://subcharts/mysql
+  version: 1.0.0
+- name: minio
+  repository: file://subcharts/minio/minio
+  version: 8.0.10
+digest: sha256:3c9f94caf38247b7c0f7031ecd58927dd737f3ba4a122a007fe8144adbdbd346
+generated: "2022-02-26T10:27:51.45836466+08:00"
