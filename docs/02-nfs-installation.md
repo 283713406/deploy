@@ -40,18 +40,14 @@ showmount -e <NFS服务器IP>
 
 6.证书设置
 
-    **待KIM服务器搭建完成后，执行以下操作**
+ **待KIM服务器搭建完成后，执行以下操作**
 
-    在部署KIM的服务器`/var/lib/ipa/certs/`目录下执行：
+   在部署KIM的服务器`/var/lib/ipa/certs/`目录下执行：
+   openssl pkey -passin file:/var/lib/ipa/passwds/{server-hostname}-443-RSA -in /var/lib/ipa/private/httpd.key > /var/lib/ipa/certs/ssl.key
 
-    ```sh
-    openssl pkey -passin file:/var/lib/ipa/passwds/{server-hostname}-443-RSA -in /var/lib/ipa/private/httpd.key > /var/lib/ipa/certs/ssl.key
+   # 将/var/lib/ipa/certs/httpd.crt 和 /var/lib/ipa/certs/ssl.key 复制到NFS服务器上
+   # NFS服务器路径见第三步脚本打印的内容
+   scp /var/lib/ipa/certs/httpd.crt <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.crt
 
-
-    # 将/var/lib/ipa/certs/httpd.crt 和 /var/lib/ipa/certs/ssl.key 复制到NFS服务器上
-    # NFS服务器路径见第三步脚本打印的内容
-
-    scp /var/lib/ipa/certs/httpd.crt <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.crt
-
-    scp /var/lib/ipa/certs/ssl.key <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.key
-    ```
+   scp /var/lib/ipa/certs/ssl.key <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.key
+   
