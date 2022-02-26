@@ -24,9 +24,10 @@ $ helm -n ha uninstall hacomponent
 请参考[KIM部署](docs/01-kim-installation.md)
 
 ### <sapn id="j2">2 NFS部署</span>
+####  2.1 nfs服务部署
 请参考[NFS 部署](docs/02-nfs-installation.md)
 
-#### 2.1 NFS部署：nfs-storageClass
+####  2.2 nfs-storageClass部署
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1
