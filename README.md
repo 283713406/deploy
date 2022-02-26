@@ -101,12 +101,12 @@ $ ssh root@master1
 ```bash
 #执行如下命令后将storageclass.kubernetes.io/is-default-class: "true"值改为：
 #storageclass.kubernetes.io/is-default-class: "false"，输入wq保存退出
-
+```bash
 $ kubectl edit sc/local-path
 
 $ git clone https://gitlab.kylincloud.org/solution/repo.git
 #后续部署请 联系 曹远志 支持
-     
+```    
 
 #### 5.2 安全管控部署
 **切换到master1控制节点**
