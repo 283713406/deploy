@@ -8,6 +8,7 @@ $ kubectl create ns dbinit
 
 启动Job:
 ```bash
+# 注意在dbinit上级目录执行
 $ helm -n dbinit install dbinit ./
 ```
 
@@ -31,7 +32,7 @@ job.batch/mysql-job     1/1           2m57s      17m
 内部包含大量数据库的默认配置，除非开发人员指导否则无需修改。
 
 ```bash
-$ vim values.yaml
+$ vim dbinit/values.yaml
 ```
 ```yaml
 # 修改mysql和mongo相关配置
