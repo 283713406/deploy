@@ -44,10 +44,10 @@ $ ssh root@master1
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/deploy.git
 $ cd deploy
-# 必要: 修改nfs 服务地址，值为:步骤2.1 NFS部署中的NFS服务IP地址
+# 必要: 修改nfs 服务地址，将 192.168.1.1 替换为:步骤2.1 NFS部署中的NFS服务IP地址
 $ make chost Host="192.168.1.1"
 
-# 可选: 修改nfs 服务挂载目录，值为:步骤2.1 NFS部署中的NFS目录
+# 可选: 修改nfs 服务挂载目录，将 /foo/bar 替换为:步骤2.1 NFS部署中的NFS目录
 $ make cpath Path="/foo/bar"
 
 # 可选: 若部署的环境为x86环境，则执行下述操作，为arm64环境则无需操作
@@ -75,7 +75,23 @@ $ cd helm-chart
 
 # 更新helm subchart
 $ helm dependency update
+```
 
+如果组件代码库（gitlab）有所更改，需要更新组件代码库，并同步 helm chart: 
+
+```bash
+# 进入需要更新的代码库目录，例如 更新了mysql。
+$ cd subcharts/mysql/
+# 拉取最新代码
+$ git pull
+# 返回原目录
+$ cd -
+# 更新helm subchart
+$ helm dependency update
+```
+若为开发人员请参考[此文档](docs/contribute.md)
+
+```bash
 # 若部署的环境为x86环境，则执行下述操作，为arm64环境则无需操作
 $ sed -i 's/arm64/amd64/g' values.yaml
 

@@ -50,6 +50,13 @@ mysql:
     uri: "ha-mysql.ha"
     port: "3306"
     database: "kcm"
+  init:
+    kcm:
+      enabled: true
+    softshop:
+      enabled: true
+    mirrors_update:
+      enabled: true
 
 mongodb:
   # 主要修改uri
@@ -65,7 +72,7 @@ job:
     mysql:
       # 注意根据机器实际信息修改 arm64 or amd64
       repository: "registry.kylincloud.org/solution/dbinit/arm64/mysql-job"
-      tag: "0225"
+      tag: "0228"
       pullPolicy: "IfNotPresent"
     mongo:
       repository: "registry.kylincloud.org/solution/ha/mongodb/arm64/mongo"
