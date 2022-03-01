@@ -137,6 +137,7 @@ redis-ha:
       repository: registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy
       tag: 2.0.4
   auth: true
+  # 不能使用特殊字符@#$等，最好使用字母+数字
   redisPassword: kylin123.
 
 minio:
