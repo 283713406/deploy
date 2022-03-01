@@ -18,10 +18,12 @@ $ kubectl -n dbinit get all
 
 NAME                  READY   STATUS      RESTARTS   AGE
 pod/mysql-job-vgss5   0/1     Completed   0          17m
+pod/postgresql-job--1-twj8s   0/1     Completed    0          17m
 
 NAME                    COMPLETIONS   DURATION   AGE
 job.batch/mongodb-job   1/1           17m        17m
 job.batch/mysql-job     1/1           2m57s      17m
+job.batch/postgresql-job 1/1           2m57s      17m
 ```
 查询结果符合下述即为成功：
 * pod 状态为 Completed
@@ -40,7 +42,7 @@ mysql:
   kcm:
     username: "root"
     password: "Kcm.2021"
-    # 主要修改uri
+    # 主要修改uri，应填写 mysql 的 service.namespace
     uri: "ha-mysql.ha"
     port: "3306"
     database: "kcm"
@@ -59,12 +61,19 @@ mysql:
       enabled: true
 
 mongodb:
-  # 主要修改uri
+  # 主要修改uri，应填写 mongodb 的 service.namespace
   uri: "mongodb.ha"
   database: "test"
   port: "27017"
   username: "test"
   password: "Kim.1997"
+
+postgres:
+  # 主要需要修改uri，应填写postgres的 service.namespace
+  uri: "acid-db.ha"
+  port: "5432"
+  username: "postgres"
+  password: "zalando"  
 # 修改mysql和mongo job镜像信息
 
 job:
@@ -77,6 +86,10 @@ job:
     mongo:
       repository: "registry.kylincloud.org/solution/ha/mongodb/arm64/mongo"
       tag: "4.4.2"
+      pullPolicy: "IfNotPresent"
+    postgres:
+      repository: "registry.kylincloud.org:4001/solution/dbinit/arm64/postgresql-job"
+      tag: "0301"
       pullPolicy: "IfNotPresent"
 ```
 
