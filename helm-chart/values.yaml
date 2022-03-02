@@ -68,10 +68,10 @@ apisix:
     config:
       apisix:
       #【注意】一定要设置 gateway 所在的 namespace
-        serviceNamespace: pl
+        serviceNamespace: apisix-system
     serviceMonitor:
       enabled: true
-      namespace: 'pl'
+      namespace: 'apisix-system'
       interval: 15s
   dashboard:
     image:
