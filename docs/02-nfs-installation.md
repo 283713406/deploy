@@ -3,15 +3,7 @@
 
     $ git clone https://gitlab.kylincloud.org/solution/ha/nfs.git
 
-#对于x86机器
-
     $ cd nfs
-    $ git checkout production-x86
-
-#对于arm64机器
-
-    $ cd nfs
-    $ git checkout production-arm64
 
 2.执行脚本设置防火墙
 
@@ -19,8 +11,7 @@
 
 3.执行脚本开始安装nfs服务
 
-    $ sh nfs-script.sh
-
+    $ bash nfs-script.sh <NFS_PATH,该路径需要和tianyu库的values.yaml中nfsServerPath值保持一致,比如nfsServerPath值为/opt/nfs,那此处NFS_PATH值便是/opt/nfs> 
 
 4.查看NFS服务端共享目录是否正常
 
@@ -46,7 +37,7 @@
 
     # 将/var/lib/ipa/certs/httpd.crt 和 /var/lib/ipa/certs/ssl.key 复制到NFS服务器上
     # NFS服务器路径见第三步脚本打印的内容
-    $ scp /var/lib/ipa/certs/httpd.crt <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.crt
+    $ scp /var/lib/ipa/certs/httpd.crt <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/data/crt/ssl.crt
 
-    $ scp /var/lib/ipa/certs/ssl.key <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/crt/ssl.key
+    $ scp /var/lib/ipa/certs/ssl.key <NFS服务器用户名>@<NFS服务器IP>：<NFS服务器路径>/data/crt/ssl.key
    
