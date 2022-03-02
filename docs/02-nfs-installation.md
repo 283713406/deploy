@@ -11,7 +11,11 @@
 
 3.执行脚本开始安装nfs服务
 
-    $ bash nfs-script.sh <NFS_PATH,该路径需要和tianyu库的values.yaml中nfsServerPath值保持一致,比如nfsServerPath值为/opt/nfs,那此处NFS_PATH值便是/opt/nfs> 
+    $ https://gitlab.kylincloud.org/solution/tianyu.git
+
+    $ cat tianyu/values.yaml | grep nfsServerPath
+
+    $ bash nfs-script.sh <NFS_PATH, 该值为上条命令查询出的nfsServerPath的值> 
 
 4.查看NFS服务端共享目录是否正常
 
