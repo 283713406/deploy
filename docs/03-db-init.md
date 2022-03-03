@@ -6,6 +6,9 @@
 $ kubectl create ns dbinit
 ```
 
+如果架构为x86
+$ sed -i s/arm64/amd64/g values.yaml 
+
 启动Job:
 ```bash
 # 注意在dbinit上级目录执行
