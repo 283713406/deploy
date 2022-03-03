@@ -158,7 +158,8 @@ $ helm install tianyu tianyu/
 $ ssh root@master1
 $ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
   # 请参考对应的values.yaml和文档。
-$ helm -n kylin-update install kylin-update-service mirrors-update/ 
+  # 若执行下述命令报kylin-update namespace已经存在的错误，先删除该namespace，即kubectl delete ns kylin-update
+$ helm install kylin-update-service mirrors-update/ 
 ```
 
 
