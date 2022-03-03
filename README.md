@@ -36,7 +36,7 @@ $ docker pull  registry.kylincloud.org:4001/solution/ha/mongodb/amd64/mongo:4.4
 ####  2.1 nfs服务部署
 **登录到master1控制节点**
 ```bash
-$ kubectl get node -owide | awk '{print $6}' | tail -n 1
+$ kubectl get node -l node-role.kubernetes.io/master!= -owide | awk '{print $6}' | tail -n 1
 ```
 
 **NFS_SERVER: 上条命令查询出的ip地址**
