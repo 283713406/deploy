@@ -34,6 +34,17 @@ $ docker pull  registry.kylincloud.org:4001/solution/ha/mongodb/amd64/mongo:4.4
 
 ### <sapn id="j2">2 NFS部署</span>
 ####  2.1 nfs服务部署
+**登录到master1控制节点**
+```bash
+$ kubectl get node -owide | awk '{print $6}' | tail -n 1
+```
+
+**NFS_SERVER: 上条命令查询出的ip地址**
+
+**NFS_PATH: /opt/nfs**
+
+**登录到NFS_SERVER节点部署nfs**
+
 请参考[NFS 部署](docs/02-nfs-installation.md)
 
 ####  2.2 nfs-storageClass部署
@@ -44,19 +55,9 @@ $ ssh root@master1
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/deploy.git
 $ cd deploy
-# 必要: 修改nfs 服务地址，将 192.168.1.1 替换为:步骤2.1 NFS部署中的NFS服务IP地址
-$ make chost Host="192.168.1.1"
-
-# 可选: 修改nfs 服务挂载目录，将 /foo/bar 替换为:步骤2.1 NFS部署中的NFS目录
-$ make cpath Path="/foo/bar"
-
-# 可选: 若部署的环境为x86环境，则执行下述操作，为arm64环境则无需操作
-$ make amd
-# 如果上述3个步骤误操作，执行下面这句命令重置nfs配置，再重新执行上述3个步骤
-$ git checkout nfs.yaml
-
-# 必要: 部署nfs
-$ make apply
+# 必要: 部署nfs storageClass，服务地址，将 NFS_SERVER 替换为:步骤2.1 中的NFS_SERVER的值
+# 必要: 部署nfs storageClass，服务挂载目录，将NFS_PATH替换为:步骤2.1 中的NFS_PATH的值
+$ bash install.sh NFS_SERVER NFS_PATH
 ```
 
 ### <span id="j3">3 基础组件部署</span>
@@ -96,7 +97,6 @@ $ helm dependency update
 $ sed -i 's/arm64/amd64/g' values.yaml
 
 # 部署apisix
-# 查询master节点的node名
 $ kubectl get node | grep master | awk '{print $1}' 
 # 将查询出的master的node名替换value.yaml中apisix.etcd.nodeAffinityPreset.values值，若一样则不用替换。
 $ vim valus.yaml
@@ -162,8 +162,5 @@ $ helm install tianyu tianyu/
 $ ssh root@master1
 $ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
   # 请参考对应的values.yaml和文档。
-  # 若执行下述命令报kylin-update namespace已经存在的错误，先删除该namespace，即kubectl delete ns kylin-update
-$ helm install kylin-update-service mirrors-update/ 
+$ helm -n kylin-update install kylin-update-service mirrors-update/ 
 ```
-
-
