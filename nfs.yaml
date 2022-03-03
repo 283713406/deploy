@@ -39,14 +39,14 @@ spec:
             - name: PROVISIONER_NAME
               value: common-nfs-storage 
             - name: NFS_SERVER
-              value: HOST
+              value: NFS_SERVER_VALUE
             - name: NFS_PATH
-              value: /k8s/nfs-storage/common
+              value: NFS_PATH_VALUE
       volumes:
         - name: nfs-client-root
           nfs:
-            server: HOST
-            path: /k8s/nfs-storage/common
+            server: NFS_SERVER_VALUE
+            path: NFS_PATH_VALUE
         - name: localtime
           hostPath:
             path: /etc/localtime
