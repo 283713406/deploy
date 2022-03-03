@@ -149,7 +149,12 @@ $ ssh root@master1
 ```
 ```bash
 $ git clone https://gitlab.kylincloud.org/solution/tianyu.git
-  # 请参考对应的values.yaml和文档。
+
+# 修改values.yaml中的nfsServerIp值为步骤2.1 中的NFS_SERVER的值
+# 修改values.yaml中的nfsServerPath值为步骤2.1 中的NFS_PATH的值
+$ vim values.yaml
+
+# 请参考对应的values.yaml和文档。
 $ helm install tianyu tianyu/
 ```
 
