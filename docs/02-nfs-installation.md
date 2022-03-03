@@ -11,7 +11,8 @@
 
 3.执行脚本开始安装nfs服务
 
-    $ bash nfs-script.sh <NFS_PATH, 该值为(README.md)步骤2.1中的NFS_PATH值> 
+    ## NFS_PATH 值为 README 文档步骤2.1中的NFS_PATH值
+    $ bash nfs-script.sh NFS_PATH 
 
 4.查看NFS服务端共享目录是否正常
 
