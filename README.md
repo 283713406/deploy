@@ -96,6 +96,9 @@ $ helm dependency update
 $ sed -i 's/arm64/amd64/g' values.yaml
 
 # 部署apisix
+# 查询master节点的node名
+$ kubectl get node | grep master | awk '{print $1}' 
+# 将查询出的master的node名替换value.yaml中apisix.etcd.nodeAffinityPreset.values值，若一样则不用替换。
 # 新建命名空间，命名空间为 apisix-system
 $ kubectl create ns apisix-system
 $ helm install -n apisix-system apisix --set mysql.enabled=false --set elasticsearch.enabled=false --set apisix.enabled=true --set mongodb.enabled=false --set redis-ha.enabled=false --set minio.enabled=false ./
