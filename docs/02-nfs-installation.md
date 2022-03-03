@@ -11,7 +11,7 @@
 
 3.执行脚本开始安装nfs服务
 
-    $ https://gitlab.kylincloud.org/solution/tianyu.git
+    $ git clone https://gitlab.kylincloud.org/solution/tianyu.git
 
     $ cat tianyu/values.yaml | grep nfsServerPath
 
