@@ -11,6 +11,20 @@ $ kubectl create ns dbinit
 $ sed -i s/arm64/amd64/g values.yaml 
 ```
 
+```bash
+$ sed -i s/arm64/amd64/g values.yaml 
+```
+
+```bash
+# 查看是否安装postgres
+$ kubectl get pod -n ha | grep postgres
+
+# 若安装了postgres，则执行下面步骤，若未安装postgres，则跳过下面步骤直接执行启动Job步骤
+$ pp=`kubectl get secret postgres.acid-db.credentials.postgresql.acid.zalan.do -n sql -o 'jsonpath={.data.password}' | base64 -d`
+$ sed -i s/postgres_password/${pp}/g values.yaml 
+```
+
+
 启动Job:
 ```bash
 # 注意在dbinit目录执行
