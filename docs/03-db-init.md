@@ -13,7 +13,7 @@ $ sed -i s/arm64/amd64/g values.yaml
 
 启动Job:
 ```bash
-# 注意在dbinit上级目录执行
+# 注意在dbinit目录执行
 $ helm -n dbinit install dbinit ./
 ```
 
