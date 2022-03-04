@@ -14,7 +14,7 @@ if [ ! ${ARCH} ]; then
 fi
 
 # 初始化文件夹
-#rm -rf /docker/registry/container-solution output
+rm -rf /docker/registry/container-solution output
 mkdir -p /docker/registry/container-solution
 mkdir -p output/{file,iso}
 
