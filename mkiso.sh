@@ -19,15 +19,15 @@ mkdir -p /docker/registry/container-solution
 mkdir -p output/{file,iso}
 
 # 初始化镜像
-#IMAGE=registry.kylincloud.org:4001/solution/deploy/${ARCH}/registry:latest
-#docker ps -a| grep container_solution >/dev/null && {
-#    docker stop container_solution && docker rm container_solution
-#} || true
-#
-#docker run -d \
-#    -v /docker/registry/container-solution:/var/lib/registry \
-#    -p 4001:5000 --restart=always \
-#    --name container_solution ${IMAGE}
+IMAGE=registry.kylincloud.org:4001/solution/deploy/${ARCH}/registry:latest
+docker ps -a| grep container_solution >/dev/null && {
+    docker stop container_solution && docker rm container_solution
+} || true
+
+docker run -d \
+    -v /docker/registry/container-solution:/var/lib/registry \
+    -p 4001:5000 --restart=always \
+    --name container_solution ${IMAGE}
 
 
 docker login -u  ci_wang  -p u1kblcakBlrHxAbxlbu0AFdca0xMvBlx harbor.kylincloud.org
