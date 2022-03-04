@@ -12,10 +12,6 @@ $ sed -i s/arm64/amd64/g values.yaml
 ```
 
 ```bash
-$ sed -i s/arm64/amd64/g values.yaml 
-```
-
-```bash
 # 查看是否安装postgres
 $ kubectl get pod -n ha | grep postgres
 
