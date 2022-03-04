@@ -6,11 +6,9 @@ mysql:
     size: 10Gi
     storageClass: nfs-storage
   image:
-    repository: registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql
-    tag: 5.7
+    image: "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
   initImage:
-    repository: registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql
-    tag: 5.7
+    image: "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
 
 #etcd:
 #  enabled: false
@@ -28,8 +26,7 @@ elasticsearch:
   enabled: true
   initContainer:
     image:
-      repository: registry.kylincloud.org:4001/solution/deploy/arm64/busybox
-      tag: 1.28
+      image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
   replicaCount: 3
   persistence:
     enabled: true
@@ -37,19 +34,16 @@ elasticsearch:
   nfs:
     enable: false
   image:
-    repository: registry.kylincloud.org:4001/solution/ha/elasticsearch/arm64/elasticsearch
-    tag: 7.9.1
+    image: "registry.kylincloud.org:4001/solution/ha/elasticsearch/arm64/elasticsearch:7.9.1"
 
 apisix:
   enabled: false
   replicaCount: 1
   apisix:
     image:
-      repository: registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix
-      tag: 2.10.4-alpine
+      image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix:2.10.4-alpine"
     initImage:
-      repository: registry.kylincloud.org:4001/solution/deploy/arm64/busybox
-      tag: 1.28
+      image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
   etcd:
     enabled: true
     host:
@@ -60,9 +54,7 @@ apisix:
     nodeAffinityPreset:
       values: ["master1", "master2", "master3"]
     image:
-      registry: "registry.kylincloud.org:4001"
-      repository: solution/ha/etcd/arm64/etcd
-      tag: v3.4.13
+      image: "registry.kylincloud.org:4001/solution/ha/etcd/arm64/etcd:v3.4.13"
   ingress-controller:
     enabled: true
     config:
@@ -73,32 +65,25 @@ apisix:
       enabled: true
       namespace: 'apisix-system'
       interval: 15s
+    image:
+      image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-ingress-controller:1.4.0"
+    initContainer:
+      image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
   dashboard:
     image:
-      repository: registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-dashboard
-      tag: "2.9.0"
-  ingress-controller:
-    image:
-      repository: registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-ingress-controller
-      tag: "1.4.0"
-    initContainer:
-      image: registry.kylincloud.org:4001/solution/deploy/arm64/busybox
-      tag: 1.28
+      image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-dashboard:2.9.0"
+
 
 mongodb:
   enabled: true
   image:
-    repository: registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo
-    tag: 4.4.2
+    image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
   sidecar:
     image:
-      registry: registry.kylincloud.org:4001
-      repository: solution/ha/mongodb/arm64/mongo-k8s-sidecar
-      tag: "20220217"
+      image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo-k8s-sidecar:20220217"
   job:
     image:
-      repository: registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo
-      tag: 4.4.2
+      image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
   replicaCount: 3
   persistence:
     enabled: true
@@ -109,8 +94,7 @@ mongodb:
 redis-ha:
   enabled: true
   image:
-    repository: registry.kylincloud.org:4001/solution/ha/redis/arm64/redis
-    tag: 5.0.12-alpine
+    image: "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
   replicas: 3
   persistentVolume:
     enabled: true
@@ -134,8 +118,7 @@ redis-ha:
     enabled: true
     replicas: 3
     image:
-      repository: registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy
-      tag: 2.0.4
+      image: "registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy:2.0.4"
   auth: true
   # 不能使用特殊字符@#$等，最好使用字母+数字
   redisPassword: kylin123.
@@ -144,11 +127,9 @@ minio:
   enabled: true
   mode: distributed
   image:
-    repository: registry.kylincloud.org:4001/solution/ha/minio/arm64/minio
-    tag: RELEASE.2021-02-14T04-01-33Z
+    image: "registry.kylincloud.org:4001/solution/ha/minio/arm64/minio:RELEASE.2021-02-14T04-01-33Z"
   mcImage:
-    repository: registry.kylincloud.org:4001/solution/ha/minio/arm64/mc
-    tag: RELEASE.2021-02-14T04-28-06Z
+    image: "registry.kylincloud.org:4001/solution/ha/minio/arm64/mc:RELEASE.2021-02-14T04-28-06Z"
   accessKey: "admin"
   secretKey: "12341234"
   service:
