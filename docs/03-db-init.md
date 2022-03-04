@@ -6,14 +6,14 @@
 $ kubectl create ns dbinit
 ```
 
-如果架构为x86
+<!-- 如果架构为x86
 ```bash
 $ sed -i s/arm64/amd64/g values.yaml 
 ```
 
 ```bash
 $ sed -i s/arm64/amd64/g values.yaml 
-```
+``` -->
 
 ```bash
 # 查看是否安装postgres
@@ -28,7 +28,7 @@ $ sed -i s/postgres_password/${pp}/g values.yaml
 启动Job:
 ```bash
 # 注意在dbinit目录执行
-$ helm -n dbinit install dbinit ./
+$ helm -n dbinit install dbinit ./ --set postgres.enabled=false --set mysql.enabled=true --set mongodb.enabled=true
 ```
 
 查看结果:

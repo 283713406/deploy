@@ -21,6 +21,8 @@ init_values()
     sed -i 's/^/  /g' tmp_images
     echo "global:" >> helm-chart/values.yaml
     cat tmp_images >> helm-chart/values.yaml
+    echo "global:" >> dbinit/values.yaml
+    cat tmp_images >> dbinit/values.yaml
 }
 
 init_values

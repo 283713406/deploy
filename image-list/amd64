@@ -33,3 +33,4 @@ images:
   registerService:              "registry.kylincloud.org:4001/solution/tianyu/amd64/register-service:3.6.2.1"
   serverService:                "registry.kylincloud.org:4001/solution/tianyu/amd64/server-service:3.6.2.1"
   ssmwebsite:                   "registry.kylincloud.org:4001/solution/tianyu/amd64/ssmwebsite-amd64:3.6.0-7-ICBC"
+  postgresJob:                  ""
