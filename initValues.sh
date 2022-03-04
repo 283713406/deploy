@@ -6,11 +6,11 @@ init_values()
     case $architecture in
         amd64|x86_64)
         # sed images list
-        cp image-list/amd64 tmp_images
+        cp image-list/images-amd64.yaml tmp_images
             ;;
         aarch64|arm64)
         # sed images list
-        cp image-list/arm64 tmp_images
+        cp image-list/images-arm64.yaml tmp_images
             ;;
         # not supported
         *)
