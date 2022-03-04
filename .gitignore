@@ -1,2 +1,4 @@
 .idea/*
-
+arm64-gitlab
+amd64-gitlab
+output

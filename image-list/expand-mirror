@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ "$1" = "" ]; then
+        echo "A parameter is required"
+        exit
+fi
+
+ARCH="arm64"
+if [ $(uname -m) == "aarch64" ]; then
+    ARCH="arm64"
+elif [ $(uname -m) == "x86_64" ]; then
+    ARCH="amd64"
+else
+    echo "unkown arch"
+    exit -1
+fi
+
+image_path=$1
+mkdir -p ${image_path}
+rm -rf ${image_path}/container-solution
+
+echo The image will be stored in the directory[ ${image_path} ]
+
+docker load < kylin-container-registry-solution.tar
+
+filesize=$(ls -l container-solution.tar.gz  | awk '{printf $5}')
+((blocksize=filesize/51200))
+tar --blocking-factor=${blocksize} --checkpoint=1 --checkpoint-action='ttyout=unpacking %u%   \r' -xzf container-solution.tar.gz -C ${image_path} >/dev/null
+
+docker run -d \
+    -v ${image_path}/container-solution:/var/lib/registry \
+    -p 4001:5000 --restart=always \
+    --name container_solution registry.kylincloud.org:4001/solution/deploy/${ARCH}/registry:latest
