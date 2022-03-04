@@ -71,6 +71,9 @@ $ cd deploy
 # 更新git submodule
 $ git submodule update --init --recursive
 
+# 根据机器架构，加载helm values
+$ bash initValues.sh
+
 #进入项目helm-chart目录
 $ cd helm-chart
 
@@ -114,7 +117,7 @@ $ helm install -n ha ha ./
 $ kubectl -n ha get pods -o wide
 
 # 如果出现大量pods批量处于pending状态, 执行如下命令重置nfs pv控制器.
-$ kubectl  -n nfs-storage delete pods --all 删除nfs-storage-class
+$ kubectl -n nfs-storage delete pods --all 删除nfs-storage-class
 ```
 ### 4 部署dbinit
 部署dbinit对数据库进行初始化，执行创建数据库、表格、初始数据等操作。
