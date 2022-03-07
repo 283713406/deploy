@@ -60,7 +60,7 @@ $ cd deploy
 $ bash install.sh NFS_SERVER NFS_PATH
 ```
 
-### <span id="j3">3 基础组件部署</span>
+### 3 基础组件部署
 **切换到master1控制节点**
 ```bash
 $ ssh root@master1

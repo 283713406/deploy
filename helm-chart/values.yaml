@@ -142,5 +142,6 @@ minio:
 #repo:
 #  enabled: false
 global:
+  imagePullSecrets: ["name": "regcred"]
   images:
     default:

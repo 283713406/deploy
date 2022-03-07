@@ -23,6 +23,8 @@ spec:
       labels:
         k8s-app: nfs-client-provisioner-common
     spec:
+      imagePullSecrets:
+      - name: regcred
       serviceAccountName: nfs-client-provisioner-common
       containers:
         - name: nfs-client-provisioner-common
