@@ -141,3 +141,6 @@ minio:
 
 #repo:
 #  enabled: false
+global:
+  images:
+    default:

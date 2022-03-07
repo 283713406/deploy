@@ -23,6 +23,7 @@ init_values()
     cat tmp_images >> helm-chart/values.yaml
     echo "global:" >> dbinit/values.yaml
     cat tmp_images >> dbinit/values.yaml
+    rm tmp_images
 }
 
 init_values
