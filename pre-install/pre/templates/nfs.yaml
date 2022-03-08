@@ -41,14 +41,14 @@ spec:
             - name: PROVISIONER_NAME
               value: common-nfs-storage 
             - name: NFS_SERVER
-              value: NFS_SERVER_VALUE
+              value: {{ .Values.nfs.server }}
             - name: NFS_PATH
-              value: NFS_PATH_VALUE
+              value: {{ .Values.nfs.path }}
       volumes:
         - name: nfs-client-root
           nfs:
-            server: NFS_SERVER_VALUE
-            path: NFS_PATH_VALUE
+            server: {{ .Values.nfs.server }}
+            path: {{ .Values.nfs.path }}
         - name: localtime
           hostPath:
             path: /etc/localtime

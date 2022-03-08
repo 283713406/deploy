@@ -1,5 +1,5 @@
 [submodule "helm-chart/subcharts/etcd"]
-	path = helm-chart/subcharts/etcd
+	path = ha/etcd
 	url = https://gitlab.kylincloud.org/solution/ha/etcd.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/repo"]
@@ -7,30 +7,33 @@
 	url = https://gitlab.kylincloud.org/solution/repo.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/mysql"]
-	path = helm-chart/subcharts/mysql
+	path = ha/mysql
 	url = https://gitlab.kylincloud.org/solution/ha/mysql.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/apisix"]
-	path = helm-chart/subcharts/apisix
+	path = ha/apisix
 	url = https://gitlab.kylincloud.org/solution/ha/apisix.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/elasticsearch"]
-	path = helm-chart/subcharts/elasticsearch
+	path = ha/elasticsearch
 	url = https://gitlab.kylincloud.org/solution/ha/elasticsearch.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/mongodb"]
-	path = helm-chart/subcharts/mongodb
+	path = ha/mongodb
 	url = https://gitlab.kylincloud.org/solution/ha/mongodb.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/redis"]
-	path = helm-chart/subcharts/redis
+	path = ha/redis
 	url = https://gitlab.kylincloud.org/solution/ha/redis.git
 	branch = amd64-dev
 [submodule "helm-chart/subcharts/minio"]
-	path = helm-chart/subcharts/minio
+	path = ha/minio
 	url = https://gitlab.kylincloud.org/solution/ha/minio.git
 	branch = amd64-dev
 [submodule "dbinit"]
-	path = dbinit
+	path = pre-install/dbinit
 	url = https://gitlab.kylincloud.org/solution/dbinit.git
 	branch = amd64-dev
+[submodule "postgres"]
+	path = ha/postgres
+	url = https://gitlab.kylincloud.org/solution/ha/postgres.git
