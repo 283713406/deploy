@@ -3,7 +3,6 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nfs-client-provisioner-common
-  namespace: nfs-storage
 spec:
   replicas: 1
   strategy:
@@ -21,7 +20,7 @@ spec:
       serviceAccountName: nfs-client-provisioner-common
       containers:
         - name: nfs-client-provisioner-common
-          image: registry.kylincloud.org:4001/solution/tianyu/arm64/nfs-client-provisioner-arm64:20220217
+          image: "{{ .Values.global.images.nfsClientProvisioner }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: nfs-client-root
@@ -58,13 +57,11 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: nfs-client-provisioner-common
-  namespace: nfs-storage
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nfs-client-provisioner-runner-common
-  namespace: nfs-storage
 rules:
   - apiGroups: [""]
     resources: ["persistentvolumes"]
@@ -83,11 +80,11 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: run-nfs-client-provisioner-common
-  namespace: nfs-storage
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner-common
-    namespace: nfs-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: nfs-client-provisioner-runner-common
@@ -97,7 +94,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner-common
-  namespace: nfs-storage
+  namespace: default
 rules:
   - apiGroups: [""]
     resources: ["endpoints"]
@@ -107,11 +104,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner-common
-  namespace: nfs-storage
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner-common
-    namespace: nfs-storage
+    namespace: default
 roleRef:
   kind: Role
   name: leader-locking-nfs-client-provisioner-common
