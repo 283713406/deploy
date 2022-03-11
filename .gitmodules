@@ -37,3 +37,15 @@
 [submodule "postgres"]
 	path = ha/postgres
 	url = https://gitlab.kylincloud.org/solution/ha/postgres.git
+[submodule "application/softshop"]
+	path = application/softshop
+	url = https://gitlab.kylincloud.org/solution/softshop.git
+[submodule "application/tianyu"]
+	path = application/tianyu
+	url = https://gitlab.kylincloud.org/solution/tianyu.git
+[submodule "application/repo"]
+	path = application/repo
+	url = https://gitlab.kylincloud.org/solution/repo.git
+[submodule "application/mirrors-update"]
+	path = application/mirrors-update
+	url = https://gitlab.kylincloud.org/solution/mirrors-update.git
