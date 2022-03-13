@@ -38,121 +38,121 @@ list() {
 }
 
 
-install-app-apisix() {
+install-ha-apisix() {
     helm install  ${ARGS}  -n apisix-system apisix ha/apisix/ -f ha/apisix/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-apisix() {
+lint-ha-apisix() {
     helm lint  ${ARGS}  -n apisix-system ha/apisix/ -f ha/apisix/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-apisix() {
+uninstall-ha-apisix() {
     helm uninstall  ${ARGS}  -n apisix-system apisix
 }
 
 
-install-app-elastic() {
+install-ha-elastic() {
     helm install  ${ARGS}  -n ha elastic ha/elasticsearch/ -f ha/elasticsearch/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-elastic() {
+lint-ha-elastic() {
     helm lint  ${ARGS}  -n ha ha/elasticsearch/ -f ha/elasticsearch/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-elastic() {
+uninstall-ha-elastic() {
     helm uninstall  ${ARGS}  -n ha elastic
 }
 
 
-install-app-etcd() {
+install-ha-etcd() {
     helm install  ${ARGS}  -n ha etcd   ha/etcd/ -f ha/etcd/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-etcd() {
+lint-ha-etcd() {
     helm lint  ${ARGS}  -n ha ha/etcd/ -f ha/etcd/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-etcd() {
+uninstall-ha-etcd() {
     helm uninstall  ${ARGS}  -n ha etcd
 }
 
 
-install-app-minio() {
+install-ha-minio() {
     helm install  ${ARGS}  -n ha minio  ha/minio/minio -f ha/minio/minio/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-minio() {
+lint-ha-minio() {
     helm lint  ${ARGS}  -n ha ha/minio/minio -f ha/minio/minio/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-minio() {
+uninstall-ha-minio() {
     helm uninstall  ${ARGS}  -n ha minio
 }
 
 
-install-app-mongodb() {
+install-ha-mongodb() {
     helm install  ${ARGS}  -n ha mongodb   ha/mongodb/ -f ha/mongodb/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-mongodb() {
+lint-ha-mongodb() {
     helm lint  ${ARGS}  -n ha ha/mongodb/ -f ha/mongodb/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-mongodb() {
+uninstall-ha-mongodb() {
     helm uninstall  ${ARGS}  -n ha mongodb
 }
 
 
-install-app-mysql() {
+install-ha-mysql() {
     helm install  ${ARGS}  -n ha mysql   ha/mysql/ -f ha/mysql/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-mysql() {
+lint-ha-mysql() {
     helm lint  ${ARGS}  -n ha ha/mysql/ -f ha/mysql/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-mysql() {
+uninstall-ha-mysql() {
     helm uninstall  ${ARGS}  -n ha mysql
 }
 
 
-install-app-postgres() {
+install-ha-postgres() {
     helm install  ${ARGS}  -n ha postgres ha/postgres/ -f ha/postgres/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-lint-app-postgres() {
+lint-ha-postgres() {
     helm lint  ${ARGS}  -n ha ha/postgres/ -f ha/postgres/values.yaml -f values.yaml -f ${IMAGELIST}
 }
-uninstall-app-postgres() {
+uninstall-ha-postgres() {
     helm uninstall  ${ARGS}  -n ha postgres
 }
 
 
-install-app-redis() {
+install-ha-redis() {
     helm install  ${ARGS}  -n ha redis   ha/redis/ -f ha/redis/values.yaml -f values.yaml  -f ${IMAGELIST}
 }
-lint-app-redis() {
+lint-ha-redis() {
     helm lint  ${ARGS}  -n ha ha/redis/ -f ha/redis/values.yaml -f values.yaml  -f ${IMAGELIST}
 }
-uninstall-app-redis() {
+uninstall-ha-redis() {
     helm uninstall  ${ARGS}  -n ha redis
 }
 
 
 install-ha() {
-    install-app-apisix
-    install-app-elastic
-    install-app-etcd
-    install-app-minio
-    install-app-mongodb
-    install-app-mysql
-    install-app-postgres
-    install-app-redis
+    install-ha-apisix
+    install-ha-elastic
+    install-ha-etcd
+    install-ha-minio
+    install-ha-mongodb
+    install-ha-mysql
+    install-ha-postgres
+    install-ha-redis
 }
 uninstall-ha() {
-    uninstall-app-apisix
-    uninstall-app-elastic
-    uninstall-app-etcd
-    uninstall-app-minio
-    uninstall-app-mongodb
-    uninstall-app-mysql
-    uninstall-app-postgres
-    uninstall-app-redis
+    uninstall-ha-apisix
+    uninstall-ha-elastic
+    uninstall-ha-etcd
+    uninstall-ha-minio
+    uninstall-ha-mongodb
+    uninstall-ha-mysql
+    uninstall-ha-postgres
+    uninstall-ha-redis
 }
 lint-ha() {
-    lint-app-apisix
-    lint-app-elastic
-    lint-app-etcd
-    lint-app-minio
-    lint-app-mongodb
-    lint-app-mysql
-    lint-app-postgres
-    lint-app-redis
+    lint-ha-apisix
+    lint-ha-elastic
+    lint-ha-etcd
+    lint-ha-minio
+    lint-ha-mongodb
+    lint-ha-mysql
+    lint-ha-postgres
+    lint-ha-redis
 }
