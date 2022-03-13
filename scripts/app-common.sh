@@ -15,7 +15,7 @@ install-app-softshop() {
 
 }
 lint-app-softshop() {
-    helm install ${ARGS} -n app application/softshop/
+    helm lint ${ARGS} -n app application/softshop/
 }
 uninstall-app-softshop() {
     helm uninstall ${ARGS} -n app repo softshop
