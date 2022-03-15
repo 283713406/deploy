@@ -80,11 +80,11 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: run-nfs-client-provisioner-common
-  namespace: default
+  namespace: apps
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner-common
-    namespace: default
+    namespace: apps
 roleRef:
   kind: ClusterRole
   name: nfs-client-provisioner-runner-common
@@ -94,7 +94,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner-common
-  namespace: default
+  namespace: apps
 rules:
   - apiGroups: [""]
     resources: ["endpoints"]
@@ -104,11 +104,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner-common
-  namespace: default
+  namespace: apps
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner-common
-    namespace: default
+    namespace: apps
 roleRef:
   kind: Role
   name: leader-locking-nfs-client-provisioner-common
