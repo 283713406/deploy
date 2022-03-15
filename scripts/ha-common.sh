@@ -1,5 +1,5 @@
 #!/bin/bash -xe
-check-ha-lint() {
+lint-ha() {
     helm lint  -n apisix-system apisix ha/apisix/ -f ha/apisix/values.yaml -f values.yaml -f ${IMAGELIST}
     helm lint  -n ha elastic ha/elasticsearch/ -f ha/elasticsearch/values.yaml -f values.yaml -f ${IMAGELIST}
     helm lint  -n ha etcd   ha/etcd/ -f ha/etcd/values.yaml -f values.yaml -f ${IMAGELIST}
@@ -8,20 +8,6 @@ check-ha-lint() {
     helm lint  -n ha mysql   ha/mysql/ -f ha/mysql/values.yaml -f values.yaml -f ${IMAGELIST}
     helm lint  -n ha postgres ha/postgres/ -f ha/postgres/values.yaml -f values.yaml -f ${IMAGELIST}
     helm lint  -n ha redis   ha/redis/ -f ha/redis/values.yaml -f values.yaml  -f ${IMAGELIST}
-}
-
-install-pre() {
-    kubectl create ns ha
-    kubectl create ns apisix-system
-    helm install  ${ARGS}  pre pre-install/pre -f values.yaml -f ${IMAGELIST}
-    kubectl delete pods --field-selector status.phase=Running,status.phase=Failed -n nfs-storage
-}
-check-pre-lint() {
-    helm lint  pre pre-install/pre -f values.yaml -f ${IMAGELIST}
-    helm lint  -n db dbinit pre-install/dbinit -f pre-install/dbinit/values.yaml -f values.yaml -f ${IMAGELIST}
-}
-uninstall-pre() {
-    helm uninstall pre
 }
 
 
