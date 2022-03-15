@@ -12,19 +12,20 @@ uninstall-app-repo() {
 
 
 install-app-softshop() {
-    helm install ${ARGS} -n apps repo application/softshop/   -f values.yaml  -f ${IMAGELIST} \
+    helm install ${ARGS} -n apps softshop application/softshop/   -f values.yaml  -f ${IMAGELIST} \
         --set minioIp=${node1Ip} --set repoIp=${node1Ip}
 }
 lint-app-softshop() {
     helm lint ${ARGS} -n apps application/softshop/ -f values.yaml  -f ${IMAGELIST}
 }
 uninstall-app-softshop() {
-    helm uninstall ${ARGS} -n apps repo softshop
+    helm uninstall ${ARGS} -n apps softshop
 }
 
 
 install-app-tianyu() {
     helm install ${ARGS} -n apps tianyu application/tianyu/  -f values.yaml  -f ${IMAGELIST}
+    kubectl delete  ValidatingWebhookConfiguration  ingress-nginx-admission-kcm-nginx-ingress
 }
 lint-app-tianyu() {
     helm lint ${ARGS} -n apps application/tianyu/  -f values.yaml  -f ${IMAGELIST}
@@ -35,16 +36,15 @@ uninstall-app-tianyu() {
 
 
 install-app-mirrors-update() {
-    helm install ${ARGS} -n apps repo application/mirrors-update \
+    helm install ${ARGS} -n apps mirrors-update application/mirrors-update \
         -f values.yaml  -f ${IMAGELIST}  \
         --set tianYuUrl=${node1Ip}
 }
 lint-app-mirrors-update() {
     helm lint ${ARGS} -n apps application/mirrors-update  -f values.yaml  -f ${IMAGELIST}
-
 }
 uninstall-app-mirrors-update() {
-    helm uninstall ${ARGS} -n apps repo
+    helm uninstall ${ARGS} -n apps mirrors-update
 }
 
 

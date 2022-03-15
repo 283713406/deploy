@@ -21,5 +21,5 @@ elif [ $ARCH = "x86_64" ]
 then
    export ARCH=amd64
 fi
-export nodeIp=$(kubectl get node -l node-role.kubernetes.io/master!= \
+export node1Ip=$(kubectl get node -l node-role.kubernetes.io/master!= \
     -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1)
