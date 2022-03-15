@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name:  pre-resource
 description: Some could not in other app charts
 

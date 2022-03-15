@@ -1,0 +1,6 @@
+# 请配置storage的类型，nfs或者glusterfs,默认为nfs.
+storage: "nfs"
+
+nfs:
+  server: "172.20.192.123"
+  path: "/opt/nfs"

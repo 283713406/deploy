@@ -1,0 +1,83 @@
+job:
+  image:
+    mysql:
+      image: "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job:0228"
+      repository: "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job"
+      tag: "0228"
+      pullPolicy: "IfNotPresent"
+    mongo:
+      image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
+      repository: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo"
+      tag: "4.4.2"
+      pullPolicy: "IfNotPresent"
+    postgres:
+      image: "registry.kylincloud.org:4001/solution/repo/arm64/spilo-12:1.6-p5"
+      repository: "registry.kylincloud.org:4001/solution/repo/arm64/spilo-12"
+      tag: "1.6-p5"
+      pullPolicy: "IfNotPresent"
+    postgresInit:
+      image: "registry.kylincloud.org:4001/solution/repo/arm64/repo-manage:v9"
+      repository: "registry.kylincloud.org:4001/solution/repo/arm64/repo-manage"
+      tag: "v9"
+      pullPolicy: "IfNotPresent"
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1
+
+mysql:
+  enabled: false
+  kcm:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kcm"
+  icbc:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kcm"
+  init:
+    kcm:
+      enabled: false
+    softshop:
+      enabled: false
+    mirrors_update:
+      enabled: false
+
+
+mongodb:
+  enabled: false
+  # uri: "mongodb.kcm-mongodb-cluster"
+  uri: "mongodb.ha"
+  database: "test"
+  port: "27017"
+  username: "test"
+  password: "Kim.1997"
+
+postgres:
+  enabled: false
+  uri: "acid-db.ha"
+  port: "5432"
+  username: "postgres"
+  password: "postgres_password"
+  db: "foreman"
+  dataUser: "foreman"
+  dataPassword: "foreman"
+
+redis:
+  # 配置redis的ip
+  host: ""
+  # 配置redis的端口
+  port: 6379
+  # 配置redis的域名
+  uri:  "ha-redis-ha-haproxy.ha"
+  # 配置redis的密码
+  password: kylin123.
+  # 配置redis的队列
+  num: 0
+
+global:
+  images:
+    default:

@@ -13,13 +13,14 @@ install-pre() {
     kubectl create ns dbinit-mysql-softshop
 
     helm install  ${ARGS}  pre pre-install/pre \
-        -f values/apps-values.yaml -f ${IMAGELIST}
+        -f values/apps-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
 
     kubectl delete pods --field-selector  \
         status.phase=Running,status.phase=Failed -n nfs-storage
 }
 lint-pre() {
-    helm lint  pre pre-install/pre -f values/apps-values.yaml -f ${IMAGELIST}
+    helm lint  pre pre-install/pre -f values/apps-values.yaml \
+        -f ${IMAGELIST} -f values/global-values.yaml
 }
 uninstall-pre() {
     helm uninstall pre
@@ -27,7 +28,8 @@ uninstall-pre() {
 
 lint-dbinit(){
     helm lint  -n db dbinit pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST}
+        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml \
+        -f ${IMAGELIST} -f values/global-values.yaml
 }
 
 # 创建初始化repo postgres数据的job
@@ -45,7 +47,8 @@ install-dbinit-postgres-repo() {
 
     helm install ${ARGS} -n dbinit-postgres-repo dbinit-postgres-repo  pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
-        --set postgres.password=${PGPASSWORD} --set postgres.enabled=true
+        -f values/global-values.yaml  --set postgres.password=${PGPASSWORD} \
+        --set postgres.enabled=true
 }
 
 
@@ -58,7 +61,8 @@ install-dbinit-mysql-mirrors-update() {
     helm list -A | grep dbinit-mysql-mirrors-update && \
         uninstall-dbinit-mysql-mirrors-update
     helm install ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} --set mysql.enabled=true \
+        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+        -f values/global-values.yaml --set mysql.enabled=true \
         --set mysql.init.mirrors_update.enabled=true
 }
 
@@ -71,7 +75,8 @@ install-dbinit-mysql-softshop() {
     helm list -A | grep dbinit-mysql-softshop && \
         uninstall-dbinit-mysql-softshop
     helm install ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} --set mysql.enabled=true \
+        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+        -f values/global-values.yaml --set mysql.enabled=true \
         --set mysql.init.softshop.enabled=true
 }
 
@@ -83,7 +88,8 @@ install-dbinit-mysql-tianyu() {
     helm list -A | grep dbinit-mysql-tianyu && \
         uninstall-dbinit-mysql-tianyu
     helm install ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} --set mysql.enabled=true \
+        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+        -f values/global-values.yaml --set mysql.enabled=true \
         --set mysql.init.kcm.enabled=true
 }
 
@@ -96,7 +102,8 @@ install-dbinit-mongodb-tianyu() {
     helm list -A | grep dbinit-mongodb-tianyu && \
         uninstall-dbinit-mongodb-tianyu
     helm install ${ARGS} -n dbinit-mongodb-tianyu dbinit-mongodb-tianyu pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml \
+        -f ${IMAGELIST} -f values/global-values.yaml \
         --set mongodb.enabled=true
 }
 

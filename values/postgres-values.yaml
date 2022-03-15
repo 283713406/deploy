@@ -12,10 +12,3 @@ image:
 devMode: true
 
 haRepo: "registry.kylincloud.org:4001/solution/ha"
-
-# 请配置storage的类型，nfs或者glusterfs,默认为nfs.
-storage: "nfs"
-
-nfs:
-  host: "172.20.42.70"
-  path: "/opt/nfs"
