@@ -1,0 +1,37 @@
+#-------------------------------------------------------------------
+# apisix组件的配置
+enabled: false
+replicaCount: 1
+apisix:
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix:2.10.4-alpine"
+  initImage:
+    image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
+etcd:
+  enabled: true
+  host:
+    - "http://apisix-etcd.apisix-system.svc.cluster.local:2379"
+  prefix: "/apisix"
+  timeout: 30
+  replicaCount: 3
+  nodeAffinityPreset:
+    values: ["host123", "host124", "host125"]
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/etcd/arm64/etcd:v3.4.13"
+ingress-controller:
+  enabled: true
+  config:
+    apisix:
+    #【注意】一定要设置 gateway 所在的 namespace
+      serviceNamespace: apisix-system
+  serviceMonitor:
+    enabled: true
+    namespace: 'apisix-system'
+    interval: 15s
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-ingress-controller:1.4.0"
+  initContainer:
+    image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
+dashboard:
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-dashboard:2.9.0"

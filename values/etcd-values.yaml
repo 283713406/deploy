@@ -1,0 +1,12 @@
+#-------------------------------------------------------------------
+# etcd组件的配置
+enabled: false
+replicaCount: 3
+nodeAffinityPreset:
+  values: ["master1", "master2", "master3"]
+persistence:
+  storageClassName: nfs-storage
+image:
+  registry: "registry.kylincloud.org:4001"
+  repository: solution/ha/etcd/arm64/etcd
+  tag: v3.4.13

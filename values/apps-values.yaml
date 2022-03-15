@@ -1,0 +1,94 @@
+#-------------------------------------------------------------------
+# apps应用的通用配置
+# 请配置storage的类型，nfs或者glusterfs,默认为nfs.
+storage: "nfs"
+
+nfs:
+  path: "/opt/nfs"
+  server: "172.20.192.132"
+
+# 请配置安全管控的相关的参数
+kcm:
+# 配置安全管控服务端域名
+  uri: "kcm.server.kylin"
+# 配置安全管控的ip地址,可以配node3的ip
+  ip:   "172.17.125.53"
+# 配置安全管控的端口
+  port: ""
+
+kim:
+# kim服务的地址和账号密码
+  uri: "kimserver.amd64.local"
+# kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
+  ip:   "172.17.125.59"
+  password: "adminroot"
+  username: "admin"
+
+apps:
+  mirrorUpdate:
+  # 配置mirrors-update的ip
+    ip:  "172.17.125.53"
+  # 配置mirrors-update的端口
+    port: "30141"
+  uksc:
+    ip: "192.20.3.1"
+  # 配置软件商店的ip地址,可以配node3的ip
+  # 配置软件商店的manage服务的端口,以下命令显示对应的端口
+  # kubectl get -n apps svc manage|awk -F ':' '{print $2}'
+    managePort:  "30008"
+  # 端口类型"https://" "http://"
+    managePortType: "http://"
+  # 配置软件商店的client服务的端口,以下命令显示对应的端口
+  # kubectl get -n apps svc client|awk -F ':' '{print $2}'
+    clientPort:  "30015"
+  # 端口类型"https://" "http://"
+    clientPortType: "http://"
+    username: "safety"
+    password: "1234qwer"
+
+
+etcd:
+  uri: "apisix-etcd.apisix-system"
+  port: "2379"
+
+mongodb:
+  uri: "mongodb-1.mongodb.ha.svc.cluster.local"
+  database: "test"
+  port: "27017"
+  username: "test"
+  password: "Kim.1997"
+
+elasticsearch:
+  uri: "elasticsearch.ha"
+  port: "9200"
+
+redis:
+  uri: "ha-redis-ha-haproxy.ha"
+  port: "6379"
+  password: "kylin123."
+
+mysql:
+  kcm:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kcm"
+  icbc:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kcm"
+  softshop:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kylin_soft_shop"
+  mirrorsUpdate:
+    username: "root"
+    password: "Kcm.2021"
+    uri: "mysql.ha"
+    port: "3306"
+    database: "kylin_source_info_test"

@@ -1,0 +1,14 @@
+#-------------------------------------------------------------------
+# elasticsearch组件的配置
+enabled: true
+initContainer:
+  image:
+    image: "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
+replicaCount: 3
+persistence:
+  enabled: true
+  storageClass: nfs-storage
+nfs:
+  enable: false
+image:
+  image: "registry.kylincloud.org:4001/solution/ha/elasticsearch/arm64/elasticsearch:7.9.1"

@@ -40,3 +40,4 @@ global:
     logstash:                     "registry.kylincloud.org:4001/solution/tianyu/arm64/logstash:7.9.1"
     nfsClientProvisioner:         "registry.kylincloud.org:4001/solution/tianyu/arm64/nfs-client-provisioner-arm64:20220217"
     nginx:                        "registry.kylincloud.org:4001/solution/tianyu/arm64/nginx:1.19.2"
+    ingressNginx: "registry.kylincloud.org:4001/solution/tianyu/arm64/ingress-nginx:v0.48.1"

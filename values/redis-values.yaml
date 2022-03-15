@@ -1,0 +1,32 @@
+#-------------------------------------------------------------------
+# redis组件的配置
+enabled: true
+image:
+  image: "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
+replicas: 3
+persistentVolume:
+  enabled: true
+  size: 10Gi
+  storageClass: nfs-storage
+redis:
+  customConfig: |
+    dir "/data"
+    port 6379
+    maxmemory 0
+    maxmemory-policy volatile-lru
+    min-replicas-max-lag 5
+    min-replicas-to-write 1
+    rdbchecksum yes
+    rdbcompression yes
+    repl-diskless-sync yes
+    save 900 1
+    requirepass replace-default-auth
+    masterauth replace-default-auth
+haproxy:
+  enabled: true
+  replicas: 3
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy:2.0.4"
+auth: true
+# 不能使用特殊字符@#$等，最好使用字母+数字
+redisPassword: kylin123.

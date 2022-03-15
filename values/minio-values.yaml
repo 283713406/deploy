@@ -1,0 +1,16 @@
+#-------------------------------------------------------------------
+# minio组件的配置
+enabled: true
+mode: distributed
+image:
+  image: "registry.kylincloud.org:4001/solution/ha/minio/arm64/minio:RELEASE.2021-02-14T04-01-33Z"
+mcImage:
+  image: "registry.kylincloud.org:4001/solution/ha/minio/arm64/mc:RELEASE.2021-02-14T04-28-06Z"
+accessKey: "admin"
+secretKey: "12341234"
+service:
+  type: NodePort
+  nodePort: 32000
+persistence:
+  enabled: true
+  storageClass: "nfs-storage"

@@ -1,0 +1,17 @@
+#-------------------------------------------------------------------
+# mongodb组件的配置
+enabled: true
+image:
+  image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
+sidecar:
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo-k8s-sidecar:20220217"
+job:
+  image:
+    image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
+replicaCount: 3
+persistence:
+  enabled: true
+  storageClassName: nfs-storage
+nfs:
+  enable: false
