@@ -5,25 +5,34 @@
 
 首先修改本目录下的values.yaml文件
 
+首先执行:
+```bash
+$ source install.sh
+```
+
+然后执行如下:
 ``` bash
 # 安装依赖文件和资源.
-$ make pre
+$ install-pre
 
 # 安装所有ha应用依赖组件
-$ make ha-all-install
+$ install-ha
+```
 
-# 安装dbinit服务
-$ make dbinit-install
+然后进行如下:
+```bash
+# 安装所有应用
+$ install-apps
 ```
 
 ## 卸载对应服务执行如下命令
 ``` bash
 # 卸载依赖文件和资源.
-$ make preuninstall
+$ uninstall-pre
 
 # 卸载所有ha应用依赖组件
-$ make ha-all-uninstall
+$ uninstall-ha
 
 # 卸载dbinit服务
-$ make dbinit-uninstall
+$ uninstall-dbinit
 ```

@@ -24,7 +24,7 @@ uninstall-app-softshop() {
 
 
 install-app-tianyu() {
-    helm install ${ARGS} -n apps repo application/tianyu/  -f values.yaml  -f ${IMAGELIST}
+    helm install ${ARGS} -n apps tianyu application/tianyu/  -f values.yaml  -f ${IMAGELIST}
 }
 lint-app-tianyu() {
     helm lint ${ARGS} -n apps application/tianyu/  -f values.yaml  -f ${IMAGELIST}

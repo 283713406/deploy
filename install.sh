@@ -21,6 +21,5 @@ elif [ $ARCH = "x86_64" ]
 then
    export ARCH=amd64
 fi
-
-export nodeIp="172.20.192.126"
-# $(kubectl get nodes --selector=kubernetes.io/role!=master -o jsonpath={.items[*].status.addresses[?\(@.type==\"ExternalIP\"\)].address})
+export nodeIp=$(kubectl get node -l node-role.kubernetes.io/master!= \
+    -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1)
