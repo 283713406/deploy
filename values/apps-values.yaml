@@ -11,9 +11,9 @@ nfs:
 kcm:
 # 配置安全管控服务端域名
   uri: "kcm.server.kylin"
-# 配置安全管控的ip地址,可以配node3的ip
-  ip:   "172.17.125.53"
-# 配置安全管控的端口
+# 配置安全管控的ip地址,默认无需配置
+  ip:   ""
+# 配置安全管控的端口,默认无需修改
   port: ""
 
 kim:
@@ -26,12 +26,13 @@ kim:
 
 apps:
   mirrorUpdate:
-  # 配置mirrors-update的ip
-    ip:  "172.17.125.53"
+  # 配置mirrors-update的ip,默认会自动配置无需修改
+    ip:  ""
   # 配置mirrors-update的端口
     port: "30141"
   uksc:
-    ip: "192.20.3.1"
+  # 默认会自动配置无需修改
+    ip: ""
   # 配置软件商店的ip地址,可以配node3的ip
   # 配置软件商店的manage服务的端口,以下命令显示对应的端口
   # kubectl get -n apps svc manage|awk -F ':' '{print $2}'
@@ -63,7 +64,7 @@ elasticsearch:
   port: "9200"
 
 redis:
-  uri: "ha-redis-ha-haproxy.ha"
+  uri: "redis-redis-ha-haproxy.ha"
   port: "6379"
   password: "kylin123."
 

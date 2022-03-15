@@ -24,7 +24,10 @@ uninstall-app-softshop() {
 
 
 install-app-tianyu() {
-    helm install ${ARGS} -n apps tianyu application/tianyu/  -f values/apps-values.yaml  -f ${IMAGELIST}
+    helm install ${ARGS} -n apps tianyu application/tianyu/  \
+        -f values/apps-values.yaml  -f ${IMAGELIST} \
+        --set kcm.ip=${node1Ip} --set apps.mirrorsUpdate.ip=${node1Ip} \
+        --set apps.uksc.ip=${node1Ip}
     kubectl delete  ValidatingWebhookConfiguration  ingress-nginx-admission-kcm-nginx-ingress
 }
 lint-app-tianyu() {
