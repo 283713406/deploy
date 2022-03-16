@@ -1,174 +1,139 @@
-# deploy
+# **新版部署方法** 
 
-### 涉及操作介绍
+## 注意
+所有命令和文件修改都在提供的安装脚本目录deploy下，不能在其他目录下操作。
+除非文档中明确指定另有手册指导.
+确保控制节点为3个，且hostname分别为master1、master2、master3
+否则etcd会出现pending，如果控制节点hostname命名不同，
+请联系开发，需要另外修改配置.
+
+## 安装准备工作
+前提条件必须k8s容器云平台已经就绪，然后再master节点上执行如下操作。
+
+请先根据文档(待补充)安装并配置nfs服务.
+
+如果需要部署安全管控，请先根据文档(待补充)安装并配置kim服务.
+
+首先执行如下命令获取对应的ip地址,该ip是后续配置的hosts的ip
+$ get-nodeIp
+
+
+首先修改本目录下的values.yaml文件
 ```bash
-# 本安装方法通过helm工具来进行安装，-n后的参数代表组件安装所在的命名空间，hacomponent为组件名字，./代表安装组件的配置文件所在目录.
-# 注：同一个命名空间下组件名字不可重复
-# 注: hacomponent需要根据具体的组件名称修改以做识别和区分，改成比如:  ha;  apisixi;   tianyu;  mirrors-update;  repo;  softshop
-$ helm install -n ha hacomponent ./
+# 修改server的值为nfs服务的ip, path为对应的nfs目录
+$ vim values/global-values.yaml
 
-# 从平台层面删除通过helm安装的组件，下面命令会卸载组件。
-# 卸载后可以重新使用上面install命令安装，更新values或者其他文件后可以先uninstall然后再install.
-# uninstall后需要一点时间等待组件彻底卸载(30s-60s)，未完全卸载时install会报namespace正在停止中
-# 只要再uninstall后重新install即可。
-$ helm -n ha uninstall hacomponent
+# 修改apps.kcm.uri为配置的安全管控域名,假设配置为kcm.kylin.com
+# 需要访问安全管控服务的终端机器需要配置该域名的host,对应ip为get-nodeIp获取的值.
+$ vim values/apps-values.yaml
+
+# 修改apps.kim.uri为配置的kim服务域名
+# 需要访问安全管控服务的终端机器需要配置该域名的host,对应ip为kim服务的ip地址
+# 修改apps.kim.password,apps.kim.username为配置的kim访问账号和密码
+$ vim values/apps-values.yaml
+
+
+# 需要访问软件商店的终端需要配置如下域名的hosts解析.
+# krmp-repo.kylinserver.com
+# krmp-manage.kylinserver.com
+# krmp.kylinserver.com
+# 配置ip为如下get-nodeIp获取的值
 ```
 
-整合部署应用软件及高可用软件，部署的前提条件是k8s集群已经就绪。服务的部署顺序是：
-* a. KIM部署、NFS部署（*包含2.1与2.2步骤*），这两个服务可以分别同步进行部署
-* b. 基础组件部署
-* c. 仓库源部署、安全管控部署、软件商店部署、源更新部署，这四个服务可以分别同步进行部署
 
-> a步骤是b,c步骤的基础，需预先部署；b步骤是c步骤的基础，需预先部署
+## 安装对应程序
+所有命令都需在提供的deploy目录下执行，不能在其他目录执行下面命令。
 
-### 前提条件
-请先确认所有节点上均可连接
-$ ping registry.kylincloud.org
-# 测试registry镜像服务是否就绪,测试环境下会报权限问题(这是正常的)，用户现场环境会直接拉取,注意把下面 amd64 改成对应架构类型
-$ docker pull  registry.kylincloud.org:4001/solution/ha/mongodb/amd64/mongo:4.4.2
-
-测试失败，请在所有master和node节点的/etc/hosts文件中配置正确的registry.kylincloud.org地址。
-
-### <sapn id="j1">1. KIM部署</sapn>
-请参考[KIM部署](docs/01-kim-installation.md)
-
-### <sapn id="j2">2 NFS部署</span>
-####  2.1 nfs服务部署
-**登录到master1控制节点**
+初始执行如下:
 ```bash
-$ kubectl get node -l node-role.kubernetes.io/master!= -owide | awk '{print $6}' | tail -n 1
+$ source install.sh
 ```
 
-**NFS_SERVER: 上条命令查询出的ip地址**
+然后执行:
+``` bash
+# 安装依赖文件和资源.
+$ install-pre
 
-**NFS_PATH: /opt/nfs**
-
-**登录到NFS_SERVER节点部署nfs**
-
-请参考[NFS 部署](docs/02-nfs-installation.md)
-
-####  2.2 nfs-storageClass部署
-**切换到master1控制节点**
-```bash
-$ ssh root@master1
-```
-```bash
-$ git clone https://gitlab.kylincloud.org/solution/deploy.git
-$ cd deploy
-# 必要: 部署nfs storageClass，服务地址，将 NFS_SERVER 替换为:步骤2.1 中的NFS_SERVER的值
-# 必要: 部署nfs storageClass，服务挂载目录，将NFS_PATH替换为:步骤2.1 中的NFS_PATH的值
-$ bash install.sh NFS_SERVER NFS_PATH
+# 安装所有ha应用依赖组件
+$ install-ha
 ```
 
-### 3 基础组件部署
-**切换到master1控制节点**
-```bash
-$ ssh root@master1
-```
-```bash
-# 再次切换到之前的deploy目录
-$ cd deploy
-# 更新git submodule
-$ git submodule update --init --recursive
+``` bash
+# 然后执行如下命令进行数据库初始化:
 
-# 根据机器架构，加载helm values
-$ bash initValues.sh
+# 如果需要安装安全管控，请执行如下命令
+$ install-dbinit-mysql-tianyu
+$ install-dbinit-mongodb-tianyu
 
-#进入项目helm-chart目录
-$ cd helm-chart
+# 如果需要安装源更新服务，请执行如下命令
+$ install-dbinit-mysql-mirrors-update
 
-# 更新helm subchart
-$ helm dependency update
-```
+# 如果需要安装软件商店，请执行如下命令
+$ install-dbinit-mysql-softshop
 
-如果组件代码库（gitlab）有所更改，需要更新组件代码库，并同步 helm chart: 
+# 如果需要安装仓库源，请执行如下命令
+$ install-dbinit-postgres-repo
 
-```bash
-# 进入需要更新的代码库目录，例如 更新了mysql。
-$ cd subcharts/mysql/
-# 拉取最新代码
-$ git pull
-# 返回原目录
-$ cd -
-# 更新helm subchart
-$ helm dependency update
-```
-若为开发人员请参考[此文档](docs/contribute.md)
+然后执行如下命令:
+$ dbinit-list-job
+显示类似如下:
+ namespace: dbinit-mysql-tianyu
+NAME        COMPLETIONS   DURATION   AGE
+mysql-job   1/1           13s        20m
+.....
 
-```bash
-# 若部署的环境为x86环境，则执行下述操作，为arm64环境则无需操作
-$ sed -i 's/arm64/amd64/g' values.yaml
-
-# 部署apisix
-$ kubectl get node | grep master | awk '{print $1}' 
-# 将查询出的master的node名替换value.yaml中apisix.etcd.nodeAffinityPreset.values值，若一样则不用替换。
-$ vim valus.yaml
-# 新建命名空间，命名空间为 apisix-system
-$ kubectl create ns apisix-system
-$ helm install -n apisix-system apisix --set mysql.enabled=false --set elasticsearch.enabled=false --set apisix.enabled=true --set mongodb.enabled=false --set redis-ha.enabled=false --set minio.enabled=false ./
-# 查看所有pod是否Running
-$ kubectl -n apisix-system get pods -o wide
-
-# 部署剩余组件
-# 新建命名空间，命名空间为 ha
-$ kubectl create ns ha
-$ helm install -n ha ha ./
-# 查看所有pod是否Running
-$ kubectl -n ha get pods -o wide
-
-# 如果出现大量pods批量处于pending状态, 执行如下命令重置nfs pv控制器.
-$ kubectl -n nfs-storage delete pods --all 删除nfs-storage-class
-```
-### 4 部署dbinit
-部署dbinit对数据库进行初始化，执行创建数据库、表格、初始数据等操作。
-注意该操作原则上在ha数据库部署之后只能执行一遍，重复执行可能导致问题。
-
-切换到master1控制节点
-```$ ssh root@master1```
-切入对应的deploy/dbinit目录
-cd  deploy/dbinit
-操作请参考[dbinit](docs/03-db-init.md)
-
-### 5 部署应用
-#### 5.1 仓库源部署
-**切换到master1控制节点**
-```bash
-$ ssh root@master1
-```
-```bash
-#执行如下命令后将storageclass.kubernetes.io/is-default-class: "true"值改为：
-#storageclass.kubernetes.io/is-default-class: "false"，输入wq保存退出
-```bash
-$ kubectl edit sc/local-path
-
-$ git clone https://gitlab.kylincloud.org/solution/repo.git
-#后续部署请 联系 曹远志 支持
-```    
-
-#### 5.2 安全管控部署
-**切换到master1控制节点**
-```bash
-$ ssh root@master1
-```
-```bash
-$ git clone https://gitlab.kylincloud.org/solution/tianyu.git
-
-# 修改values.yaml中的nfsServerIp值为步骤2.1 中的NFS_SERVER的值
-# 修改values.yaml中的nfsServerPath值为步骤2.1 中的NFS_PATH的值
-$ vim values.yaml
-
-# 请参考对应的values.yaml和文档。
-$ helm install tianyu tianyu/
+请确认所有的COMPLETIONS字段都为1/1,此时数据库数据初始化完毕.
+请继续执行之后命令.
 ```
 
-#### 5.3 软件商店部署
-切换到master1控制节点```$ ssh root@master1```,请参考[软件商店](docs/04-softshop-installation.md)
 
-#### 5.4 源更新部署
+然后进行如下命令安装对应应用:
 ```bash
-  # 切换到master1控制节点
-$ ssh root@master1
-$ git clone https://gitlab.kylincloud.org/solution/mirrors-update.git
-  # 请参考对应的values.yaml和文档。
-$ helm -n kylin-update install kylin-update-service mirrors-update/ 
+# 如果需要安装安全管控，请执行如下命令
+$ install-app-tianyu
+
+# 如果需要安装仓库源，请执行如下命令
+$ install-app-repo
+
+# 如果需要安装软件商店，请执行如下命令
+$ install-app-softshop
+
+# 如果需要安装源更新服务，请执行如下命令
+$ install-app-mirrors-update
 ```
+
+## 卸载对应服务执行如下命令
+``` bash
+# 卸载依赖文件和资源.
+$ uninstall-pre
+
+# 卸载所有ha应用依赖组件
+$ uninstall-has
+
+# 卸载所有应用
+$ uninstall-apps
+
+# 一键卸载所有
+# uninstall-all
+```
+
+
+## 参考验证访问方式
+下面的get-nodeIp字段指代在命令行中执行该命令获取的ip地址.
+### 天域安全管控
+浏览器直接访问:
+https://kcm.kylin.com:30443
+### 仓库源
+浏览器直接访问:
+http://krmp.repo.kylinserver.com
+http://krmp-repo.repo.kylinserver.com
+http://krmp-manage.repo.kylinserver.com
+### 软件商店
+浏览器直接访问
+http://get-nodeIp:30008
+默认账号密码: safety/1234qwer
+### 源更新软件
+浏览器直接访问:
+http://get-nodeIp:30780/dist/
+https://get-nodeIp:30784/dist/
+默认初始化登录账号root/123456
