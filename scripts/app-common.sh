@@ -79,3 +79,10 @@ uninstall-apps() {
     uninstall-app-softshop
     uninstall-app-mirrors-update
 }
+
+uninstall-all-pv-apps() {
+    kubectl get pvc -n apps | awk '{print $1}' \
+        | xargs -I '{}' kubectl delete -n apps pvc "{}" $1
+    kubectl get pv | grep apps/ | awk '{print $1}' \
+        | xargs -I '{}' kubectl delete  pv  "{}" $1
+}

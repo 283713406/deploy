@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
+get-nodeIp() {
+    kubectl get node -l node-role.kubernetes.io/master!= \
+    -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1
+}
+
 install-pre() {
     kubectl create ns ha
     kubectl create ns kcm
     kubectl create ns apisix-system
     kubectl create ns apps
+    kubectl create ns nfs-storage
 
     kubectl create ns dbinit-postgres-repo
     kubectl create ns dbinit-mysql-tianyu
@@ -13,9 +19,10 @@ install-pre() {
     kubectl create ns dbinit-mysql-softshop
 
     helm install  ${ARGS}  pre pre-install/pre \
-        -f values/apps-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
+        -n ha -f values/apps-values.yaml -f ${IMAGELIST} \
+        -f values/global-values.yaml
 
-    kubectl delete pods --field-selector  \
+    kubectl delete pods -n ha --field-selector  \
         status.phase=Running,status.phase=Failed -n nfs-storage
 }
 lint-pre() {
@@ -23,7 +30,7 @@ lint-pre() {
         -f ${IMAGELIST} -f values/global-values.yaml
 }
 uninstall-pre() {
-    helm uninstall pre
+    helm uninstall pre -n ha
 }
 
 lint-dbinit(){
@@ -38,7 +45,7 @@ uninstall-dbinit-postgres-repo(){
 }
 install-dbinit-postgres-repo() {
 
-    helm list -A | grep dbinit-postgres-repo && \
+    helm list -A -a | grep dbinit-postgres-repo && \
         uninstall-dbinit-postgres-repo
 
     export PGPASSWORD=$(kubectl get secret  \
@@ -58,7 +65,7 @@ uninstall-dbinit-mysql-mirrors-update(){
     helm uninstall ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update
 }
 install-dbinit-mysql-mirrors-update() {
-    helm list -A | grep dbinit-mysql-mirrors-update && \
+    helm list -A -a | grep dbinit-mysql-mirrors-update && \
         uninstall-dbinit-mysql-mirrors-update
     helm install ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
@@ -72,7 +79,7 @@ uninstall-dbinit-mysql-softshop(){
     helm uninstall ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop
 }
 install-dbinit-mysql-softshop() {
-    helm list -A | grep dbinit-mysql-softshop && \
+    helm list -A -a | grep dbinit-mysql-softshop && \
         uninstall-dbinit-mysql-softshop
     helm install ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
@@ -85,7 +92,7 @@ uninstall-dbinit-mysql-tianyu(){
     helm uninstall ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu
 }
 install-dbinit-mysql-tianyu() {
-    helm list -A | grep dbinit-mysql-tianyu && \
+    helm list -A -a | grep dbinit-mysql-tianyu && \
         uninstall-dbinit-mysql-tianyu
     helm install ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
@@ -99,7 +106,7 @@ uninstall-dbinit-mongodb-tianyu(){
     helm uninstall ${ARGS} -n dbinit-mongodb-tianyu dbinit-mongodb-tianyu
 }
 install-dbinit-mongodb-tianyu() {
-    helm list -A | grep dbinit-mongodb-tianyu && \
+    helm list -A -a | grep dbinit-mongodb-tianyu && \
         uninstall-dbinit-mongodb-tianyu
     helm install ${ARGS} -n dbinit-mongodb-tianyu dbinit-mongodb-tianyu pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml \
@@ -118,6 +125,8 @@ dbinit-list-job() {
     kubectl get job -n dbinit-mysql-mirrors-update
     echo " namespace: dbinit-mysql-softshop"
     kubectl get job -n dbinit-mysql-softshop
+    echo " namespace: dbinit-postgres-repo"
+    kubectl get job -n dbinit-postgres-repo
 }
 dbinit-list-pods() {
     echo " namespace: dbinit-mysql-tianyu"
@@ -128,6 +137,8 @@ dbinit-list-pods() {
     kubectl get pods -n dbinit-mysql-mirrors-update
     echo " namespace: dbinit-mysql-softshop"
     kubectl get pods -n dbinit-mysql-softshop
+    echo " namespace: dbinit-postgres-repo"
+    kubectl get pods -n dbinit-postgres-repo
 }
 
 install-dbinit-all() {

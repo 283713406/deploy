@@ -9,7 +9,7 @@ sidecar:
 job:
   image:
     image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
-replicaCount: 3
+replicaCount: 1
 persistence:
   enabled: true
   storageClassName: nfs-storage

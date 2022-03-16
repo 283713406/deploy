@@ -22,5 +22,17 @@ then
    export ARCH=amd64
 fi
 
-export node1Ip=$(kubectl get node -l node-role.kubernetes.io/master!= \
-    -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1)
+export node1Ip=$(get-nodeIp)
+
+
+
+uninstall-all() {
+   uninstall-apps
+   echo "Wait 20s for clean......."
+   sleep 20
+   uninstall-all-pv-apps
+   uninstall-has
+   echo "Wait 10s for clean......."
+   uninstall-all-pv-ha
+   uninstall-pre
+}

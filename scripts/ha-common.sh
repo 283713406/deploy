@@ -131,6 +131,7 @@ lint-ha-postgres() {
 }
 uninstall-ha-postgres() {
     helm uninstall  ${ARGS}  -n ha postgres
+    kubectl delete -n ha sts acid-db
 }
 
 
@@ -148,6 +149,7 @@ uninstall-ha-redis() {
 
 
 install-has() {
+    kubectl create ns ha
     install-ha-apisix
     install-ha-elastic
     install-ha-etcd
@@ -166,6 +168,7 @@ uninstall-has() {
     uninstall-ha-mysql
     uninstall-ha-postgres
     uninstall-ha-redis
+    kubectl delete ns ha
 }
 lint-has() {
     lint-ha-apisix
@@ -176,4 +179,11 @@ lint-has() {
     lint-ha-mysql
     lint-ha-postgres
     lint-ha-redis
+}
+
+uninstall-all-pv-ha() {
+    kubectl get pvc -n ha | awk '{print $1}' \
+        | xargs -I '{}' kubectl delete -n ha pvc "{}" $1
+    kubectl get pv | grep ha/ | awk '{print $1}' \
+        | xargs -I '{}' kubectl delete  pv  "{}" $1
 }
