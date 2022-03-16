@@ -7,8 +7,8 @@ install-app-repo() {
 lint-app-repo() {
     helm lint ${ARGS} -n apps application/repo/   \
         -f values/apps-values.yaml  -f ${IMAGELIST} \
-        -f values/global-values.yaml  --set frontResolvIp=${node1Ip} \
-        -set repostoreResolvIp=${node1Ip}
+        -f values/global-values.yaml  --set apps.repo.ip=${node1Ip} \
+        --set repostoreResolvIp=${node1Ip}
 }
 uninstall-app-repo() {
     helm uninstall ${ARGS} -n apps repo
@@ -18,7 +18,7 @@ uninstall-app-repo() {
 install-app-softshop() {
     helm install ${ARGS} -n apps softshop application/softshop/   \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
-        --set minioIp=${node1Ip} --set repoIp=${node1Ip}
+        --set minio.ip=${node1Ip} --set apps.repo.ip=${node1Ip}
 }
 lint-app-softshop() {
     helm lint ${ARGS} -n apps application/softshop/ -f values/apps-values.yaml  \
@@ -32,8 +32,8 @@ uninstall-app-softshop() {
 install-app-tianyu() {
     helm install ${ARGS} -n apps tianyu application/tianyu/  \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
-        --set kcm.ip=${node1Ip} --set apps.mirrorsUpdate.ip=${node1Ip} \
-        --set apps.uksc.ip=${node1Ip}
+        --set apps.kcm.ip=${node1Ip} --set apps.mirrorsUpdate.ip=${node1Ip} \
+        --set apps.softshop.ip=${node1Ip}
     kubectl delete  ValidatingWebhookConfiguration  ingress-nginx-admission-kcm-nginx-ingress
 }
 lint-app-tianyu() {
@@ -49,7 +49,7 @@ uninstall-app-tianyu() {
 install-app-mirrors-update() {
     helm install ${ARGS} -n apps mirrors-update application/mirrors-update \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml  \
-        --set tianYuUrl=${node1Ip}
+        --set apps.kcm.ip=${node1Ip}
 }
 lint-app-mirrors-update() {
     helm lint ${ARGS} -n apps application/mirrors-update \

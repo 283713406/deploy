@@ -19,7 +19,7 @@ install-pre() {
         status.phase=Running,status.phase=Failed -n nfs-storage
 }
 lint-pre() {
-    helm lint  pre pre-install/pre -f values/apps-values.yaml \
+    helm lint  pre-install/pre -f values/apps-values.yaml \
         -f ${IMAGELIST} -f values/global-values.yaml
 }
 uninstall-pre() {
