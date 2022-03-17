@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-source scripts/ha-common.sh
-source scripts/app-common.sh
-source scripts/pre-common.sh
+if [ $DEVMODE == "true" ]
+then
+   $IMAGEPATH='image-list/images_dev'
+   echo '采用开发者部署模式:
+请确认内部开发者源地址可以访问
+harbor.kylincloud.org   registry.kylincloud.org.'
+elif
+   $IMAGEPATH='image-list/images'
+   echo '采用生产环境部署模式:
+请确认生产镜像已展开,registry服务已就绪
+,且各个服务端的对应registry.kylincloud.org域名的hosts映射已配置.'
+fi
 
-#IMAGELIST=image-list/images-arm64.yaml
-#IMAGELIST=image-list/images-amd64.yaml
-export IMAGELIST=image-list/images_dev-arm64.yaml
-#IMAGELIST=image-list/images_dev-amd64.yaml
+export IMAGELIST=${IMAGEPATH}-${ARCH}.yaml
 
 
 ARGS=''
@@ -21,6 +27,10 @@ elif [ $ARCH = "x86_64" ]
 then
    export ARCH=amd64
 fi
+
+source scripts/ha-common.sh
+source scripts/app-common.sh
+source scripts/pre-common.sh
 
 uninstall-all() {
    uninstall-apps

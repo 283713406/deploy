@@ -15,19 +15,14 @@ apps:
   softshop:
   # 默认会自动配置无需修改
     ip: ""
-  # 配置软件商店的ip地址,可以配node3的ip
-  # 配置软件商店的manage服务的端口,以下命令显示对应的端口
-  # kubectl get -n apps svc manage|awk -F ':' '{print $2}'
-    managePort:  "30008"
-  # 端口类型"https://" "http://"
-    managePortType: "http://"
-  # 配置软件商店的client服务的端口,以下命令显示对应的端口
-  # kubectl get -n apps svc client|awk -F ':' '{print $2}'
-    clientPort:  "30015"
-  # 端口类型"https://" "http://"
-    clientPortType: "http://"
-    username: "safety"
-    password: "1234qwer"
+    username: "admin"
+    password: "admin"
+    clientService:
+      type: NodePort
+      port: 30015
+    manageService:
+      type: NodePort
+      port: 30008
   repo:
     # 仓库源地址信息
     manageUri: "krmp-manage.kylinserver.com"
@@ -37,12 +32,6 @@ apps:
     ip: ""
     repoPostfix: "katello/api/"
     androidUrl: "krmp-manage.kylinserver.com"
-    clientService:
-      type: NodePort
-      port: 30015
-    manageService:
-      type: NodePort
-      port: 30008
   kcm:
   # 配置安全管控服务端域名
     uri: "kcm.server.kylin"
