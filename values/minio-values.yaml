@@ -14,3 +14,7 @@ service:
 persistence:
   enabled: true
   storageClass: "nfs-storage"
+
+
+imagePullSecrets:
+- name: "regcred"

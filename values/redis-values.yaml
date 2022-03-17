@@ -4,6 +4,10 @@ enabled: true
 image:
   image: "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
 replicas: 3
+
+imagePullSecrets:
+- name: "regcred"
+
 persistentVolume:
   enabled: true
   size: 10Gi

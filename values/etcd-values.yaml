@@ -10,3 +10,5 @@ image:
   registry: "registry.kylincloud.org:4001"
   repository: solution/ha/etcd/arm64/etcd
   tag: v3.4.13
+  pullSecrets:
+    - regcred
