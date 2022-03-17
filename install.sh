@@ -22,10 +22,6 @@ then
    export ARCH=amd64
 fi
 
-export node1Ip=$(get-nodeIp)
-
-
-
 uninstall-all() {
    uninstall-apps
    echo "Wait 20s for clean......."

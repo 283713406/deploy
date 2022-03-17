@@ -34,7 +34,7 @@ apps:
     repoUri: "krmp-repo.kylinserver.com"
     frontUri: "krmp.kylinserver.com"
     uriHttpType: "http://"
-    ip: "172.20.42.60"
+    ip: ""
     repoPostfix: "katello/api/"
     androidUrl: "krmp-manage.kylinserver.com"
     clientService:

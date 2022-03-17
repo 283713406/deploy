@@ -113,8 +113,11 @@ lint-ha-postgres() {
         -f values/postgres-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
 }
 uninstall-ha-postgres() {
-    helm uninstall  ${ARGS}  -n ha postgres
+    helm uninstall -n ha ${ARGS} postgres
     kubectl delete -n ha sts acid-db
+    kubectl delete -n ha svc acid-db acid-db-config acid-db-repl
+    kubectl delete -n ha poddisruptionbudgets.policy postgres-acid-db-pdb
+    kubectl delete -n ha pvc pgdata-acid-db-0 pgdata-acid-db-1 pgdata-acid-db-2
 }
 
 

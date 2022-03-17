@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 install-app-repo() {
+    export node1Ip=$(get-nodeIp)
     helm install ${ARGS} -n apps repo application/repo/    \
-        -f values/apps-values.yaml  -f ${IMAGELIST} -f \
-        values/global-values.yaml
+        -f values/apps-values.yaml  -f ${IMAGELIST} \
+        --set apps.repo.ip=${node1Ip} \
+        -f values/global-values.yaml
 }
 lint-app-repo() {
+    export node1Ip=$(get-nodeIp)
     helm lint ${ARGS} -n apps application/repo/   \
         -f values/apps-values.yaml  -f ${IMAGELIST} \
-        -f values/global-values.yaml  --set apps.repo.ip=${node1Ip} \
-        --set repostoreResolvIp=${node1Ip}
+        -f values/global-values.yaml  --set apps.repo.ip=${node1Ip}
 }
 uninstall-app-repo() {
     helm uninstall ${ARGS} -n apps repo
@@ -16,6 +18,7 @@ uninstall-app-repo() {
 
 
 install-app-softshop() {
+    export node1Ip=$(get-nodeIp)
     helm install ${ARGS} -n apps softshop application/softshop/   \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
         --set minio.ip=${node1Ip} --set apps.repo.ip=${node1Ip}
@@ -30,6 +33,7 @@ uninstall-app-softshop() {
 
 
 install-app-tianyu() {
+    export node1Ip=$(get-nodeIp)
     helm install ${ARGS} -n apps tianyu application/tianyu/  \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
         --set apps.kcm.ip=${node1Ip} --set apps.mirrorsUpdate.ip=${node1Ip} \
@@ -47,6 +51,7 @@ uninstall-app-tianyu() {
 
 
 install-app-mirrors-update() {
+    export node1Ip=$(get-nodeIp)
     helm install ${ARGS} -n apps mirrors-update application/mirrors-update \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml  \
         --set apps.kcm.ip=${node1Ip}

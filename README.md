@@ -125,13 +125,17 @@ $ uninstall-apps
 https://kcm.kylin.com:30443
 ### 仓库源
 浏览器直接访问:
+下面默认账号:  admin/123123
 http://krmp.repo.kylinserver.com
+
+下面默认账号:  admin/123123
 http://krmp-repo.repo.kylinserver.com
+
 http://krmp-manage.repo.kylinserver.com
 ### 软件商店
 浏览器直接访问
 http://get-nodeIp:30008
-默认账号密码: safety/1234qwer
+默认账号密码: admin/admin
 ### 源更新软件
 浏览器直接访问:
 http://get-nodeIp:30780/dist/
