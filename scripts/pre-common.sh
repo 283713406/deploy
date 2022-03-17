@@ -5,6 +5,21 @@ get-nodeIp() {
     -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1
 }
 
+install-gate() {
+    kubectl create ns apisix-system
+    helm install  ${ARGS}  -n apisix-system apisix pre-install/apisix/ \
+        -f pre-install/apisix/values.yaml -f values/apisix-values.yaml \
+        -f ${IMAGELIST} -f values/global-values.yaml
+}
+uninstall-gate() {
+    helm uninstall  ${ARGS}  -n apisix-system apisix
+}
+lint-gate() {
+    helm lint  ${ARGS}  -n apisix-system pre-install/apisix/ \
+        -f pre-install/apisix/values.yaml -f values/apisix-values.yaml \
+        -f ${IMAGELIST} -f values/global-values.yaml
+}
+
 install-pre() {
     kubectl create ns ha
     kubectl create ns kcm

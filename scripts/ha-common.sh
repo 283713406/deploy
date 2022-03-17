@@ -1,7 +1,5 @@
 #!/bin/bash -xe
 lint-has() {
-    helm lint  -n apisix-system  apisix     ha/apisix/ -f ha/apisix/values.yaml \
-        -f values/apisix-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
 
     helm lint  -n ha             elastic    ha/elasticsearch/ -f ha/elasticsearch/values.yaml \
         -f values/elastic-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
@@ -37,21 +35,6 @@ uninstall-dbinit() {
 
 list() {
     helm list -A
-}
-
-
-install-ha-apisix() {
-    helm install  ${ARGS}  -n apisix-system apisix ha/apisix/ \
-        -f ha/apisix/values.yaml -f values/apisix-values.yaml \
-        -f ${IMAGELIST} -f values/global-values.yaml
-}
-lint-ha-apisix() {
-    helm lint  ${ARGS}  -n apisix-system ha/apisix/ \
-        -f ha/apisix/values.yaml -f values/apisix-values.yaml \
-        -f ${IMAGELIST} -f values/global-values.yaml
-}
-uninstall-ha-apisix() {
-    helm uninstall  ${ARGS}  -n apisix-system apisix
 }
 
 
@@ -150,7 +133,6 @@ uninstall-ha-redis() {
 
 install-has() {
     kubectl create ns ha
-    install-ha-apisix
     install-ha-elastic
     install-ha-etcd
     install-ha-minio
@@ -160,7 +142,6 @@ install-has() {
     install-ha-redis
 }
 uninstall-has() {
-    uninstall-ha-apisix
     uninstall-ha-elastic
     uninstall-ha-etcd
     uninstall-ha-minio
@@ -171,7 +152,6 @@ uninstall-has() {
     kubectl delete ns ha
 }
 lint-has() {
-    lint-ha-apisix
     lint-ha-elastic
     lint-ha-etcd
     lint-ha-minio
