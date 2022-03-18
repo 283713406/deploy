@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-if [ $DEVMODE = "true" ]
+if [ -z $DEVMODE ]
+then
+   echo '需要首先配置DEVMODE参数,
+export DEVMODE=true        开发测试环境请如左执行
+export DEVMODE=false       生产项目环境请如左执行
+执行后再重复source install.sh'
+elif [ $DEVMODE = "true" ]
 then
    export IMAGEPATH='image-list/images_dev'
    echo '采用开发者部署模式:
