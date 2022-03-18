@@ -39,13 +39,17 @@ install-pre() {
 
     kubectl delete pods -n ha --field-selector  \
         status.phase=Running,status.phase=Failed -n nfs-storage
+
+    install-gate
 }
 lint-pre() {
     helm lint  pre-install/pre -f values/apps-values.yaml \
         -f ${IMAGELIST} -f values/global-values.yaml
+    lint-gate
 }
 uninstall-pre() {
     helm uninstall pre -n ha
+    uninstall-gate
 }
 
 lint-dbinit(){

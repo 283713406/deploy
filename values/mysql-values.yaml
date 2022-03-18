@@ -1,6 +1,8 @@
 #-------------------------------------------------------------------
 # mysql组件的配置
-enabled: true
+
+# 使用本地目录为hostpah，采用storageclass改为storageclass.
+volumeType: "hostpath"
 replicas: 1
 persistentVolume:
   enabled: true
