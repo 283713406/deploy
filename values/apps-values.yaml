@@ -42,11 +42,12 @@ apps:
     httpsPort: "32443"
     httpType: "https://"
   kim:
-  # kim服务的地址和账号密码
-    uri: "kimserver.amd64.local"
+  # kim服务安装时配置的域名hosts
+    uri: "kim.icbchg.local"
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
-    ip:   "172.17.125.59"
-    password: "adminroot"
+    ip:   "172.20.42.74"
+  # kim服务的地址和账号密码
+    password: "Kim.1997"
     username: "admin"
 
 

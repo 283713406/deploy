@@ -15,6 +15,11 @@ persistence:
   enabled: true
   storageClass: "nfs-storage"
 
+# volumeType is set storageclass or hostpath
+# storageclass is nfs.
+volumeType: "hostpath"
+hostpathVolume:
+  path: /opt/ssd/minio-datadir     # 配置要调度到的节点的目录
 
 imagePullSecrets:
 - name: "regcred"

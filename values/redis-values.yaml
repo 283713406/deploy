@@ -8,6 +8,11 @@ replicas: 3
 imagePullSecrets:
 - name: "regcred"
 
+# storageclass or hostpath
+volumeType: "hostpath"
+hostpathVolume:
+  path: /opt/ssd/redis-datadir     # 配置要调度到的节点的目录
+
 persistentVolume:
   enabled: true
   size: 10Gi

@@ -15,3 +15,9 @@ persistence:
   storageClassName: nfs-storage
 nfs:
   enable: false
+
+# volumeType is storageclass or hostpath
+# storageclass will use nfs-storage and nfs.enable should be true.
+volumeType: "hostpath"
+hostpathVolume:
+  path: /opt/ssd/mongodb-datadir
