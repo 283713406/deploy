@@ -38,9 +38,9 @@ apps:
   # 配置安全管控的ip地址,默认无需配置
     ip:   ""
   # 配置安全管控的端口,默认无需修改
-    httpPort: ""
-    httpsPort: "30443"
-    httpType: "http://"
+    httpPort: "31080"
+    httpsPort: "32443"
+    httpType: "https://"
   kim:
   # kim服务的地址和账号密码
     uri: "kimserver.amd64.local"
@@ -52,7 +52,7 @@ apps:
 
 
 etcd:
-  uri: "apisix-etcd.apisix-system"
+  uri: "etcd.ha.svc.cluster.local"
   port: "2379"
 
 mongodb:
@@ -96,3 +96,10 @@ mysql:
     uri: "mysql.ha"
     port: "3306"
     database: "kylin_source_info_test"
+
+postgres:
+  port: 5432
+  uri: "acid-db.ha.svc.cluster.local"
+  db: "foreman"
+  dataUser: "foreman"
+  dataPassword: "foreman"
