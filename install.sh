@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ $DEVMODE = "true" ]
+if [ "$DEVMODE" = true ]
 then
    export IMAGEPATH='image-list/images_dev'
    echo '采用开发者部署模式:
