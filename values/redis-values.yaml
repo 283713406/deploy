@@ -9,7 +9,7 @@ imagePullSecrets:
 - name: "regcred"
 
 # storageclass or hostpath
-volumeType: "hostpath"
+volumeType: "storageclass"
 hostpathVolume:
   path: /opt/ssd/redis-datadir     # 配置要调度到的节点的目录
 

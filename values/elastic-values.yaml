@@ -9,9 +9,10 @@ persistence:
   enabled: true
   storageClass: nfs-storage
 
-volumeType: "hostpath"
+# volumeType is storageclass or hostpath
+# storageclass will use nfs-storage and nfs.enable should be true.
+volumeType: "storageclass"
 hostpathVolume:
-  node: node1                   # 配置要调度到的节点的hostname
   path: /opt/ssd/elastic-datadir     # 配置要调度到的节点的目录
 
 nfs:

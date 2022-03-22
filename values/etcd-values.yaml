@@ -11,7 +11,7 @@ persistence:
 # it will use nfs-storage storageClassName.
 volumeType: "hostpath"
 hostpathVolume:
-  path: /opt/ssd/mongodb-datadir
+  path: /opt/ssd/apps-etcd-datadir
 
 image:
   registry: "registry.kylincloud.org:4001"

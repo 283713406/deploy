@@ -12,3 +12,10 @@ image:
   image: "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
 initImage:
   image: "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
+
+
+# volumeType is storageclass or hostpath if set storageClassName
+# it will use nfs-storage storageClassName.
+volumeType: "hostpath"
+hostpathVolume:
+  path: /opt/ssd/mysql-datadir

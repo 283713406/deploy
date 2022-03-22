@@ -18,6 +18,7 @@ etcd:
     values: ["master1", "master2", "master3"]
   image:
     image: "registry.kylincloud.org:4001/solution/ha/etcd/arm64/etcd:v3.4.13"
+volumeType: "hostpath"
   hostpathVolume:
     path: /opt/ssd/apisix-etcd-datadir
 ingress-controller:
