@@ -49,6 +49,7 @@ lint-pre() {
 }
 uninstall-pre() {
     helm uninstall pre -n ha
+    kubectl delete crd postgresqls.acid.zalan.do
     uninstall-gate
 }
 
