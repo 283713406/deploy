@@ -1,6 +1,7 @@
-# **新版部署方法** 
+# **新版部署方法**
 
 ## 注意
+
 所有命令和文件修改都在提供的安装脚本目录deploy下，不能在其他目录下操作。
 除非文档中明确指定另有手册指导.
 确保控制节点为3个，且hostname分别为master1、master2、master3
@@ -8,6 +9,7 @@
 请联系开发，需要另外修改配置.
 
 ## 安装准备工作
+
 前提条件必须k8s容器云平台已经就绪，然后再master节点上执行如下操作。
 
 请先根据文档(待补充)安装并配置nfs服务.
@@ -17,8 +19,8 @@
 首先执行如下命令获取对应的ip地址,该ip是后续配置的hosts的ip
 $ get-nodeIp
 
-
 首先修改本目录下的values.yaml文件
+
 ```bash
 # 修改server的值为nfs服务的ip, path为对应的nfs目录
 $ vim values/global-values.yaml
@@ -40,25 +42,27 @@ $ vim values/apps-values.yaml
 # 配置ip为如下get-nodeIp获取的值
 ```
 
-
 ## 安装对应程序
+
 所有命令都需在提供的deploy目录下执行，不能在其他目录执行下面命令。
 
 初始执行如下:
+
 ```bash
 $ source install.sh
 ```
 
 然后执行:
-``` bash
+
+```bash
 # 安装依赖文件和资源.
 $ install-pre
 
 # 安装所有ha应用依赖组件
-$ install-ha
+$ install-has
 ```
 
-``` bash
+```bash
 # 然后执行如下命令进行数据库初始化:
 
 # 如果需要安装安全管控，请执行如下命令
@@ -86,8 +90,8 @@ mysql-job   1/1           13s        20m
 请继续执行之后命令.
 ```
 
-
 然后进行如下命令安装对应应用:
+
 ```bash
 # 如果需要安装安全管控，请执行如下命令
 $ install-app-tianyu
@@ -103,7 +107,8 @@ $ install-app-mirrors-update
 ```
 
 ## 卸载对应服务执行如下命令
-``` bash
+
+```bash
 # 卸载依赖文件和资源.
 $ uninstall-pre
 
@@ -117,13 +122,17 @@ $ uninstall-apps
 # uninstall-all
 ```
 
-
 ## 参考验证访问方式
+
 下面的get-nodeIp字段指代在命令行中执行该命令获取的ip地址.
+
 ### 天域安全管控
+
 浏览器直接访问:
 https://kcm.kylin.com:30443
+
 ### 仓库源
+
 浏览器直接访问:
 下面默认账号:  admin/123123
 http://krmp.repo.kylinserver.com
@@ -132,11 +141,15 @@ http://krmp.repo.kylinserver.com
 http://krmp-repo.repo.kylinserver.com
 
 http://krmp-manage.repo.kylinserver.com
+
 ### 软件商店
+
 浏览器直接访问
 http://get-nodeIp:30008
 默认账号密码: admin/admin
+
 ### 源更新软件
+
 浏览器直接访问:
 http://get-nodeIp:30780/dist/
 https://get-nodeIp:30784/dist/

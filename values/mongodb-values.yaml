@@ -1,23 +1,31 @@
 #-------------------------------------------------------------------
 # mongodb组件的配置
-enabled: true
-image:
-  image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
-sidecar:
-  image:
-    image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo-k8s-sidecar:20220217"
-job:
-  image:
-    image: "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongo:4.4.2"
-replicaCount: 1
-persistence:
-  enabled: true
-  storageClassName: nfs-storage
-nfs:
-  enable: false
+replicaCount: 3
 
-# volumeType is storageclass or hostpath
+image:
+  agentImage: quay.io/mongodb/mongodb-agent:11.12.0.7388-1
+  versionUpgradeHookImage: quay.io/mongodb/mongodb-kubernetes-operator-version-upgrade-post-start-hook:1.0.4
+  readinessProbeImage: quay.io/mongodb/mongodb-kubernetes-readinessprobe:1.0.8
+  mongoImage: mongo:4.2.6
+  operatorImage: quay.io/mongodb/mongodb-kubernetes-operator:0.7.3
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+username: root
+database: admin
+password: Kcm.2021
+
 # storageclass will use nfs-storage and nfs.enable should be true.
 volumeType: "storageclass"
 hostpathVolume:
   path: /opt/ssd/mongodb-datadir
+
+persistence:
+  mountPath: /bitnami/mongodb
+  subPath: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  annotations: {}
+  storageClassName: "nfs-storage"

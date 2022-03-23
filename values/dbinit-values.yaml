@@ -49,12 +49,13 @@ mysql:
 
 mongodb:
   enabled: false
-  # uri: "mongodb.kcm-mongodb-cluster"
-  uri: "mongodb.ha"
-  database: "test"
+  uri: "mongodb-svc.ha.svc.cluster.local"
+  database: "admin"
   port: "27017"
-  username: "test"
-  password: "Kim.1997"
+  username: "root"
+  password: "Kcm.2021"
+  replicaset: "mongodb"
+
 
 postgres:
   enabled: false
