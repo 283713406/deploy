@@ -16,6 +16,11 @@ install-gate() {
         -f pre-install/apisix/values.yaml -f values/apisix-values.yaml \
         -f ${IMAGELIST} -f values/global-values.yaml
 }
+
+upgrade-gate() {
+    helm upgrade  ${ARGS}  -n apisix-system apisix pre-install/apisix/
+}
+
 uninstall-gate() {
     helm uninstall  ${ARGS}  -n apisix-system apisix
 }

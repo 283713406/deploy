@@ -56,6 +56,11 @@ install-ha-etcd() {
     helm install  ${ARGS}  -n ha etcd   ha/etcd/ -f ha/etcd/values.yaml \
         -f values/etcd-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
 }
+
+upgrade-ha-etcd() {
+    helm upgrade  ${ARGS}  -n ha etcd   ha/etcd/
+}
+
 lint-ha-etcd() {
     helm lint  ${ARGS}  -n ha ha/etcd/ -f ha/etcd/values.yaml \
         -f values/etcd-values.yaml -f ${IMAGELIST} -f values/global-values.yaml

@@ -58,8 +58,14 @@ $ source install.sh
 # 安装依赖文件和资源.
 $ install-pre
 
+# 允许apisix的etcd加入现有群集
+$ upgrade-gate
+
 # 安装所有ha应用依赖组件
 $ install-has
+
+# 允许ha的etcd加入现有群集
+$ upgrade-ha-etcd
 ```
 
 ```bash
