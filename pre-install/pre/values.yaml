@@ -1,0 +1,4 @@
+namespace: pre
+
+ntp:
+  serverNode: master1

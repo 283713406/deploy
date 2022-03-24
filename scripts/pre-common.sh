@@ -5,6 +5,11 @@ get-nodeIp() {
     -owide | grep -v INTERNAL-IP  | awk '{print $6}' | head -n 1
 }
 
+get-masterName() {
+    kubectl get node -l node-role.kubernetes.io/master= \
+    -owide | grep -v INTERNAL-IP  | awk '{print $1}' | head -n 1
+}
+
 install-gate() {
     kubectl create ns apisix-system
     helm install  ${ARGS}  -n apisix-system apisix pre-install/apisix/ \
@@ -34,8 +39,9 @@ install-pre() {
     kubectl create ns dbinit-mysql-softshop
 
     helm install  ${ARGS}  pre pre-install/pre \
-        -n ha -f values/apps-values.yaml -f ${IMAGELIST} \
-        -f values/global-values.yaml
+        -f values/apps-values.yaml -f ${IMAGELIST} \
+        -f values/global-values.yaml \
+        --set ntp.serverName=${masterName}
 
     kubectl delete pods -n ha --field-selector  \
         status.phase=Running,status.phase=Failed -n nfs-storage
@@ -43,12 +49,14 @@ install-pre() {
     install-gate
 }
 lint-pre() {
+    export masterName=$(get-masterName)
     helm lint  pre-install/pre -f values/apps-values.yaml \
-        -f ${IMAGELIST} -f values/global-values.yaml
+        -f ${IMAGELIST} -f values/global-values.yaml \
+        --set ntp.serverName=${masterName}
     lint-gate
 }
 uninstall-pre() {
-    helm uninstall pre -n ha
+    helm uninstall pre
     kubectl delete crd postgresqls.acid.zalan.do
     uninstall-gate
 }

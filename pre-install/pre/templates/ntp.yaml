@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntp-server
+  namespace: ha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ntp-server
+  template:
+    metadata:
+      labels:
+        app: ntp-server
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      nodeName: {{ .Values.ntp.serverNode }}
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+      initContainers:
+      - command: ["/bin/chmod", "-R", "750", "/var/run/chrony"]
+        image: {{ .Values.global.images.ntp }}
+        imagePullPolicy: IfNotPresent
+        name: chauth
+        volumeMounts:
+          - name: var-run-chrony
+            mountPath: /var/run/chrony
+      containers:
+      - name: ntp-server
+        image: {{ .Values.global.images.ntp }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 123
+          protocol: UDP
+        securityContext:
+          capabilities:
+            add:
+            - SYS_TIME
+            - SYS_RESOURCE
+        volumeMounts:
+          - name: timezone
+            mountPath: /etc/localtime
+          - name: etc-chrony
+            mountPath: /etc/chrony
+          - name: run-chrony
+            mountPath: /run/chrony
+          - name: var-lib-chrony
+            mountPath: /var/lib/chrony
+          - name: var-run-chrony
+            mountPath: /var/run/chrony
+        env:
+          - name: NTP_SERVERS
+            value: 127.127.1.1
+      volumes:
+         - name: timezone
+           hostPath:
+             path: /etc/localtime
+         - name: etc-chrony
+           emptyDir: {}
+         - name: run-chrony
+           emptyDir: {}
+         - name: var-lib-chrony
+           emptyDir: {}
+         - name: var-run-chrony
+           emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ntp-server
+  namespace: ha
+spec:
+  selector:
+    app: ntp-server
+  ports:
+  - protocol: UDP
+    port: 123
+    targetPort: 123
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ntp-client
+  namespace: ha
+spec:
+  selector:
+    matchLabels:
+      app: ntp-client
+  template:
+    metadata:
+      labels:
+        app: ntp-client
+    spec:
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+      imagePullSecrets:
+      - name: regcred
+      initContainers:
+      - command: ["/bin/chmod", "-R", "750", "/var/run/chrony"]
+        image: {{ .Values.global.images.ntp }}
+        imagePullPolicy: IfNotPresent
+        name: chauth
+        volumeMounts:
+          - name: var-run-chrony
+            mountPath: /var/run/chrony
+      containers:
+      - name: ntp
+        image: {{ .Values.global.images.ntp }}
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            add:
+            - SYS_TIME
+            - SYS_RESOURCE
+        volumeMounts:
+          - name: timezone
+            mountPath: /etc/localtime
+          - name: etc-chrony
+            mountPath: /etc/chrony
+          - name: run-chrony
+            mountPath: /run/chrony
+          - name: var-lib-chrony
+            mountPath: /var/lib/chrony
+          - name: var-run-chrony
+            mountPath: /var/run/chrony
+        env:
+        - name: NTP_SERVERS
+          value: ntp-server
+      volumes:
+         - name: timezone
+           hostPath:
+             path: /etc/localtime
+         - name: etc-chrony
+           emptyDir: {}
+         - name: run-chrony
+           emptyDir: {}
+         - name: var-lib-chrony
+           emptyDir: {}
+         - name: var-run-chrony
+           emptyDir: {}
