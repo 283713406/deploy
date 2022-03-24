@@ -124,15 +124,57 @@ $ uninstall-apps
 
 ## 参考验证访问方式
 
+### apisix场景访问方式
+
+``` bash
+# 需要配置相关hosts
+使用get-nodeIp命令可以获取nodeIp
+
+vim /etc/hosts
+
+# 验证安全管控需添加如下内容
+<nodeIp>  kcm.kylinserver.com  # 这里的域名为 #3.1修改配置 中填写的域名
+
+# 验证仓库源需添加如下内容
+<nodeIp>  krmp.repo.kylinserver.com
+<nodeIp>  krmp-repo.repo.kylinserver.com
+<nodeIp>  krmp-manage.repo.kylinserver.com
+<nodeIp>  krmp.kylinserver.com
+
+# 验证软件商店需添加如下内容
+<nodeIp>  apps.kylinserver.com
+
+# 验证源更新软件需添加如下内容
+<nodeIp>  kylin-update.kylinserver.com
+```
+
+#### 天域安全管控
+浏览器直接访问:
+https://kcm.kylinserver.com:30233/
+使用激活码激活后，默认账号密码为 admin/Kcm.2021
+#### 仓库源
+浏览器直接访问:
+http://krmp.kylinserver.com:30233/
+管理员账号密码为 admin/123123
+#### 软件商店
+浏览器直接访问:
+http://apps.kylinserver.com:30233/login
+默认账号密码: safety/1234qwer
+#### 源更新软件
+http浏览器直接访问：
+http://kylin-update.kylinserver.com:30233/dist/
+https浏览器直接访问，注意替换nodeIP
+https://nodeIp:30784/dist/
+默认初始化登录账号root/123456
+
+
+### 非apisix场景访问方式
+
 下面的get-nodeIp字段指代在命令行中执行该命令获取的ip地址.
-
-### 天域安全管控
-
+#### 天域安全管控
 浏览器直接访问:
 https://kcm.kylin.com:30443
-
-### 仓库源
-
+#### 仓库源
 浏览器直接访问:
 下面默认账号:  admin/123123
 http://krmp.repo.kylinserver.com
@@ -141,15 +183,11 @@ http://krmp.repo.kylinserver.com
 http://krmp-repo.repo.kylinserver.com
 
 http://krmp-manage.repo.kylinserver.com
-
-### 软件商店
-
+#### 软件商店
 浏览器直接访问
 http://get-nodeIp:30008
 默认账号密码: admin/admin
-
-### 源更新软件
-
+#### 源更新软件
 浏览器直接访问:
 http://get-nodeIp:30780/dist/
 https://get-nodeIp:30784/dist/
