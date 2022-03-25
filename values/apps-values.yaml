@@ -57,8 +57,9 @@ etcd:
   port: "2379"
 
 mongodb:
-  uri: "mongodb-0.mongodb.ha.svc.cluster.local"
+  uri: "mongodb-svc.ha.svc.cluster.local"
   database: "test"
+  dbArgs: "replicaSet=mongodb"
   port: "27017"
   username: "test"
   password: "Kim.1997"
