@@ -1,8 +1,23 @@
 #!/bin/bash
 
+run=2
+
 if [ "$1" = "" ]; then
         echo "A parameter is required"
         exit
+fi
+
+if [ "$2" = "--only-start" ]; then
+        echo "only start cotainer"
+	run=1
+fi
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$2" = "--help" ] || [ "$2" = "-h" ]; then
+        echo "执行脚本前请先创建镜像存放目录。"
+	echo "执行脚本：bash $0 [path]"
+	echo "仅启动容器：bash $0 [path] --only-start"
+	echo "查看帮助：bash $0 --help|-h"
+	exit 0
 fi
 
 ARCH="arm64"
@@ -16,7 +31,17 @@ else
 fi
 
 image_path=$1
-mkdir -p ${image_path}
+
+echo ${image_path}
+# 判断是否为目录
+if [ ! -d "${image_path}" ]; then
+    echo "传入参数非目录，请提前创建该目录"
+    exit -1
+fi
+
+# 判断传入参数run
+if [ $run -eq 2 ]; then
+
 rm -rf ${image_path}/container-solution
 
 echo The image will be stored in the directory[ ${image_path} ]
@@ -26,6 +51,8 @@ docker load < kylin-container-registry-solution.tar
 filesize=$(ls -l container-solution.tar.gz  | awk '{printf $5}')
 ((blocksize=filesize/51200))
 tar --blocking-factor=${blocksize} --checkpoint=1 --checkpoint-action='ttyout=unpacking %u%   \r' -xzf container-solution.tar.gz -C ${image_path} >/dev/null
+
+fi
 
 docker run -d \
     -v ${image_path}/container-solution:/var/lib/registry \
