@@ -27,9 +27,12 @@ fi
 
 export IMAGELIST=${IMAGEPATH}-${ARCH}.yaml
 
+export GVALUE="-f $IMAGELIST  -f values/global-values.yaml"
+
 source scripts/ha-common.sh
 source scripts/app-common.sh
 source scripts/pre-common.sh
+source scripts/module-common.sh
 
 uninstall-all() {
    uninstall-apps

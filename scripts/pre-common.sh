@@ -32,6 +32,7 @@ lint-gate() {
 
 install-pre() {
     kubectl create ns ha
+    kubectl create ns module
     kubectl create ns kcm
     kubectl create ns apisix-system
     kubectl create ns apps

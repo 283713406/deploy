@@ -6,3 +6,7 @@ nfs:
   server: "172.20.192.123"
   # 需要修改，请配置真实nfs服务目录
   path: "/opt/ssd/nfs"
+
+global:
+  imagePullSecrets:
+    - name: "regcred"

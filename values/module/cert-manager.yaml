@@ -1,0 +1,41 @@
+global:
+  imagePullSecrets:
+  - name: "regcred"
+  leaderElection:
+    # Override the namespace used to store the ConfigMap for leader election
+    namespace: "module"
+
+clusterResourceNamespace: "module"
+
+tolerations:
+- effect: NoSchedule
+  key: node-role.kubernetes.io/master
+  operator: Exists
+
+installCRDs: true
+replicaCount: 1
+extraArgs: []
+
+image:
+  repository: registry.kylincloud.org/solution/module/cert-manager/cert-manager-controller
+
+webhook:
+  extraArgs: []
+  replicaCount: 1
+  timeoutSeconds: 10
+  tolerations: []
+  image:
+    repository: registry.kylincloud.org/solution/module/cert-manager/cert-manager-webhook
+
+cainjector:
+  enabled: true
+  replicaCount: 1
+  extraArgs: []
+  image:
+    repository: registry.kylincloud.org/solution/module/cert-manager/cert-manager-cainjector
+
+startupapicheck:
+  enabled: true
+  extraArgs: []
+  image:
+    repository: registry.kylincloud.org/solution/module/cert-manager/cert-manager-ctl
