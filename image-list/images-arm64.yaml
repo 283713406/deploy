@@ -18,7 +18,7 @@ global:
     ntp:                          "registry.kylincloud.org:4001/solution/deploy/arm64/ntp:v1"
     haproxy:                      "registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy:2.0.4"
     redis:                        "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
-    sourceinfo:                   "registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.5"
+    sourceinfo:                   "registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.6"
     client:                       "registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm"
     manage:                       "registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm"
     frontChild:                   "registry.kylincloud.org:4001/solution/repo/arm64/front-child:v3.3"
