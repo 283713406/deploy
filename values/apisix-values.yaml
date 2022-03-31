@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------
 # apisix组件的配置
 enabled: false
-replicaCount: 1
+replicaCount: 3
 apisix:
   image:
     image: "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix:2.10.4-alpine"
