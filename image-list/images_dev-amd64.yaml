@@ -1,6 +1,6 @@
 global:
   images:
-    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/amd64/mysql-job:0228"
+    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/amd64/mysql-job:0331"
     busybox:                      "registry.kylincloud.org:4001/solution/deploy/amd64/busybox:1.28"
     apisix:                       "registry.kylincloud.org:4001/solution/ha/apisix/amd64/apisix:2.10.4-alpine"
     apisixDashboard:              "registry.kylincloud.org:4001/solution/ha/apisix/amd64/apisix-dashboard:2.9.0"

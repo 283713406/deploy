@@ -1,6 +1,6 @@
 global:
   images:
-    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job:0228"
+    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job:0331"
     busybox:                      "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
     apisix:                       "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix:2.10.4-alpine"
     apisixDashboard:              "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-dashboard:2.9.0"
@@ -22,7 +22,7 @@ global:
     client:                       "registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm"
     manage:                       "registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm"
     frontChild:                   "harbor.kylincloud.org/solution-repo/krmp-arm/front-child:v3.3"
-    frontMain:                    "harbor.kylincloud.org/solution-repo/krmp-arm/front-main:v2"
+    frontMain:                    "harbor.kylincloud.org/solution-repo/krmp-arm/front-main:v4"
     logicalBackup:                "harbor.kylincloud.org/solution-repo/krmp-arm/logical-backup:v1.7.1"
     pgbouncer:                    "harbor.kylincloud.org/solution-repo/krmp-arm/pgbouncer:1.16.1-r0"
     postgresOperator:             "harbor.kylincloud.org/solution-repo/krmp-arm/postgres-operator:v1.7.1"
