@@ -16,6 +16,18 @@ initImage:
 
 # volumeType is storageclass or hostpath if set storageClassName
 # it will use nfs-storage storageClassName.
-volumeType: "hostpath"
+volumeType: "storageclass"
 hostpathVolume:
-  path: /opt/ssd/mysql-datadir
+  enabled: false
+  node: node1                   # 配置要调度到的节点的hostname
+  path: /opt/ssd/mysql-datadir     # 配置要调度到的节点的目录
+  type: DirectoryOrCreate
+
+# 如需使用NFS，请修改hostpathVolume的enabled选项为false
+# 将persistentVolume的enabled选项改为true,storageclass改为nfs-storage
+persistentVolume:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  storageClass: local-path
