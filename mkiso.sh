@@ -37,15 +37,15 @@ docker login -u wangqiwei -p Kylin123. registry.kylincloud.org:4001
 }
 
 # 拉取镜像
-cat images_dev-arm64.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
+cat image-list/images_dev-${ARCH}.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
 	docker pull $line;
 done
 
 # 修改harbor镜像tag为registry
 > ${ARCH}-gitlab
-cat images_dev-arm64.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
+cat image-list/images_dev-${ARCH}.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
     echo $line |grep harbor >/dev/null && {
-        newline=$(echo $line | sed 's=-'${ARCH}'==g' | awk -F'/' '{print "registry.kylincloud.org:4001/solution/"$2"/arm64/"$NF}' | sed 's=solution-==g')
+        newline=$(echo $line | sed 's=-'${ARCH}'==g' | awk -F'/' '{print "registry.kylincloud.org:4001/solution/"$2"/'${ARCH}'/"$NF}' | sed 's=solution-==g')
         docker tag $line $newline
         echo $newline
     } || echo $line
