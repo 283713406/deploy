@@ -3,9 +3,10 @@ storage: "nfs"
 
 nfs:
   # 需要修改，请配置真实nfs服务ip
-  server: "172.20.192.123"
+  server: "172.20.144.236"
   # 需要修改，请配置真实nfs服务目录
-  path: "/opt/ssd/nfs"
+  path: "/opt/nfs"
+
 
 global:
   imagePullSecrets:

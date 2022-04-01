@@ -43,14 +43,12 @@ apps:
     httpType: "https://"
   kim:
   # kim服务安装时配置的域名hosts
-    uri: "kim.icbchg.local"
+    uri: "kim.kylincloud.org"
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
-    ip:   "172.20.42.74"
+    ip:   "172.20.144.237"
   # kim服务的地址和账号密码
-    password: "Kim.1997"
+    password: "kylincloud@123."
     username: "admin"
-
-
 
 etcd:
   uri: "etcd.ha.svc.cluster.local"
