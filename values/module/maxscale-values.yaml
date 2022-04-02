@@ -1,0 +1,31 @@
+mysql:
+  server1:
+    host: "172.20.144.21"
+    port: "63132"
+  server2:
+    host: "172.20.144.22"
+    port: "63132"
+  server3:
+    host: "172.20.144.23"
+    port: "63132"
+
+monitor:
+  user: maxscale_monitor
+  password: 123456
+
+route:
+  user: maxscale_route
+  password: 123456
+
+port: 3306
+webport: 8989
+webNodeport: 32089
+
+image: "registry.kylincloud.org:4001/solution/module/maxscale/amd64/maxscale:6.2.3"
+
+replicas: 2
+
+
+global:
+  images:
+    default:
