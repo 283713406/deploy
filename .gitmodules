@@ -49,3 +49,6 @@
 [submodule "application/mirrors-update"]
 	path = application/mirrors-update
 	url = https://gitlab.kylincloud.org/solution/mirrors-update.git
+[submodule "module/maxscale"]
+	path = module/maxscale
+	url = https://gitlab.kylincloud.org/solution/module/maxscale.git
