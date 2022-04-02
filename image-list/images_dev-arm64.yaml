@@ -1,7 +1,8 @@
 global:
   images:
-    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job:0331"
+    mysqlJob:                     "registry.kylincloud.org:4001/solution/dbinit/arm64/mysql-job:0402"
     busybox:                      "registry.kylincloud.org:4001/solution/deploy/arm64/busybox:1.28"
+    ntp:                          "registry.kylincloud.org:4001/solution/deploy/arm64/ntp:v1"
     apisix:                       "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix:2.10.4-alpine"
     apisixDashboard:              "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-dashboard:2.9.0"
     apisixIngressController:      "registry.kylincloud.org:4001/solution/ha/apisix/arm64/apisix-ingress-controller:1.4.0"
@@ -15,10 +16,10 @@ global:
     mongodbOperatorVersionHook:   "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongodb-kubernetes-operator-version-upgrade-post-start-hook:1.0.4"
     mongodbReadinessprobe:        "registry.kylincloud.org:4001/solution/ha/mongodb/arm64/mongodb-kubernetes-readinessprobe:1.0.8"
     mysql:                        "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
-    ntp:                          "registry.kylincloud.org:4001/solution/deploy/arm64/ntp:v1"
     haproxy:                      "registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy:2.0.4"
     redis:                        "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
     sourceinfo:                   "registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.6"
+    maxscale:                     "registry.kylincloud.org:4001/solution/module/maxscale/arm64/maxscale:6.2.3"
     client:                       "registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm"
     manage:                       "registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm"
     frontChild:                   "harbor.kylincloud.org/solution-repo/krmp-arm/front-child:v3.3"
