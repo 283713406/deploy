@@ -26,18 +26,20 @@ job:
 
 mysql:
   enabled: false
+  # maxscale or dev
+# dev: mysql in ha namespace
+# maxscale: maxscale in module namespace
+  type: dev
+  devUri: "mysql.ha"
+  maxscaleUri: "maxscale.module"
   kcm:
     username: "root"
     password: "Kcm.2021"
-    uri: "mysql.ha"
     port: "3306"
-    database: "kcm"
-  icbc:
+  maxscale:
     username: "root"
     password: "Kcm.2021"
-    uri: "mysql.ha"
     port: "3306"
-    database: "kcm"
   init:
     kcm:
       enabled: false

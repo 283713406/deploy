@@ -8,6 +8,14 @@ nfs:
   path: "/opt/nfs"
 
 
+mysql:
+  # maxscale or dev
+  # dev: mysql in ha namespace
+  # maxscale: maxscale in module namespace
+  type: dev
+  devUri: "mysql.ha"
+  maxscaleUri: "maxscale.module"
+
 global:
   imagePullSecrets:
     - name: "regcred"
