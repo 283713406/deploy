@@ -37,8 +37,8 @@ mysql:
     password: "Kcm.2021"
     port: "3306"
   maxscale:
-    username: "root"
-    password: "Kcm.2021"
+    username: "dbinit"
+    password: "123456"
     port: "3306"
   init:
     kcm:
