@@ -33,6 +33,7 @@ source scripts/ha-common.sh
 source scripts/app-common.sh
 source scripts/pre-common.sh
 source scripts/module-common.sh
+source scripts/debug.sh
 
 uninstall-all() {
    uninstall-apps

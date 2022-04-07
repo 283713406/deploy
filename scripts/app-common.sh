@@ -21,11 +21,11 @@ install-app-softshop() {
     export node1Ip=$(get-nodeIp)
     helm install ${ARGS} -n apps softshop application/softshop/   \
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
-        --set minio.ip=${node1Ip} --set apps.repo.ip=${node1Ip}
+        --set apps.repo.ip=${node1Ip}
 }
 lint-app-softshop() {
     helm lint ${ARGS} -n apps application/softshop/ -f values/apps-values.yaml  \
-        -f ${IMAGELIST} -f values/global-values.yaml
+        -f ${IMAGELIST} -f values/global-values.yaml --set apps.repo.ip=${node1Ip}
 }
 uninstall-app-softshop() {
     helm uninstall ${ARGS} -n apps softshop

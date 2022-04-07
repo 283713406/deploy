@@ -8,6 +8,12 @@ nfs:
   path: "/opt/nfs"
 
 
+# enable apisix
+apisix:
+  enabled: false
+  baseUri: "kylincloud.org"
+
+
 mysql:
   # maxscale or dev
   # dev: mysql in ha namespace

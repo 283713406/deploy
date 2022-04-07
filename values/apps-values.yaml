@@ -34,7 +34,7 @@ apps:
     androidUrl: "krmp-manage.kylinserver.com"
   kcm:
   # 配置安全管控服务端域名
-    uri: "kcm.server.kylin"
+    uri: "kcm.kylincloud.org"
   # 配置安全管控的ip地址,默认无需配置
     ip:   ""
   # 配置安全管控的端口,默认无需修改
@@ -99,3 +99,9 @@ postgres:
   db: "foreman"
   dataUser: "foreman"
   dataPassword: "foreman"
+
+minio:
+  ip: "minio.ha"
+  port: "9000"
+  username: "admin"
+  password: "12341234"
