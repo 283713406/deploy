@@ -42,11 +42,20 @@ apps:
     httpsPort: "32443"
     httpType: "https://"
   kim:
+    lbUri: "kim.kylinserver.com"
   # kim服务安装时配置的域名hosts
     uri: "kim.kylincloud.org"
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
     ip:   "172.20.144.237"
   # kim服务的地址和账号密码
+    password: "kylincloud@123."
+    username: "admin"
+  kimb:
+    # kim备用服务安装时配置的域名hosts
+    uri: "kim-b.kylincloud.org"
+    # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
+    ip:   "172.20.144.238"
+    # kim服务的地址和账号密码
     password: "kylincloud@123."
     username: "admin"
 
