@@ -47,6 +47,8 @@ apps:
     uri: "kim.kylincloud.org"
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
     ip:   "172.20.144.237"
+  # kim服务的web端口
+    prot: 31443
   # kim服务的地址和账号密码
     password: "kylincloud@123."
     username: "admin"
@@ -55,6 +57,8 @@ apps:
     uri: "kim-b.kylincloud.org"
     # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
     ip:   "172.20.144.238"
+    # kim服务的web端口
+    prot: 31443
     # kim服务的地址和账号密码
     password: "kylincloud@123."
     username: "admin"
