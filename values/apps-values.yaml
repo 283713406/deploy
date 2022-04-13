@@ -42,6 +42,7 @@ apps:
     httpsPort: "32443"
     httpType: "https://"
   kim:
+    lbEnabled: false
     lbUri: "kim.kylinserver.com"
   # kim服务安装时配置的域名hosts
     uri: "kim.kylincloud.org"
