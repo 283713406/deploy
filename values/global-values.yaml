@@ -1,6 +1,8 @@
 # 请配置storage的类型，nfs或者glusterfs,默认为nfs.
 storage: "nfs"
 
+devMode: true
+
 nfs:
   # 需要修改，请配置真实nfs服务ip
   server: "172.20.144.236"
