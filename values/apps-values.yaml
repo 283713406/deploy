@@ -87,23 +87,23 @@ redis:
 
 mysql:
   kcm:
-    username: "kcm_user"
-    password: "Kylin123."
+    username: "root"
+    password: "Kcm.2021"
     port: "3306"
     database: "kcm"
   icbc:
-    username: "kcm_user"
-    password: "Kylin123."
+    username: "root"
+    password: "Kcm.2021"
     port: "3306"
     database: "kcm"
   softshop:
-    username: "dbinit"
-    password: "123456"
+    username: "root"
+    password: "Kcm.2021"
     port: "3306"
     database: "kylin_soft_shop"
   mirrorsUpdate:
-    username: "dbinit"
-    password: "123456"
+    username: "root"
+    password: "Kcm.2021"
     port: "3306"
     database: "kylin_source_info_test"
 
