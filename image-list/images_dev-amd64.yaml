@@ -49,3 +49,5 @@ global:
     certManage:                   "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-controller:v1.7.2"
     certCainjector:               "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-cainjector:v1.7.2"
     certStartupApiCheck:          "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-ctl:v1.7.2"
+    postgresDeploy:               "registry.kylincloud.org:4001/solution/ha/postgres/amd64/install-ha-postgress:0414"
+    keeproxyDeploy:               "registry.kylincloud.org:4001/solution/ha/keeproxy/amd64/install-keeproxy:0414"
