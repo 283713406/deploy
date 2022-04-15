@@ -41,9 +41,31 @@ apps:
     httpPort: "31080"
     httpsPort: "32443"
     httpType: "https://"
-  kim:
+  kimLb:
+    # 是否开启kim的负载均衡，true开启、false不开启
     lbEnabled: false
+    # 开启kim的负载均衡后的uri地址
     lbUri: "kim.kylinserver.com"
+    serviceName: kim-nginx-service
+    # max_fails次失败后，暂停的时间
+    failTimeout: 5s
+    # 允许请求失败的次数。当超过maxFails最大次数时，暂停failTimeout才允许继续访问
+    maxFails: 3
+    # 配置kim的端口,默认无需修改
+    httpsPort: 31443
+    # 配置kim的端口,默认无需修改
+    tcpPort389: 389
+    # 配置kim的端口,默认无需修改
+    tcpPort636: 636
+    # 配置kim的端口,默认无需修改
+    tcpPort22: 22
+    # 配置kim的端口,默认无需修改
+    udpPort88: 88
+    # 配置kim的端口,默认无需修改
+    udpPort464: 464
+    # 配置kim的端口,默认无需修改
+    udpPort53: 53
+  kim:
   # kim服务安装时配置的域名hosts
     uri: "kim.kylincloud.org"
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
