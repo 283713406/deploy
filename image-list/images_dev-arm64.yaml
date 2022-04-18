@@ -18,7 +18,7 @@ global:
     mysql:                        "registry.kylincloud.org:4001/solution/ha/mysql/arm64/mysql:5.7"
     haproxy:                      "registry.kylincloud.org:4001/solution/ha/redis/arm64/haproxy:2.0.4"
     redis:                        "registry.kylincloud.org:4001/solution/ha/redis/arm64/redis:5.0.12-alpine"
-    sourceinfo:                   "registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.6"
+    sourceinfo:                   "registry.kylincloud.org:4001/solution/mirrors-update/arm64/sourceinfo:v1.7"
     maxscale:                     "registry.kylincloud.org:4001/solution/module/maxscale/arm64/maxscale:6.2.3"
     client:                       "registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm"
     manage:                       "registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm"
