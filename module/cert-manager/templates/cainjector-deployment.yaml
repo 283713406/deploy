@@ -52,7 +52,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.cainjector.image }}
-          image: "{{ template "certCainjector" . }}"
+          image: "{{ template "images.certCainjector" . }}"
           {{- end }}
           imagePullPolicy: {{ .Values.cainjector.image.pullPolicy }}
           args:

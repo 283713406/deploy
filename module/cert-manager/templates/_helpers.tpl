@@ -157,3 +157,35 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 helm.sh/chart: {{ include "chartName" . }}
 {{- end -}}
 {{- end -}}
+
+{{- define "images.certManage" -}}
+{{- if .Values.global.images.certManage -}}
+{{- .Values.global.images.certManage -}}
+{{- else -}}
+{{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
+{{- end -}}
+
+{{- define "images.certWebhook" -}}
+{{- if .Values.global.images.certWebhook -}}
+{{- .Values.global.images.certWebhook -}}
+{{- else -}}
+{{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
+{{- end -}}
+
+{{- define "images.certCainjector" -}}
+{{- if .Values.global.images.certCainjector -}}
+{{- .Values.global.images.certCainjector -}}
+{{- else -}}
+{{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
+{{- end -}}
+
+{{- define "images.certStartupApiCheck" -}}
+{{- if .Values.global.images.certStartupApiCheck -}}
+{{- .Values.global.images.certStartupApiCheck -}}
+{{- else -}}
+{{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
+{{- end -}}

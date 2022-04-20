@@ -54,7 +54,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.webhook.image }}
-          image: "{{ template "certWebhook" . }}"
+          image: "{{ template "images.certWebhook" . }}"
           {{- end }}
           imagePullPolicy: {{ .Values.webhook.image.pullPolicy }}
           args:

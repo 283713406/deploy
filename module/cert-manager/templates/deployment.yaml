@@ -72,7 +72,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.image }}
-          image: "{{ template "certManage" . }}"
+          image: "{{ template "images.certManage" . }}"
           {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
