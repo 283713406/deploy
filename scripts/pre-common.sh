@@ -63,7 +63,6 @@ lint-pre() {
 }
 uninstall-pre() {
     helm uninstall pre
-    kubectl delete crd postgresqls.acid.zalan.do
     uninstall-gate
 }
 
@@ -82,13 +81,9 @@ install-dbinit-postgres-repo() {
     helm list -A -a | grep dbinit-postgres-repo && \
         uninstall-dbinit-postgres-repo
 
-    export PGPASSWORD=$(kubectl get secret  \
-        postgres.acid-db.credentials.postgresql.acid.zalan.do \
-        -o  'jsonpath={.data.password}' -n ha | base64  -d )
-
     helm install ${ARGS} -n dbinit-postgres-repo dbinit-postgres-repo  pre-install/dbinit \
         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
-        -f values/global-values.yaml  --set postgres.password=${PGPASSWORD} \
+        -f values/global-values.yaml -f values/apps-values.yaml \
         --set postgres.enabled=true
 }
 

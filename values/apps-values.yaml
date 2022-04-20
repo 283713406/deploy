@@ -71,7 +71,7 @@ apps:
   # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
     ip:   "172.20.144.237"
   # kim服务的web端口
-    prot: 31443
+    port: 31443
   # kim服务的地址和账号密码
     password: "kylincloud@123."
     username: "admin"
@@ -135,6 +135,11 @@ postgres:
   db: "foreman"
   dataUser: "foreman"
   dataPassword: "foreman"
+
+#配置patroni的ip地址，即部署高可用postgresql时候的虚拟ip地址，virtual_ip的值,端口值固定为8000不变
+patroni:
+  patroni_host: "172.20.144.74"
+  patroni_port: 8000
 
 minio:
   ip: "minio.ha"

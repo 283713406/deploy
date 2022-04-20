@@ -16,9 +16,6 @@ lint-has() {
     helm lint  -n ha             mysql      ha/mysql/ -f ha/mysql/values.yaml  \
         -f values/mysql-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
 
-    helm lint  -n ha             postgres   ha/postgres/ -f ha/postgres/values.yaml \
-        -f values/postgres-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
-
     helm lint  -n ha             redis      ha/redis/ -f ha/redis/values.yaml \
         -f values/redis-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml
 }
@@ -124,26 +121,6 @@ uninstall-ha-mysql() {
 }
 
 
-install-ha-postgres() {
-    helm install  ${ARGS}  -n ha postgres ha/postgres/ -f ha/postgres/values.yaml \
-        -f values/postgres-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
-}
-upgrade-ha-postgres() {
-    helm upgrade  ${ARGS}  -n ha postgres ha/postgres/ -f ha/postgres/values.yaml \
-        -f values/postgres-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
-}
-lint-ha-postgres() {
-    helm lint  ${ARGS}  -n ha ha/postgres/ -f ha/postgres/values.yaml \
-        -f values/postgres-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
-}
-uninstall-ha-postgres() {
-    helm uninstall -n ha ${ARGS} postgres
-    kubectl delete -n ha sts acid-db
-    kubectl delete -n ha svc acid-db acid-db-config acid-db-repl
-    kubectl delete -n ha poddisruptionbudgets.policy postgres-acid-db-pdb
-    kubectl delete -n ha pvc pgdata-acid-db-0 pgdata-acid-db-1 pgdata-acid-db-2
-}
-
 
 install-ha-redis() {
     helm install  ${ARGS}  -n ha redis   ha/redis/ -f ha/redis/values.yaml \
@@ -169,7 +146,6 @@ install-has() {
     install-ha-minio
     install-ha-mongodb
     install-ha-mysql
-    install-ha-postgres
     install-ha-redis
 }
 uninstall-has() {
@@ -178,7 +154,6 @@ uninstall-has() {
     uninstall-ha-minio
     uninstall-ha-mongodb
     uninstall-ha-mysql
-    uninstall-ha-postgres
     uninstall-ha-redis
     kubectl delete ns ha
 }
@@ -188,7 +163,6 @@ lint-has() {
     lint-ha-minio
     lint-ha-mongodb
     lint-ha-mysql
-    lint-ha-postgres
     lint-ha-redis
 }
 
