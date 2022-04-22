@@ -53,7 +53,7 @@ spec:
             mountPath: /var/run/chrony
         env:
           - name: NTP_SERVERS
-            value: 127.127.1.1
+            value: {{ .Values.ntp.upstreamServer }}
       volumes:
          - name: timezone
            hostPath:

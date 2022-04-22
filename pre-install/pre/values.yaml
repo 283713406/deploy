@@ -1,4 +1,7 @@
 namespace: pre
 
 ntp:
+  # ntp的服务默认调度在master1上
   serverNode: master1
+  # 如果有上游地址请配置下列参数,否则不要修改
+  upstreamServer: 127.127.1.1
