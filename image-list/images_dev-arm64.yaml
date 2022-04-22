@@ -40,7 +40,7 @@ global:
     policyService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/policy-service:3.6.2.2"
     registerService:              "registry.kylincloud.org:4001/solution/tianyu/arm64/register-service:3.6.2.8"
     serverService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/server-service:3.6.2.7"
-    ssmwebsite:                   "registry.kylincloud.org:4001/solution/tianyu/arm64/ssmwebsite:3.6.1.5-ICBC"
+    ssmwebsite:                   "registry.kylincloud.org:4001/solution/tianyu/arm64/ssmwebsite:3.6.1.6-ICBC"
     certWebhook:                  "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-webhook:v1.7.2"
     certManage:                   "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-controller:v1.7.2"
     certCainjector:               "registry.kylincloud.org:4001/solution/module/cert-manager/cert-manager-cainjector:v1.7.2"
