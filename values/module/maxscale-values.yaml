@@ -1,13 +1,13 @@
 mysql:
   server1:
-    host: "172.20.144.21"
-    port: "63132"
+    host: "172.20.192.130"
+    port: "3306"
   server2:
-    host: "172.20.144.22"
-    port: "63132"
+    host: "172.20.192.131"
+    port: "3306"
   server3:
-    host: "172.20.144.23"
-    port: "63132"
+    host: "172.20.192.132"
+    port: "3306"
 
 monitor:
   user: maxscale_monitor
