@@ -71,9 +71,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- with .Values.image }}
           image: "{{ template "images.certManage" . }}"
-          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           {{- if .Values.global.logLevel }}

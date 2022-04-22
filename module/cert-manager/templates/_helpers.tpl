@@ -162,7 +162,9 @@ helm.sh/chart: {{ include "chartName" . }}
 {{- if .Values.global.images.certManage -}}
 {{- .Values.global.images.certManage -}}
 {{- else -}}
+{{- with .Values.image }}
 {{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -170,7 +172,9 @@ helm.sh/chart: {{ include "chartName" . }}
 {{- if .Values.global.images.certWebhook -}}
 {{- .Values.global.images.certWebhook -}}
 {{- else -}}
+{{- with .Values.webhook.image }}
 {{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -178,7 +182,9 @@ helm.sh/chart: {{ include "chartName" . }}
 {{- if .Values.global.images.certCainjector -}}
 {{- .Values.global.images.certCainjector -}}
 {{- else -}}
+{{- with .Values.startupapicheck.image }}
 {{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -186,6 +192,8 @@ helm.sh/chart: {{ include "chartName" . }}
 {{- if .Values.global.images.certStartupApiCheck -}}
 {{- .Values.global.images.certStartupApiCheck -}}
 {{- else -}}
+{{- with .Values.cainjector.image }}
 {{- if .registry -}}{{ .registry }}/{{- end -}}{{ .repository }}{{- if (.digest) -}} @{{ .digest }}{{- else -}}:{{ default $.Chart.AppVersion .tag }} {{- end -}}"
+{{- end -}}
 {{- end -}}
 {{- end -}}

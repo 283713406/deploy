@@ -43,9 +43,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- with .Values.startupapicheck.image }}
           image: "{{ template "images.certStartupApiCheck" . }}"
-          {{- end }}
           imagePullPolicy: {{ .Values.startupapicheck.image.pullPolicy }}
           args:
           - check

@@ -51,9 +51,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- with .Values.cainjector.image }}
           image: "{{ template "images.certCainjector" . }}"
-          {{- end }}
           imagePullPolicy: {{ .Values.cainjector.image.pullPolicy }}
           args:
           {{- if .Values.global.logLevel }}

@@ -36,7 +36,7 @@ apps:
     httpType: "https://"
   kimLb:
     # 是否开启kim的负载均衡，true开启、false不开启
-    lbEnabled: false
+    lbEnabled: true
     # 开启kim的负载均衡后的uri地址
     lbUri: "kim.kylinserver.com"
     serviceName: kim-nginx-service
@@ -61,7 +61,7 @@ apps:
   kim:
   # kim服务安装时配置的域名hosts
     uri: "kim.kylincloud.org"
-  # kim如果采用物理机部署时需要配置下列的的具体Ip,否则留空.
+  # 配置kim主服务物理机部署时的ip地址
     ip:   "172.20.144.237"
   # kim服务的web端口
     port: 31443
