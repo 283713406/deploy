@@ -14,7 +14,8 @@ install-gate() {
     kubectl create ns apisix-system
     helm install  ${ARGS}  -n apisix-system apisix pre-install/apisix/ \
         -f pre-install/apisix/values.yaml -f values/apisix-values.yaml \
-        -f values/apps-values.yaml -f ${IMAGELIST} -f values/global-values.yaml
+        -f values/apps-values.yaml -f ${IMAGELIST} -f values/global-values.yaml \
+        --set apisix.enabled=true
 }
 
 upgrade-gate() {
