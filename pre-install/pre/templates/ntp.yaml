@@ -80,6 +80,8 @@ spec:
   - protocol: UDP
     port: 123
     targetPort: 123
+  externalIPs:
+  - {{ .Values.ingressVip }}
 
 ---
 apiVersion: apps/v1
