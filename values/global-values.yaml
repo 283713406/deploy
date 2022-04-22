@@ -14,7 +14,7 @@ ingressVip: 172.20.144.239
 
 # enable apisix
 apisix:
-  enabled: true
+  enabled: false
   baseUri: "kylincloud.org"
 
 ntp:
