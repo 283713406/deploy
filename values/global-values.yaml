@@ -27,7 +27,7 @@ mysql:
   # maxscale or dev
   # dev: mysql in ha namespace
   # maxscale: maxscale in module namespace
-  type: "dev"
+  type: "maxscale"
   devUri: "mysql.ha"
   maxscaleUri: "maxscale.module"
 
