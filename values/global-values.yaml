@@ -9,6 +9,8 @@ nfs:
   # 需要修改，请配置真实nfs服务目录
   path: "/opt/nfs"
 
+# 请配置控制节点上部署的keepalived虚ip
+ingressVip: 172.20.144.239
 
 # enable apisix
 apisix:

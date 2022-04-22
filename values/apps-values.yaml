@@ -3,8 +3,6 @@
 # 请配置安全管控的相关的参数
 apps:
   mirrorUpdate:
-  # 配置mirrors-update的ip,默认会自动配置无需修改
-    ip:  ""
   # 配置mirrors-update的url,默认无需修改
     uri: ""
   # 配置mirrors-update的orginfo的http端口
@@ -13,8 +11,6 @@ apps:
     httpsPort: "30241"
     httpsEnable: false
   softshop:
-  # 默认会自动配置无需修改
-    ip: ""
     username: "admin"
     password: "admin"
     clientService:
@@ -29,14 +25,11 @@ apps:
     repoUri: "krmp-repo.kylinserver.com"
     frontUri: "krmp.kylinserver.com"
     uriHttpType: "http://"
-    ip: ""
     repoPostfix: "katello/api/"
     androidUrl: "krmp-manage.kylinserver.com"
   kcm:
   # 配置安全管控服务端域名
     uri: "kcm.kylincloud.org"
-  # 配置安全管控的ip地址,默认无需配置
-    ip:   ""
   # 配置安全管控的端口,默认无需修改
     httpPort: "31080"
     httpsPort: "32443"
@@ -131,7 +124,8 @@ mysql:
 
 postgres:
   port: 5432
-  uri: "acid-db.ha.svc.cluster.local"
+  # 该项地址需要修改为postgres的vip地址
+  uri: "postgresVip"
   db: "foreman"
   dataUser: "foreman"
   dataPassword: "foreman"
@@ -142,7 +136,7 @@ patroni:
   patroni_port: 8000
 
 minio:
-  ip: "minio.ha"
+  uri: "minio.ha"
   port: "9000"
   username: "admin"
   password: "12341234"
