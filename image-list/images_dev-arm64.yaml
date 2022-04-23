@@ -22,6 +22,7 @@ global:
     maxscale:                     "registry.kylincloud.org:4001/solution/module/maxscale/arm64/maxscale:6.2.3"
     client:                       "registry.kylincloud.org:4001/solution/softshop/arm64/client:2.1.0-arm"
     manage:                       "registry.kylincloud.org:4001/solution/softshop/arm64/manage:2.1.0-arm"
+    spilo:                        "harbor.kylincloud.org/solution-repo/krmp-arm/spilo-12:1.6-p5"
     frontChild:                   "registry.kylincloud.org:4001/solution/repo/arm64/front-child:v4"
     frontMain:                    "registry.kylincloud.org:4001/solution/repo/arm64/front-main:v6"
     repoDynflow:                  "registry.kylincloud.org:4001/solution/repo/arm64/repo-dynflow:v10"
