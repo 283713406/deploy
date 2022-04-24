@@ -38,6 +38,7 @@ install-app-tianyu() {
         -f values/apps-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml \
         --set apps.kcm.ip=${node1Ip} --set apps.mirrorsUpdate.ip=${node1Ip} \
         --set apps.softshop.ip=${node1Ip}
+    kubectl delete validatingwebhookconfiguration ingress-nginx-admission-kcm-nginx-ingress
 }
 lint-app-tianyu() {
     helm lint ${ARGS} -n kcm application/tianyu/  \
