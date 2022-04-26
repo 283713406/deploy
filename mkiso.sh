@@ -84,6 +84,7 @@ host="172.20.188.156"
 gitcommit=$(git log | head -1 | awk '{print substr($2,0,10)}')
 mkdir -p  ~/.ssh
 cat .id_rsa | base64 -d > ~/.ssh/id_rsa
+chmod 400 ~/.ssh/id_rsa
 scp -o "StrictHostKeyChecking no" output/iso/${iso} ${user}@${host}:/ahanwhite/container/iso/solution/${ARCH}/
 ssh -o "StrictHostKeyChecking no" ${user}@${host} "echo \"|v${version_date}|${ARCH}|[${iso}](./${ARCH}/${iso})|${md5_value}|${gitcommit}||\" >> /ahanwhite/container/iso/solution/.readme-notice"
 
