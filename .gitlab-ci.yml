@@ -1,0 +1,23 @@
+stages:
+  - build
+
+.build: &build_ref
+  stage: build
+  script:
+    - bash mkiso.sh
+
+build_amd64:
+  <<: *build_ref
+  variables:
+    ARCH : 'amd64'
+  image: registry.kylincloud.org/pub/dind/amd64:build-iso
+  tags:
+    - amd64-iso
+
+build_arm64:
+  <<: *build_ref
+  variables:
+    ARCH : 'arm64'
+  image: registry.kylincloud.org/pub/dind/arm64:build-iso
+  tags:
+    - arm64-iso

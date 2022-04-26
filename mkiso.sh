@@ -13,10 +13,17 @@ if [ ! ${ARCH} ]; then
   fi
 fi
 
+registry_path=$(pwd)
+
 # 初始化文件夹
-rm -rf /docker/registry/container-solution output
-mkdir -p /docker/registry/container-solution
+rm -rf container-solution output
+mkdir -p container-solution
 mkdir -p output/{file,iso}
+
+# 登录仓库
+docker login -u  ci_wang  -p u1kblcakBlrHxAbxlbu0AFdca0xMvBlx harbor.kylincloud.org
+docker login -u wangqiwei -p Kylin123. registry.kylincloud.org:4001
+docker login -u wangqiwei -p Kylin123. registry.kylincloud.org
 
 # 初始化镜像
 IMAGE=registry.kylincloud.org:4001/solution/deploy/${ARCH}/registry:latest
@@ -25,16 +32,9 @@ docker ps -a| grep container_solution >/dev/null && {
 } || true
 
 docker run -d \
-    -v /docker/registry/container-solution:/var/lib/registry \
+    -v ${registry_path}/container-solution:/var/lib/registry \
     -p 4001:5000 --restart=always \
     --name container_solution ${IMAGE}
-
-
-docker login -u  ci_wang  -p u1kblcakBlrHxAbxlbu0AFdca0xMvBlx harbor.kylincloud.org
-docker login -u wangqiwei -p Kylin123. registry.kylincloud.org:4001
-[ $CI ] && {
-  docker login -u  push  -p kylincloud@123.  $CI_REGISTRY
-}
 
 # 拉取镜像
 cat image-list/images_dev-${ARCH}.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
@@ -59,7 +59,7 @@ cat ${ARCH}-gitlab | while read line; do
 done
 
 # 打包镜像文件
-pushd /docker/registry/ >/dev/null
+pushd ${registry_path} >/dev/null
 tar czf $(dirs -l| awk '{printf $NF}')/output/file/container-solution.tar.gz container-solution
 popd >/dev/null
 
@@ -73,8 +73,17 @@ gzexe expand-mirror
 rm -rf expand-mirror~
 popd >/dev/null
 
+version_date=$(date "+%y%m%d")
 version=$(date "+%y%m%d-%H%M%S")
 iso=container-solution-${ARCH}-${version}.iso
 mkisofs -allow-limited-size -l -J -r -iso-level 3 -o output/iso/${iso} output/file/
 md5_value=$(md5sum output/iso/${iso} | awk '{print $1}')
+
+user="root"
+host="172.20.188.156"
+gitcommit=$(git log | head -1 | awk '{print substr($2,0,10)}')
+mkdir -p  ~/.ssh
+cat .id_rsa | base64 -d > ~/.ssh/id_rsa
+scp -o "StrictHostKeyChecking no" output/iso/${iso} ${user}@${host}:/ahanwhite/container/iso/solution/${ARCH}/
+ssh -o "StrictHostKeyChecking no" ${user}@${host} "echo \"|v${version_date}|${ARCH}|[${iso}](./${ARCH}/${iso})|${md5_value}|${gitcommit}||\" >> /ahanwhite/container/iso/solution/.readme-notice"
 
