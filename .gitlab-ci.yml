@@ -12,7 +12,8 @@ build_amd64:
     ARCH : 'amd64'
   image: registry.kylincloud.org/pub/dind/amd64:build-iso
   tags:
-    - amd64-iso
+    - cached
+    - amd64
 
 build_arm64:
   <<: *build_ref
@@ -20,4 +21,5 @@ build_arm64:
     ARCH : 'arm64'
   image: registry.kylincloud.org/pub/dind/arm64:build-iso
   tags:
-    - arm64-iso
+    - cached
+    - arm64
