@@ -11,6 +11,8 @@ nfs:
 
 # 请配置控制节点上部署的keepalived虚ip
 ingressVip: 172.20.144.239
+# 请配置控制节点同网段的未使用ip
+externalIp: 172.20.144.235
 
 # enable apisix
 apisix:

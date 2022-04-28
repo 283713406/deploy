@@ -81,7 +81,7 @@ spec:
     port: 123
     targetPort: 123
   externalIPs:
-  - {{ .Values.ingressVip }}
+  - {{ .Values.externalIp }}
 
 ---
 apiVersion: apps/v1
