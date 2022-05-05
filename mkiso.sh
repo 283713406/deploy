@@ -43,21 +43,14 @@ docker run -d \
 # 修改harbor镜像tag为registry
 echo 【-】组织镜像列表
 ######################
-> ${arch}-gitlab
-cat image-list/images_dev-${arch}.yaml | tail -n +3 | sed 's=\"==g'| awk '{print $2}' | while read line; do
-    echo -e "${line},\c"
-    newline=
-    echo $line |grep harbor >/dev/null && {
-        newline=$(echo $line | sed 's=-'${arch}'==g' | awk -F'/' '{print "registry.kylincloud.org:4001/solution/"$2"/'${arch}'/"$NF}' | sed 's=solution-==g')
-        docker tag $line $newline
-    } || newline=$line
-    echo $newline | sed 's=registry.kylincloud.org=localhost=g'
-done >> ${arch}-gitlab
+pushd image-list >/dev/null
+bash mklist.sh
+popd >/dev/null
 
 # 拷贝镜像
 echo 【-】拷贝镜像
 ######################
-cat ${arch}-gitlab | while read line; do
+cat image-list/${arch}-images.list | while read line; do
     oldtag=$(echo $line |awk -F',' '{print $1}')
     newtag=$(echo $line |awk -F',' '{print $2}')
     $skopeo copy --dest-tls-verify=false --src-creds=${username}:${password} docker://${oldtag} docker://${newtag}

@@ -3,6 +3,7 @@
 for arch in arm64 amd64; do
 echo "global:" > images-${arch}.yaml
 echo "  images:" >>  images-${arch}.yaml
+> ${arch}-images.list
 cat images_dev-${arch}.yaml | tail -n +3 | while read line; do 
     newline=""
     echo $line | grep harbor >/dev/null && {
@@ -11,6 +12,6 @@ cat images_dev-${arch}.yaml | tail -n +3 | while read line; do
 	newline="$key \"$value\""
 } || newline=$(echo $line | sed 's=-'${arch}'==g')
     echo $newline | awk '{printf "    %-30s%s\n",$1,$2}' >> images-${arch}.yaml
-
+    echo $line $newline | awk '{print $2","$4}' | sed 's="==g' >> ${arch}-images.list
 done
 done

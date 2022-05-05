@@ -1,5 +1,5 @@
 .idea/*
-arm64-gitlab
-amd64-gitlab
 output
 helm-chart/charts/*
+image-list/amd64-images.list
+image-list/arm64-images.list
