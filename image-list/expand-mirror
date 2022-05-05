@@ -6,12 +6,10 @@ if [ "$1" = "" ]; then
         echo "A parameter is required"
         exit
 fi
-
 if [ "$2" = "--only-start" ]; then
         echo "only start cotainer"
 	run=1
 fi
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$2" = "--help" ] || [ "$2" = "-h" ]; then
         echo "执行脚本前请先创建镜像存放目录。"
 	echo "执行脚本：bash $0 [path]"
@@ -41,18 +39,13 @@ fi
 
 # 判断传入参数run
 if [ $run -eq 2 ]; then
-
-rm -rf ${image_path}/container-solution
-
-echo The image will be stored in the directory[ ${image_path} ]
-
-docker load < kylin-container-registry-solution.tar
-
-echo "拷贝镜像文件..."
-cp -r container-solution ${image_path}/
-
+    rm -rf ${image_path}/container-solution
+    echo The image will be stored in the directory[ ${image_path} ]
+    echo "拷贝镜像文件..."
+    cp -r container-solution ${image_path}/
 fi
 
+docker load < kylin-container-registry-solution.tar
 docker ps -a| grep container_solution >/dev/null && {
     docker stop container_solution && docker rm container_solution
 } || true
