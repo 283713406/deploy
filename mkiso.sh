@@ -52,7 +52,7 @@ echo 【-】拷贝镜像
 ######################
 cat image-list/${arch}-images.list | while read line; do
     oldtag=$(echo $line |awk -F',' '{print $1}')
-    newtag=$(echo $line |awk -F',' '{print $2}')
+    newtag=$(echo $line |awk -F',' '{print $2}' | sed 's=registry.kylincloud.org=localhost=g')
     $skopeo copy --dest-tls-verify=false --src-creds=${username}:${password} docker://${oldtag} docker://${newtag}
 done
 
@@ -77,7 +77,7 @@ version=$(date "+%y%m%d-%H%M%S")
 iso=container-solution-${arch}-${version}.iso
 mkisofs -allow-limited-size -l -J -r -iso-level 3 -o output/iso/${iso} output/file/
 md5_value=$(md5sum output/iso/${iso} | awk '{print $1}')
-exit
+
 user="root"
 host="172.20.188.156"
 gitcommit=$(git log | head -1 | awk '{print substr($2,0,10)}')
