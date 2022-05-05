@@ -4,7 +4,7 @@ stages:
 .build: &build_ref
   stage: build
   script:
-    - bash mkiso.sh
+    - git show --stat $(git log | head -1 | awk '{print $2}') | grep image-list >/dev/null && bash mkiso.sh
 
 build_amd64:
   <<: *build_ref

@@ -48,12 +48,14 @@ echo The image will be stored in the directory[ ${image_path} ]
 
 docker load < kylin-container-registry-solution.tar
 
-filesize=$(ls -l container-solution.tar.gz  | awk '{printf $5}')
-((blocksize=filesize/51200))
-tar --blocking-factor=${blocksize} --checkpoint=1 --checkpoint-action='ttyout=unpacking %u%   \r' -xzf container-solution.tar.gz -C ${image_path} >/dev/null
+echo "拷贝镜像文件..."
+cp -r container-solution ${image_path}/
 
 fi
 
+docker ps -a| grep container_solution >/dev/null && {
+    docker stop container_solution && docker rm container_solution
+} || true
 docker run -d \
     -v ${image_path}/container-solution:/var/lib/registry \
     -p 4001:5000 --restart=always \
