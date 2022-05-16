@@ -90,45 +90,45 @@ install-dbinit-postgres-repo() {
 
 
 
-# 创建初始化mirrors-update mysql数据的job
-uninstall-dbinit-mysql-mirrors-update(){
-    helm uninstall ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update
-}
-install-dbinit-mysql-mirrors-update() {
-    helm list -A -a | grep dbinit-mysql-mirrors-update && \
-        uninstall-dbinit-mysql-mirrors-update
-    helm install ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
-        -f values/global-values.yaml --set mysql.enabled=true \
-        --set mysql.init.mirrors_update.enabled=true
-}
+# # 创建初始化mirrors-update mysql数据的job
+# uninstall-dbinit-mysql-mirrors-update(){
+#     helm uninstall ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update
+# }
+# install-dbinit-mysql-mirrors-update() {
+#     helm list -A -a | grep dbinit-mysql-mirrors-update && \
+#         uninstall-dbinit-mysql-mirrors-update
+#     helm install ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update pre-install/dbinit \
+#         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+#         -f values/global-values.yaml --set mysql.enabled=true \
+#         --set mysql.init.mirrors_update.enabled=true
+# }
 
 
-# 创建初始化softshop mysql数据的job
-uninstall-dbinit-mysql-softshop(){
-    helm uninstall ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop
-}
-install-dbinit-mysql-softshop() {
-    helm list -A -a | grep dbinit-mysql-softshop && \
-        uninstall-dbinit-mysql-softshop
-    helm install ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
-        -f values/global-values.yaml --set mysql.enabled=true \
-        --set mysql.init.softshop.enabled=true
-}
+# # 创建初始化softshop mysql数据的job
+# uninstall-dbinit-mysql-softshop(){
+#     helm uninstall ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop
+# }
+# install-dbinit-mysql-softshop() {
+#     helm list -A -a | grep dbinit-mysql-softshop && \
+#         uninstall-dbinit-mysql-softshop
+#     helm install ${ARGS} -n dbinit-mysql-softshop dbinit-mysql-softshop pre-install/dbinit \
+#         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+#         -f values/global-values.yaml --set mysql.enabled=true \
+#         --set mysql.init.softshop.enabled=true
+# }
 
-# 创建初始化tianyu mysql数据的job
-uninstall-dbinit-mysql-tianyu(){
-    helm uninstall ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu
-}
-install-dbinit-mysql-tianyu() {
-    helm list -A -a | grep dbinit-mysql-tianyu && \
-        uninstall-dbinit-mysql-tianyu
-    helm install ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu pre-install/dbinit \
-        -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
-        -f values/global-values.yaml --set mysql.enabled=true \
-        --set mysql.init.kcm.enabled=true
-}
+# # 创建初始化tianyu mysql数据的job
+# uninstall-dbinit-mysql-tianyu(){
+#     helm uninstall ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu
+# }
+# install-dbinit-mysql-tianyu() {
+#     helm list -A -a | grep dbinit-mysql-tianyu && \
+#         uninstall-dbinit-mysql-tianyu
+#     helm install ${ARGS} -n dbinit-mysql-tianyu dbinit-mysql-tianyu pre-install/dbinit \
+#         -f pre-install/dbinit/values.yaml -f values/dbinit-values.yaml -f ${IMAGELIST} \
+#         -f values/global-values.yaml --set mysql.enabled=true \
+#         --set mysql.init.kcm.enabled=true
+# }
 
 
 # 创建初始化tianyu mongodb数据的job

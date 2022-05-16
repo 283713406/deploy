@@ -34,6 +34,7 @@ source scripts/app-common.sh
 source scripts/pre-common.sh
 source scripts/module-common.sh
 source scripts/debug.sh
+source pre-install/dbinit/script/init_mysql.sh
 
 uninstall-all() {
    uninstall-apps
