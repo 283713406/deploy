@@ -79,7 +79,7 @@ mkisofs -allow-limited-size -l -J -r -iso-level 3 -o output/iso/${iso} output/fi
 md5_value=$(md5sum output/iso/${iso} | awk '{print $1}')
 
 user="root"
-host="172.20.188.156"
+host="172.20.188.158"
 gitcommit=$(git log | head -1 | awk '{print substr($2,0,10)}')
 mkdir -p  ~/.ssh
 cat .id_rsa | base64 -d > ~/.ssh/id_rsa
