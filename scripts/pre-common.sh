@@ -10,6 +10,64 @@ get-masterName() {
     -owide | grep -v INTERNAL-IP  | awk '{print $1}' | head -n 1
 }
 
+get-maxscaleIp(){
+    kubectl -n module get service/maxscale -o go-template='{{(.spec.clusterIP)}}'
+}
+
+get-devMysqlIp(){
+    kubectl -n ha get service/mysql -o go-template='{{(.spec.clusterIP)}}'
+}
+
+function parse-yaml() {
+   local prefix=$2
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+   awk -F$fs '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+
+         printf("%s%s%s=%s\n", "'$prefix'",vn, $2, $3);
+      }
+   }'
+}
+
+function get-mysql-params() {
+    eval $(parse-yaml values/global-values.yaml)
+
+    if [ $mysql_type = "maxscale" ]
+    then
+        if [ -z "$MAXSCALE_IP" ]
+        then
+            export MAXSCALE_IP=$(get-maxscaleIp)
+        fi
+        DBINIT_MYSQL_URI=$MAXSCALE_IP
+        DBINIT_MYSQL_PORT=3306
+        DBINIT_MYSQL_USERNAME=dbinit
+        DBINIT_MYSQL_PASSWORD=123456
+    elif [ $mysql_type = "dev" ]
+    then
+        if [ -z "$DEV_MYSQL_IP" ]
+        then
+            export DEV_MYSQL_IP=$(get-devMysqlIp)
+        fi
+        DBINIT_MYSQL_URI=$DEV_MYSQL_IP
+        DBINIT_MYSQL_PORT=3306
+        DBINIT_MYSQL_USERNAME=root
+        DBINIT_MYSQL_PASSWORD=Kcm.2021
+    elif [ $mysql_type = "external" ]
+    then
+        DBINIT_MYSQL_URI=$mysql_externalUri
+        DBINIT_MYSQL_PORT=$mysql_externalPort
+        DBINIT_MYSQL_USERNAME=$mysql_externalUser
+        DBINIT_MYSQL_PASSWORD=$mysql_externalPwd
+    fi
+}
+
 install-gate() {
     kubectl create ns apisix-system
     helm install  ${ARGS}  -n apisix-system apisix pre-install/apisix/ \
@@ -88,7 +146,38 @@ install-dbinit-postgres-repo() {
         --set postgres.enabled=true
 }
 
+# 创建初始化tianyu mysql数据的job
+install-dbinit-mysql-tianyu(){
+    eval get-mysql-params
 
+    docker rm install-dbinit-mysql-tianyu
+
+    docker run --network host --name install-dbinit-mysql-tianyu -v $PWD/pre-install/dbinit/script:/opt \
+        -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
+        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-tianyu.sh
+}
+
+# 创建初始化mirrors-update mysql数据的job
+install-dbinit-mysql-mirrors-update(){
+    eval get-mysql-params
+
+    docker rm install-dbinit-mysql-mirrors-update
+
+    docker run --network host --name install-dbinit-mysql-mirrors-update -v $PWD/pre-install/dbinit/script:/opt \
+        -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
+        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-mirrors-update.sh
+}
+
+# 创建初始化softshop mysql数据的job
+install-dbinit-mysql-softshop(){
+    eval get-mysql-params
+
+    docker rm install-dbinit-mysql-softshop
+
+    docker run --network host --name install-dbinit-mysql-softshop -v $PWD/pre-install/dbinit/script:/opt \
+        -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
+        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-softshop.sh
+}
 
 # # 创建初始化mirrors-update mysql数据的job
 # uninstall-dbinit-mysql-mirrors-update(){
