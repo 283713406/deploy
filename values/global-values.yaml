@@ -26,12 +26,17 @@ ntp:
   upstreamServer: 127.127.1.1
 
 mysql:
-  # maxscale or dev
-  # dev: mysql in ha namespace
-  # maxscale: maxscale in module namespace
+  # type: maxscale, dev, external
+  # dev: 使用ha命名空间下的MySQL
+  # maxscale: 使用maxscale中间件连接MySQL
+  # external: 使用外部提供的MySQL，使用外部提供的MySQL时，需要填入URI, Port和有全部权限的用户名及密码
   type: "maxscale"
   devUri: "mysql.ha"
   maxscaleUri: "maxscale.module"
+  externalUri: "172.0.0.1"
+  externalPort: "3306"
+  externalUser: "username"
+  externalPwd: "password"
 
 global:
   imagePullSecrets:
