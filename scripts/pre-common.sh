@@ -38,7 +38,7 @@ function parse-yaml() {
 
 function get-mysql-params() {
     eval $(parse-yaml values/global-values.yaml)
-
+    eval $(parse-yaml $IMAGELIST)
     if [ $mysql_type = "maxscale" ]
     then
         if [ -z "$MAXSCALE_IP" ]
@@ -154,7 +154,7 @@ install-dbinit-mysql-tianyu(){
 
     docker run --network host --name install-dbinit-mysql-tianyu -v $PWD/pre-install/dbinit/script:/opt \
         -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
-        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-tianyu.sh
+        $global_images_mysqlJob bash /opt/install-dbinit-mysql-tianyu.sh
 }
 
 # 创建初始化mirrors-update mysql数据的job
@@ -165,7 +165,7 @@ install-dbinit-mysql-mirrors-update(){
 
     docker run --network host --name install-dbinit-mysql-mirrors-update -v $PWD/pre-install/dbinit/script:/opt \
         -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
-        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-mirrors-update.sh
+        $global_images_mysqlJob bash /opt/install-dbinit-mysql-mirrors-update.sh
 }
 
 # 创建初始化softshop mysql数据的job
@@ -176,7 +176,7 @@ install-dbinit-mysql-softshop(){
 
     docker run --network host --name install-dbinit-mysql-softshop -v $PWD/pre-install/dbinit/script:/opt \
         -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
-        registry.kylincloud.org/solution/dbinit/arm64/mysql-job:0422 bash /opt/install-dbinit-mysql-softshop.sh
+        $global_images_mysqlJob bash /opt/install-dbinit-mysql-softshop.sh
 }
 
 # # 创建初始化mirrors-update mysql数据的job
