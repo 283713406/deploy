@@ -2,3 +2,4 @@
 output
 helm-chart/charts/*
 *.list
+images-*
