@@ -23,3 +23,13 @@ build_arm64:
   tags:
     - cached
     - arm64
+
+build_icbc:
+  <<: *build_ref
+  variables:
+    ARCH : 'arm64'
+    FILEARCH: 'icbc'
+  image: registry.kylincloud.org/pub/dind/arm64:build-iso
+  tags:
+    - cached
+    - arm64

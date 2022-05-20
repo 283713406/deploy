@@ -25,9 +25,21 @@ then
    export ARCH=amd64
 fi
 
-export IMAGELIST=${IMAGEPATH}-${ARCH}.yaml
+FILEARCH=$ARCH
+[ $# -gt 0 ] && {
+    [ -f ${IMAGEPATH}-$1.yaml ] || {
+        echo -e "\033[31m\nERROR: 参数错误：$1，\c"
+        echo -e "只支持$(ls image-list/images-*| sed 's=.yaml==g' | awk -F '-' '{printf " "$3}')\033[0m"
+        return
+    }
+    FILEARCH=$1
+}
 
-export GVALUE="-f $IMAGELIST  -f values/global-values.yaml"
+export PROJECTIMAGELIST=${IMAGEPATH}-${FILEARCH}.yaml
+
+export IMAGELIST=" ${IMAGEPATH}-${ARCH}.yaml -f ${PROJECTIMAGELIST}"
+
+export GVALUE="-f ${IMAGELIST}  -f values/global-values.yaml"
 
 source scripts/ha-common.sh
 source scripts/app-common.sh

@@ -13,6 +13,15 @@ allarch["aarch64"]="arm64"
 arch=${allarch["$(uname -m)"]}
 registry_path=$(pwd)/output/file
 IMAGE=registry.kylincloud.org:4001/solution/deploy/${arch}/registry:latest
+filearch=$arch
+# 参数 除amd64/arm64 外 具体项目需要传入参数调用对应的镜像列表
+[ $# -gt 0 ] && filearch=$1
+[ "$FILEARCH" = "" ] || filearch=$FILEARCH
+[ -f image-list/images-${filearch}.yaml ] || {
+echo -e "\033[31m\nERROR: 参数错误：$FILEARCH，\c"
+echo -e "只支持$(ls image-list/images-*| sed 's=.yaml==g' | awk -F '-' '{printf " "$3}')\033[0m"
+exit
+}
 
 ## 镜像拷贝工具，使用: $skopeo -v
 skopeo="docker run --net host --rm --privileged registry.kylincloud.org/wangqiwei/mkiso/${arch}/skopeo:1.7.0"
@@ -50,7 +59,7 @@ popd >/dev/null
 # 拷贝镜像
 echo 【-】拷贝镜像
 ######################
-cat image-list/${arch}-images.list | while read line; do
+cat image-list/${filearch}-images.list | while read line; do
     oldtag=$(echo $line |awk -F',' '{print $1}')
     newtag=$(echo $line |awk -F',' '{print $2}' | sed 's=registry.kylincloud.org=localhost=g')
     $skopeo copy --dest-tls-verify=false --src-creds=${username}:${password} docker://${oldtag} docker://${newtag}
@@ -59,7 +68,7 @@ done
 # 打包ISO
 echo 【-】打包ISO
 ######################
-cp image-list/images-${arch}.yaml   output/file/images.yaml
+cp image-list/images-${filearch}.yaml   output/file/images.yaml
 cp image-list/expand-mirror output/file/
 cp image-list/README-iso.md     output/file/README.md
 docker save -o output/file/kylin-container-registry-solution.tar ${IMAGE}
@@ -75,6 +84,7 @@ echo 【-】提交版本
 version_date=$(date "+%y%m%d")
 version=$(date "+%y%m%d-%H%M%S")
 iso=container-solution-${arch}-${version}.iso
+[ "${arch}" = "${filearch}" ] || iso=container-solution-${arch}-${filearch}-${version}.iso
 mkisofs -allow-limited-size -l -J -r -iso-level 3 -o output/iso/${iso} output/file/
 md5_value=$(md5sum output/iso/${iso} | awk '{print $1}')
 

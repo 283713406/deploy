@@ -1,0 +1,9 @@
+global:
+  images:
+    httpd:                        "registry.kylincloud.org:4001/solution/tianyu/arm64/httpd:2.4.53-custom"
+    monitorSync:                  "registry.kylincloud.org:4001/solution/tianyu/arm64/monitor-sync:3.6.1.34"
+    monitorVnc:                   "registry.kylincloud.org:4001/solution/tianyu/arm64/monitor-vnc:1.0.2"
+    policyService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/policy-service:3.6.2.4"
+    registerService:              "registry.kylincloud.org:4001/solution/tianyu/arm64/register-service:3.6.2.8"
+    serverService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/server-service:3.6.2.8"
+    ssmwebsite:                   "registry.kylincloud.org:4001/solution/tianyu/arm64/ssmwebsite:3.6.1.7-ICBC"
