@@ -1,10 +1,14 @@
 #!/bin/bash
+
+localrun=false
+[ "$1" = "local" ] && localrun=true
+
 declare -A allarch
 allarch["x86_64"]="amd64"
 allarch["aarch64"]="arm64"
 RUNNERARCH=${allarch["$(uname -m)"]}
 
-docker login registry.kylincloud.org -u wangqiwei -p Kylin123.
+$localrun || docker login registry.kylincloud.org -u wangqiwei -p Kylin123.
 
 yq() {
   docker run --rm -i -v "${PWD}":/workdir registry.kylincloud.org/kcc/images/${RUNNERARCH}/yq:4 "$@"
@@ -18,8 +22,11 @@ function setNewline() {
     } || newline=$(echo $line | sed 's=-'${arch}'==g')
 }
 
-for arch in arm64 amd64 ; do
+archlist="arm64 amd64"
+$localrun && archlist="arm64 amd64 icbc"
+for arch in $archlist; do
     file_arch=${arch}
+    [ "$arch" = "icbc" ] && file_arch=icbc
     echo "global:" > images-${file_arch}.yaml
     echo "  images:" >>  images-${file_arch}.yaml
     > ${file_arch}-images.list
@@ -30,6 +37,8 @@ for arch in arm64 amd64 ; do
         echo $line $newline | awk '{print $2","$4}' | sed 's="==g' >> ${file_arch}-images.list
     done
 done
+
+$localrun && exit
 
 arch=arm64
 file_arch=icbc

@@ -17,7 +17,7 @@ filearch=$arch
 # 参数 除amd64/arm64 外 具体项目需要传入参数调用对应的镜像列表
 [ $# -gt 0 ] && filearch=$1
 [ "$FILEARCH" = "" ] || filearch=$FILEARCH
-[ -f image-list/images-${filearch}.yaml ] || {
+[ -f image-list/images_dev-${filearch}.yaml ] || {
 echo -e "\033[31m\nERROR: 参数错误：$FILEARCH，\c"
 echo -e "只支持$(ls image-list/images-*| sed 's=.yaml==g' | awk -F '-' '{printf " "$3}')\033[0m"
 exit
