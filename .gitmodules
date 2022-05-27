@@ -52,3 +52,6 @@
 [submodule "module/maxscale"]
 	path = module/maxscale
 	url = https://gitlab.kylincloud.org/solution/module/maxscale.git
+[submodule "appsimage"]
+	path = image-list
+	url = https://gitlab.kylincloud.org/solution/appsimage.git
