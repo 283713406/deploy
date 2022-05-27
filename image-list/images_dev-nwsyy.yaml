@@ -1,6 +1,0 @@
-global:
-  images:
-    policyService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/policy-service:3.6.2.4"
-    registerService:              "registry.kylincloud.org:4001/solution/tianyu/arm64/register-service:3.6.2.8"
-    serverService:                "registry.kylincloud.org:4001/solution/tianyu/arm64/server-service:3.6.2.8"
-    ssmwebsite:                   "registry.kylincloud.org:4001/solution/tianyu/arm64/ssmwebsite:3.6.1-nwsyy"
