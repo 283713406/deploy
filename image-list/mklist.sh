@@ -1,54 +1,58 @@
 #!/bin/bash
 
-localrun=false
-[ "$1" = "local" ] && localrun=true
-
+offline=false
+[ "$1" = "offline" ] && offline=true
+projectarchfile=project.arch
+# 无公司内网环境，无法制作项目定制镜像，需要传入offline参数
+# 公司内网环境可以组装镜像列表，制作项目定制镜像
 declare -A allarch
 allarch["x86_64"]="amd64"
 allarch["aarch64"]="arm64"
 RUNNERARCH=${allarch["$(uname -m)"]}
-
-$localrun || docker login registry.kylincloud.org -u wangqiwei -p Kylin123.
+$offline || docker login registry.kylincloud.org -u wangqiwei -p Kylin123.
 
 yq() {
-  docker run --rm -i -v "${PWD}":/workdir registry.kylincloud.org/kcc/images/${RUNNERARCH}/yq:4 "$@"
+    docker run --rm -i -v "${PWD}":/workdir registry.kylincloud.org/kcc/images/${RUNNERARCH}/yq:4 "$@"
 }
 
-function setNewline() {
+setNewLine() {
     echo $line | grep harbor >/dev/null && {
         key=$(echo $line | awk '{print $1}')
-	    value=$(echo $line | awk '{print $2}'| sed 's=\"==g' | sed 's=-'${arch}'==g' | awk -F'/' '{print "registry.kylincloud.org:4001/solution/"$2"/'${arch}'/"$NF}' | sed 's=solution-==g' | sed 's=-'${arch}'==g')
-	    newline="$key \"$value\""
+        value=$(echo $line | awk '{print $2}'| \
+                sed 's=\"==g' | sed 's=-'${arch}'==g' | \
+                awk -F'/' '{print "registry.kylincloud.org:4001/solution/"$2"/'${arch}'/"$NF}' | \
+                sed 's=solution-==g' | sed 's=-'${arch}'==g')
+        newline="$key \"$value\""
     } || newline=$(echo $line | sed 's=-'${arch}'==g')
 }
 
-archlist="arm64 amd64"
-$localrun && archlist="arm64 amd64 icbc"
-for arch in $archlist; do
-    file_arch=${arch}
-    [ "$arch" = "icbc" ] && file_arch=icbc
-    echo "global:" > images-${file_arch}.yaml
-    echo "  images:" >>  images-${file_arch}.yaml
-    > ${file_arch}-images.list
-    cat images_dev-${file_arch}.yaml | tail -n +3 | while read line; do 
+archlist=$(ls images_dev-* | sed 's=.yaml==g' | awk -F'-' '{print $NF}')
+
+for filearch in $archlist; do
+    arch=$filearch
+    case $filearch in
+        arm64|amd64 ) arch=$filearch ;;
+        * ) 
+            cat $projectarchfile | grep $filearch >/dev/null || {
+                echo "Project $filearch has no arch description in $projectarchfile"
+                exit
+            }
+            arch=$(cat $projectarchfile | grep $filearch | awk '{print $2}') ;;
+    esac
+    echo "global:" > images-${filearch}.yaml
+    echo "  images:" >>  images-${filearch}.yaml
+    yamlvalue=$(cat images_dev-${filearch}.yaml)
+    echo "$yamlvalue" | tail -n +3 | while read line; do
         newline=""
-        setNewline
-        echo $newline | awk '{printf "    %-30s%s\n",$1,$2}' >> images-${file_arch}.yaml
-        echo $line $newline | awk '{print $2","$4}' | sed 's="==g' >> ${file_arch}-images.list
+        setNewLine
+        echo $newline | awk '{printf "    %-30s%s\n",$1,$2}' >> images-${filearch}.yaml
     done
-done
-
-$localrun && exit
-
-arch=arm64
-file_arch=icbc
-echo "global:" > images-${file_arch}.yaml
-echo "  images:" >>  images-${file_arch}.yaml
-> ${file_arch}-images.list
-yq '. *= load("images_dev-'${file_arch}'.yaml")' images_dev-${arch}.yaml | tail -n +3 | while read line; do
-    newline=""
-    setNewline
-    cat images_dev-${file_arch}.yaml | grep $(echo $line | awk -F'"' '{print $2}') >/dev/null && \
-        echo $newline | awk '{printf "    %-30s%s\n",$1,$2}' >> images-${file_arch}.yaml
-    echo $line $newline | awk '{print $2","$4}' | sed 's="==g' >> ${file_arch}-images.list
+    $offline && continue
+    yamlvalue=$(yq '. *= load("images_dev-'${filearch}'.yaml")' images_dev-${arch}.yaml)
+    > ${filearch}-images.list
+    echo "$yamlvalue" | tail -n +3 | while read line; do
+        newline=""
+        setNewLine
+        echo $line $newline | awk '{print $2","$4}' | sed 's="==g' >> ${filearch}-images.list
+    done
 done
