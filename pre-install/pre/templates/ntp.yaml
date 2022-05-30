@@ -15,7 +15,6 @@ spec:
     spec:
       imagePullSecrets:
       - name: regcred
-      nodeName: {{ .Values.ntp.serverNode }}
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
