@@ -38,7 +38,14 @@ function parse-yaml() {
 
 function get-mysql-params() {
     eval $(parse-yaml values/global-values.yaml)
-    eval $(parse-yaml $IMAGELIST)
+    IMAGES=(`echo $IMAGELIST ` )
+    for element in ${IMAGES[@]}
+    do
+        if [ $element != "-f" ]
+        then
+            eval $(parse-yaml $element)
+        fi
+    done
     if [ $mysql_type = "maxscale" ]
     then
         if [ -z "$MAXSCALE_IP" ]
