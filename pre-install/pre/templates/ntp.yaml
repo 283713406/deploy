@@ -111,6 +111,10 @@ spec:
         volumeMounts:
           - name: var-run-chrony
             mountPath: /var/run/chrony
+      - name: wait-ntp-server
+        image: {{ .Values.global.images.busybox }}
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', "until nc -u -z ntp-server.ha.svc.cluster.local 123; do echo waiting for ntp-server `date`; sleep 2; done;"]
       containers:
       - name: ntp
         image: {{ .Values.global.images.ntp }}
