@@ -186,6 +186,18 @@ install-dbinit-mysql-softshop(){
         $global_images_mysqlJob bash /opt/install-dbinit-mysql-softshop.sh
 }
 
+# 创建初始化radius mysql数据的job
+install-dbinit-mysql-radius(){
+    eval get-mysql-params
+
+    docker rm install-dbinit-mysql-radius
+
+    docker run --network host --name install-dbinit-mysql-radius  -v $PWD/pre-install/dbinit/script:/opt \
+        -e MYSQL_HOST=$DBINIT_MYSQL_URI -e MYSQL_PORT=$DBINIT_MYSQL_PORT -e USERNAME=$DBINIT_MYSQL_USERNAME -e PASSWORD=$DBINIT_MYSQL_PASSWORD \
+        $global_images_mysqlJob bash /opt/install-dbinit-mysql-radius.sh
+}
+
+
 # # 创建初始化mirrors-update mysql数据的job
 # uninstall-dbinit-mysql-mirrors-update(){
 #     helm uninstall ${ARGS} -n dbinit-mysql-mirrors-update dbinit-mysql-mirrors-update
