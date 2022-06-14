@@ -55,3 +55,6 @@
 [submodule "appsimage"]
 	path = image-list
 	url = https://gitlab.kylincloud.org/solution/appsimage.git
+[submodule "ha/radius"]
+	path = ha/radius
+	url = https://gitlab.kylincloud.org/solution/ha/radius.git

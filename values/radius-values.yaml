@@ -1,0 +1,29 @@
+radius:
+  server:
+    proxy:
+      nodePort1: 31812
+      client_whitelist:
+        host: "172.20.106.90"
+        secret: "netpass"
+    backend01:
+      secret: "netpass"
+      Cleartext_Password: "kylinos123"
+      client_whitelist:
+        host: "10.233.64.0/18"
+        secret: "netpass"
+    backend02:
+      secret: "netpass"
+      Cleartext_Password: "kylinos123"
+      client_whitelist:
+        host: "10.233.64.0/18"
+        secret: "netpass"
+    otpserver_external: true
+    otpserver_icbc:
+      ip: "172.20.1.123"
+      port: 1812
+      secret: "passwd"
+    otpserver_dev:
+      secret: "netpass"
+      client_whitelist:
+        host: "10.233.64.0/18"
+        secret: "netpass"

@@ -18,6 +18,10 @@ lint-has() {
 
     helm lint  -n ha             redis      ha/redis/ -f ha/redis/values.yaml \
         -f values/redis-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml
+
+    helm lint  -n ha             radius      ha/radius/ -f ha/radius/values.yaml \
+        -f values/radius-values.yaml  -f ${IMAGELIST} -f values/global-values.yaml
+
 }
 
 
@@ -139,6 +143,24 @@ uninstall-ha-redis() {
 }
 
 
+install-ha-radius() {
+    helm install  ${ARGS}  -n ha radius   ha/radius/ -f ha/radius/values.yaml \
+        -f values/radius-values.yaml  -f ${IMAGELIST} -f values/apps-values.yaml -f values/global-values.yaml
+}
+upgrade-ha-radius() {
+    helm upgrade  ${ARGS}  -n ha radius   ha/radius/ -f ha/radius/values.yaml \
+        -f values/radius-values.yaml  -f ${IMAGELIST} -f values/apps-values.yaml -f values/global-values.yaml
+}
+lint-ha-radius() {
+    helm lint  ${ARGS}  -n ha ha/radius/ -f ha/radius/values.yaml \
+        -f values/radius-values.yaml  -f ${IMAGELIST} -f values/apps-values.yaml -f values/global-values.yaml
+}
+uninstall-ha-radius() {
+    helm uninstall  ${ARGS}  -n ha radius
+}
+
+
+
 install-has() {
     kubectl create ns ha
     install-ha-elastic
@@ -147,6 +169,7 @@ install-has() {
     install-ha-mongodb
     install-ha-mysql
     install-ha-redis
+    install-ha-radius
 }
 uninstall-has() {
     uninstall-ha-elastic
@@ -155,6 +178,7 @@ uninstall-has() {
     uninstall-ha-mongodb
     uninstall-ha-mysql
     uninstall-ha-redis
+    uninstall-ha-radius
     kubectl delete ns ha
 }
 lint-has() {
@@ -164,6 +188,7 @@ lint-has() {
     lint-ha-mongodb
     lint-ha-mysql
     lint-ha-redis
+    lint-ha-radius
 }
 
 uninstall-all-pv-ha() {
